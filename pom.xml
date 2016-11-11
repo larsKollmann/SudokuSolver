@@ -47,7 +47,7 @@
 
 
     <dependencies>
-    
+        
         <!-- MigLayout -->
 
         <dependency>
@@ -86,7 +86,13 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+        <dependency>
+           <groupId>junit</groupId>
+           <artifactId>junit</artifactId>
+           <version>4.11</version>
+           <scope>test</scope>
+       </dependency>
 
-    </dependencies>
+   </dependencies>
 
 </project>
