@@ -1,4 +1,4 @@
-package de.fhaachen.swegrp2;
+package de.fhaachen.swegrp2.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

@@ -6,6 +6,7 @@
     <groupId>de.fhaachen.swegrp2</groupId>
     <artifactId>sudoku</artifactId>
     <name>sudoku</name>
+    <description>Dieses Programm ist der SudokuSolver der Gruppe 2</description>
 
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -50,8 +51,16 @@
                 <!-- put your configurations here -->
             </configuration>
         </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.10.4</version>
+            <configuration>
+              ...
+          </configuration>
+      </plugin>
 
-    </plugins>
+  </plugins>
 </build>
 
 
@@ -98,11 +107,11 @@
 
     <!-- Testing -->
     <dependency>
-       <groupId>junit</groupId>
-       <artifactId>junit</artifactId>
-       <version>4.11</version>
-       <scope>test</scope>
-   </dependency>
+     <groupId>junit</groupId>
+     <artifactId>junit</artifactId>
+     <version>4.11</version>
+     <scope>test</scope>
+ </dependency>
 
 </dependencies>
 
