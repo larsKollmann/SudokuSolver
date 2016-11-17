@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<?import org.tbee.javafx.scene.layout.fxml.MigPane?>
+
+
+<?import org.tbee.javafx.scene.layout.fxml.MigPane?>
+<?import de.fhaachen.swegrp2.*?>
+
