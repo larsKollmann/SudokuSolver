@@ -1,7 +1,7 @@
 package de.fhaachen.swegrp2;
 
 import static org.junit.Assert.assertEquals;
-
+import de.fhaachen.swegrp2.models.Import;
 import org.junit.Test;
 
 
@@ -15,13 +15,14 @@ class MyClass {
 public class MainAppTest {
 
     @Test
-    public void multiplicationOfZeroIntegersShouldReturnZero() {
-
-        MyClass tester = new MyClass(); // MyClass is tested
-
-        // assert statements
-        assertEquals("10 x 0 must be 0", 0, tester.multiply(10, 0));
-        assertEquals("0 x 10 must be 0", 0, tester.multiply(0, 10));
-        assertEquals("0 x 0 must be 0", 0, tester.multiply(0, 0));
+    public void sollteXMLimportieren() {
+    Import xml = new Import();
+    int[][] arr = xml.importXML("src/test/java/test.xml");
+        for (int y = 0; y < arr.length; y++) {
+            for (int x = 0; x < arr.length; x++) {
+                System.out.print(arr[y][x]);
+            }
+            System.out.println();
+        }
     }
 }
