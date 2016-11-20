@@ -1,20 +1,29 @@
 package de.fhaachen.swegrp2.models;
 
 import java.io.*;
+
 import org.w3c.dom.*;
+
 import javax.xml.parsers.*;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Locale;
+import java.util.StringTokenizer;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 /*Alle öffentlichen Importfunktionen erhalten einen String mit dem Pfad des zu lesenden Dokuments
 * und geben ein 2-Dimensionales Integer Array zurück. Desweiteren werden diverse Exceptions geworfen,
 * die beim Aufrufer gefangen werden müssen
 * */
 public class Import {
 
-    public Import () {
+    public Import() {
     }
 
-    public int[][] importXML (String path) throws Exception {
+    public int[][] importXML(String path) throws Exception {
         File inputFile = new File(path);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -37,7 +46,7 @@ public class Import {
         return arr;
     }
 
-    public int[][] importCSV (String path) throws Exception {
+    public int[][] importCSV(String path) throws Exception {
         Scanner scanner = new Scanner(new File(path), "UTF-8");
         scanner.useLocale(Locale.GERMANY);
         int size = Integer.parseInt(scanner.nextLine().split(";")[0]);
@@ -51,4 +60,52 @@ public class Import {
         }
         return arr;
     }
+
+    public int[][] importJSON(String path) throws Exception {
+        JSONParser parser = new JSONParser();
+
+        Object obj = parser.parse(new FileReader(path));
+        JSONObject jsonObject = (JSONObject) obj;
+
+        int size = Integer.parseInt(jsonObject.get("size").toString());
+        if (!isSizeSupported(size)) throw new SizeNotSupportedException("Fehlerhafte Größe");
+
+        JSONArray sudokuJSONArray = (JSONArray) jsonObject.get("sudoku");
+        if (sudokuJSONArray == null) throw new EmptyArrayException("Übergebenes Sudoku leer");
+
+        int arr[][] = convertJSONArrayTo2DIntArray(sudokuJSONArray, size);
+
+        return arr;
+    }
+
+    public int[][] convertJSONArrayTo2DIntArray(JSONArray jsonArray, int dimensions) {
+        int arr[][] = new int[dimensions][dimensions];
+        for (int i = 0, col = 0, row = 0; i < dimensions * dimensions; i++) {
+            if (col == dimensions) {
+                col = 0;
+                row++;
+            }
+            arr[row][col] = Integer.parseInt(jsonArray.get(i).toString());
+            col++;
+        }
+        return arr;
+    }
+
+    public boolean isSizeSupported(int size) {
+        return (size == 9 || size == 16 || size == 25 || size == 36);
+    }
+
+    class SizeNotSupportedException extends Exception {
+        SizeNotSupportedException(String err) {
+            super(err);
+        }
+    }
+
+    class EmptyArrayException extends Exception {
+        EmptyArrayException(String err) {
+            super(err);
+        }
+    }
+
+
 }

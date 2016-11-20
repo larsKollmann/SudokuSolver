@@ -45,4 +45,20 @@ public class MainAppTest {
             ex.printStackTrace();
         }
     }
+
+    @Test
+    public void sollteJSONimportieren () {
+        try {
+            Import csv = new Import();
+            int arr[][] = csv.importJSON("src/test/java/test.json");
+            for (int y = 0; y < arr.length; y++) {
+                for (int x = 0; x < arr.length; x++) {
+                    System.out.print(arr[y][x]);
+                }
+                System.out.println();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 }
