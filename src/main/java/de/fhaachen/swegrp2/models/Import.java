@@ -72,6 +72,7 @@ public class Import {
 
         JSONArray sudokuJSONArray = (JSONArray) jsonObject.get("sudoku");
         if (sudokuJSONArray == null) throw new EmptyArrayException("Übergebenes Sudoku leer");
+        if (sudokuJSONArray.size() != size*size) throw new SizeNotSupportedException("Sudokugröße entspricht nicht der angegebenen Größe");
 
         int arr[][] = convertJSONArrayTo2DIntArray(sudokuJSONArray, size);
 
