@@ -23,12 +23,9 @@ public class SudokuController {
     //Löscht das ganze Sudoku (füllt es mit 0-Werten)
     public void resetSudoku () {
         sudokuArr = new int[size][size];
-        for (int y = 0; y < size; y++)
-            for (int x = 0; x < size; x++)
-                sudokuArr[y][x] = 0;
     }
 
-    //Änder die größe des Sudoku (Das neue Sudoku ist leer)
+    //Ändert die Größe des Sudoku (Das neue Sudoku ist leer)
     public void changeSize (int size) {
         this.size = size;
         resetSudoku();
