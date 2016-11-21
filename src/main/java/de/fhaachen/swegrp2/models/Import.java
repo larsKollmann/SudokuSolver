@@ -5,10 +5,8 @@ import java.io.*;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.*;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Locale;
-import java.util.StringTokenizer;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -25,12 +23,15 @@ public class Import {
 
     public int[][] importXML(String path) throws Exception {
         File inputFile = new File(path);
+
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(inputFile);
         doc.getDocumentElement().normalize();
+
         int size = Integer.parseInt(doc.getDocumentElement().getAttribute("size"));
         int[][] arr = new int[size][size];
+
         NodeList rows = doc.getElementsByTagName("row");
         if (rows.getLength() == size) {
             for (int r = 0; r < size; r++) {
@@ -43,14 +44,17 @@ public class Import {
                 }
             }
         }
+
         return arr;
     }
 
     public int[][] importCSV(String path) throws Exception {
         Scanner scanner = new Scanner(new File(path), "UTF-8");
         scanner.useLocale(Locale.GERMANY);
+
         int size = Integer.parseInt(scanner.nextLine().split(";")[0]);
         int[][] arr = new int[size][size];
+
         for (int y = 0; y < size; y++) {
             if (scanner.hasNextLine()) {
                 String[] cols = scanner.nextLine().split(";");
@@ -58,6 +62,7 @@ public class Import {
                     arr[y][x] = Integer.parseInt(cols[x]);
             }
         }
+
         return arr;
     }
 
@@ -89,6 +94,7 @@ public class Import {
             arr[row][col] = Integer.parseInt(jsonArray.get(i).toString());
             col++;
         }
+
         return arr;
     }
 
