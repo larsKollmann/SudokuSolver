@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+
 /*Alle öffentlichen Importfunktionen erhalten einen String mit dem Pfad des zu lesenden Dokuments
 * und geben ein 2-Dimensionales Integer Array zurück. Desweiteren werden diverse Exceptions geworfen,
 * die beim Aufrufer gefangen werden müssen
@@ -30,18 +31,19 @@ public class Import {
         doc.getDocumentElement().normalize();
 
         int size = Integer.parseInt(doc.getDocumentElement().getAttribute("size"));
+        if (!isSizeSupported(size)) throw new SizeNotSupportedException("Nicht unterstützte Groeße!");
         int[][] arr = new int[size][size];
 
         NodeList rows = doc.getElementsByTagName("row");
-        if (rows.getLength() == size) {
-            for (int r = 0; r < size; r++) {
-                Element e = (Element) rows.item(r);
-                for (int c = 0; c < size; c++) {
-                    if (!e.getElementsByTagName("col").item(r).getTextContent().equals(""))
-                        arr[c][r] = Integer.parseInt(e.getElementsByTagName("col").item(r).getTextContent());
-                    else
-                        arr[c][r] = 0;
-                }
+        if (rows.getLength() != size) throw new FaultyFormatException("Anzahl Zeilen stimmt mit Arraygroeße nicht ueberein!");
+        for (int r = 0; r < size; r++) {
+            NodeList cols = ((Element)rows.item(r)).getElementsByTagName("col");
+            if (cols.getLength() != size) throw new FaultyFormatException("Anzahl Spalten stimmt mit Arraygroeße nicht ueberein!");
+            for (int c = 0; c < size; c++) {
+                if (!cols.item(r).getTextContent().equals(""))
+                    arr[c][r] = Integer.parseInt(cols.item(r).getTextContent());
+                else
+                    arr[c][r] = 0;
             }
         }
 
@@ -53,15 +55,19 @@ public class Import {
         scanner.useLocale(Locale.GERMANY);
 
         int size = Integer.parseInt(scanner.nextLine().split(";")[0]);
+        if (!isSizeSupported(size)) throw new SizeNotSupportedException("Nicht unterstützte Groeße!");
         int[][] arr = new int[size][size];
 
         for (int y = 0; y < size; y++) {
             if (scanner.hasNextLine()) {
                 String[] cols = scanner.nextLine().split(";");
+                if (cols.length != size) throw new FaultyFormatException("Anzahl Spalten stimmt mit Arraygroeße nicht ueberein!");
                 for (int x = 0; x < size; x++)
                     arr[y][x] = Integer.parseInt(cols[x]);
             }
+            else throw new FaultyFormatException("Es sind zu wenige Zeilen beschrieben!");
         }
+        if (scanner.hasNextLine()) throw new FaultyFormatException("Es sind zu viele Zeilen beschrieben!");
 
         return arr;
     }
@@ -108,11 +114,15 @@ public class Import {
         }
     }
 
+    class FaultyFormatException extends Exception {
+        FaultyFormatException (String err) {
+            super(err);
+        }
+    }
+
     class EmptyArrayException extends Exception {
         EmptyArrayException(String err) {
             super(err);
         }
     }
-
-
 }
