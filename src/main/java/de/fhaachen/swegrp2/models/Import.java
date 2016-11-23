@@ -56,16 +56,16 @@ public class Import {
         Scanner scanner = new Scanner(new File(path), "UTF-8");
         scanner.useLocale(Locale.GERMANY);
 
-        int size = Integer.parseInt(scanner.nextLine().split(";")[0]);
+        int size = Integer.parseInt(scanner.nextLine().split(";")[0].replaceAll("\\D+",""));
         if (!isSizeSupported(size)) throw new SizeNotSupportedException("Nicht unterstützte Groeße!");
         int[][] arr = new int[size][size];
 
         for (int y = 0; y < size; y++) {
             if (scanner.hasNextLine()) {
                 String[] cols = scanner.nextLine().split(";");
-                if (cols.length != size) throw new FaultyFormatException("Anzahl Spalten stimmt mit Arraygroeße nicht ueberein!");
+                if (cols.length > size) throw new FaultyFormatException("Anzahl Spalten stimmt mit Arraygroeße nicht ueberein!");
                 for (int x = 0; x < size; x++) {
-                    if (!cols[x].equals(""))
+                    if (x < cols.length && !cols[x].equals(""))
                         arr[y][x] = Integer.parseInt(cols[x]);
                     else
                         arr[y][x] = 0;
@@ -113,7 +113,7 @@ public class Import {
     }
 
     public boolean isSizeSupported(int size) {
-        return (size == 9 || size == 16 || size == 25 /*|| size == 36*/);
+        return (size == 9 || size == 16 || size == 25 || size == 36);
     }
 
     class SizeNotSupportedException extends Exception {
