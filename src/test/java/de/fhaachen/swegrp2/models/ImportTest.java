@@ -1,11 +1,12 @@
 package de.fhaachen.swegrp2.models;
 
 import org.junit.*;
-import static org.junit.Assert.*;
 
 
 /**
  * Created by simon on 21.11.2016.
+ *
+ * TODO: Write tests for Exception handling.
  */
 public class ImportTest {
     Import testimporter;
@@ -20,30 +21,31 @@ public class ImportTest {
 
     }
 
+    private SudokuField getExpectedImportResult() {
+        SudokuField field = new SudokuField(9);
+        for(int i=0; i<9; i++) {
+            for(int j=0; j<9; j++) {
+                field.setFieldValue(i, j, j);
+            }
+        }
+        return field;
+    }
+
     @Test
     public void importXMLTest() throws Exception {
-        int[][] testArray = testimporter.importXML("src/test/java/test.xml");
-
-        assertEquals(3, testArray[0][3]);
-        assertEquals(7, testArray[3][7]);
-        assertNotEquals(5, testArray[6][8]);
+        SudokuField testArray = testimporter.importXML("src/test/java/test.xml");
+        TestHelper.testResult(getExpectedImportResult(), testArray);
     }
 
     @Test
     public void importCSVTest() throws Exception {
-        int[][] testArray = testimporter.importCSV("src/test/java/test.csv");
-
-        assertEquals(3, testArray[0][3]);
-        assertEquals(7, testArray[3][7]);
-        assertNotEquals(5, testArray[6][8]);
+        SudokuField testArray = testimporter.importCSV("src/test/java/test.csv");
+        TestHelper.testResult(getExpectedImportResult(), testArray);
     }
 
     @Test
     public void importJSONTest() throws Exception {
-        int[][] testArray = testimporter.importJSON("src/test/java/test.json");
-
-        assertEquals(3, testArray[0][3]);
-        assertEquals(7, testArray[3][7]);
-        assertNotEquals(5, testArray[6][8]);
+        SudokuField testArray = testimporter.importJSON("src/test/java/test.json");
+        TestHelper.testResult(getExpectedImportResult(), testArray);
     }
 }

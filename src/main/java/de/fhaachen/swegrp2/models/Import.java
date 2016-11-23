@@ -15,14 +15,14 @@ import org.json.simple.parser.JSONParser;
 
 /**
  * Alle Öffentlichen Importfunktionen erhalten einen String mit dem Pfad des zu lesenden Dokuments
- * und geben ein 2-Dimensionales Integer Array zurück. Desweiteren werden diverse Exceptions geworfen,
+ * und geben ein SudokuField zurück. Desweiteren werden diverse Exceptions geworfen,
  * die beim Aufrufer gefangen werden müssen
  */
 public class Import {
 
     public Import() { }
 
-    public int[][] importXML(String path) throws Exception {
+    public SudokuField importXML(String path) throws Exception {
         File inputFile = new File(path);
 
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -49,10 +49,10 @@ public class Import {
             }
         }
 
-        return arr;
+        return new SudokuField(arr);
     }
 
-    public int[][] importCSV(String path) throws Exception {
+    public SudokuField importCSV(String path) throws Exception {
         Scanner scanner = new Scanner(new File(path), "UTF-8");
         scanner.useLocale(Locale.GERMANY);
 
@@ -77,10 +77,10 @@ public class Import {
         }
         if (scanner.hasNextLine()) throw new FaultyFormatException("Es sind zu viele Zeilen beschrieben!");
 
-        return arr;
+        return new SudokuField(arr);
     }
 
-    public int[][] importJSON(String path) throws Exception {
+    public SudokuField importJSON(String path) throws Exception {
         JSONParser parser = new JSONParser();
 
         Object obj = parser.parse(new FileReader(path));
@@ -95,7 +95,7 @@ public class Import {
 
         int arr[][] = convertJSONArrayTo2DIntArray(sudokuJSONArray, size);
 
-        return arr;
+        return new SudokuField(arr);
     }
 
     public int[][] convertJSONArrayTo2DIntArray(JSONArray jsonArray, int dimensions) {
