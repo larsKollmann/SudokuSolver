@@ -71,9 +71,7 @@ public class Import {
                         arr[y][x] = 0;
                 }
             }
-            else {
-                throw new FaultyFormatException("Es sind zu wenige Zeilen beschrieben!");
-            }
+            //else: Nachfolgende Zeilen < size bleiben { 0 }
         }
         if (scanner.hasNextLine()) throw new FaultyFormatException("Es sind zu viele Zeilen beschrieben!");
 
