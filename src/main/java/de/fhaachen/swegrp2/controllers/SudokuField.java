@@ -1,4 +1,4 @@
-package de.fhaachen.swegrp2.models;
+package de.fhaachen.swegrp2.controllers;
 
 /**
  * Created by basti on 23.11.2016.
@@ -30,12 +30,7 @@ public class SudokuField {
      */
     public SudokuField(int arr[][]) {
         this.size = arr.length;
-        resetSudoku();
-        for(int i=0; i<arr.length; i++) {
-            for(int j=0; j<arr.length; j++) {
-                fieldValues[i][j] = arr[i][j];
-            }
-        }
+        fieldValues = arr;
     }
 
     /*
@@ -46,18 +41,17 @@ public class SudokuField {
         resetSudoku();
     }
 
-    public void resetSudoku() {
-        fieldValues = new int[size][size];
-    }
+    public void resetSudoku() {fieldValues = new int[size][size];}
 
+
+    //Getter & Setter
     public int getFieldValue(int a, int b) {
         return fieldValues[a][b];
     }
-
     public void setFieldValue(int a, int b, int value) {
         fieldValues[a][b] = value;
     }
-
+    public int[][] getField () {return fieldValues;}
     public int getSize() {
         return size;
     }

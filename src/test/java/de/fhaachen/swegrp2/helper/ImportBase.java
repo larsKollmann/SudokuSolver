@@ -1,7 +1,7 @@
 package de.fhaachen.swegrp2.helper;
 
 import de.fhaachen.swegrp2.models.Import;
-import de.fhaachen.swegrp2.models.SudokuField;
+import de.fhaachen.swegrp2.controllers.SudokuField;
 
 /**
  * Created by basti on 24.11.2016.

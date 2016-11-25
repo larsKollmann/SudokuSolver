@@ -1,5 +1,6 @@
 package de.fhaachen.swegrp2.models;
 
+import de.fhaachen.swegrp2.controllers.SudokuField;
 import de.fhaachen.swegrp2.helper.ImportBase;
 import org.junit.*;
 

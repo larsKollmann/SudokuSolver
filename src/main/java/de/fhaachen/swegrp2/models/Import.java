@@ -2,21 +2,22 @@ package de.fhaachen.swegrp2.models;
 
 import java.io.*;
 
+import de.fhaachen.swegrp2.controllers.SudokuField;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.*;
 import java.util.Scanner;
 import java.util.Locale;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-
 /**
  * Alle Öffentlichen Importfunktionen erhalten einen String mit dem Pfad des zu lesenden Dokuments
  * und geben ein SudokuField zurück. Desweiteren werden diverse Exceptions geworfen,
- * die beim Aufrufer gefangen werden müssen
+ * die beim Aufrufer gefangen werden müssen.
+ *
+ * TODO: Excpetions anständig definieren und implementieren
  */
 public class Import {
 
@@ -65,13 +66,12 @@ public class Import {
                 String[] cols = scanner.nextLine().split(";");
                 if (cols.length > size) throw new FaultyFormatException("Anzahl Spalten stimmt mit Arraygroeße nicht ueberein!");
                 for (int x = 0; x < size; x++) {
-                    if (x < cols.length && !cols[x].equals(""))
-                        arr[y][x] = Integer.parseInt(cols[x]);
-                    else
+                    if (cols[x].equals(""))
                         arr[y][x] = 0;
+                    else
+                        arr[y][x] = Integer.parseInt(cols[x]);
                 }
             }
-            //else: Nachfolgende Zeilen < size bleiben { 0 }
         }
         if (scanner.hasNextLine()) throw new FaultyFormatException("Es sind zu viele Zeilen beschrieben!");
 
@@ -96,7 +96,7 @@ public class Import {
         return new SudokuField(arr);
     }
 
-    public int[][] convertJSONArrayTo2DIntArray(JSONArray jsonArray, int dimensions) {
+    private int[][] convertJSONArrayTo2DIntArray(JSONArray jsonArray, int dimensions) {
         int arr[][] = new int[dimensions][dimensions];
         for (int i = 0, col = 0, row = 0; i < dimensions * dimensions; i++) {
             if (col == dimensions) {
@@ -110,7 +110,7 @@ public class Import {
         return arr;
     }
 
-    public boolean isSizeSupported(int size) {
+    private boolean isSizeSupported(int size) {
         return (size == 9 || size == 16 || size == 25 || size == 36);
     }
 

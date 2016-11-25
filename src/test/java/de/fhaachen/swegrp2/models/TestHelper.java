@@ -1,5 +1,7 @@
 package de.fhaachen.swegrp2.models;
 
+import de.fhaachen.swegrp2.controllers.SudokuField;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
