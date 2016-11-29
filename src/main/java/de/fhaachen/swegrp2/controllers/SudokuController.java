@@ -5,33 +5,39 @@ import java.io.File;
 
 /**
  * Singleton Sudoku Controller:
- * Beinhaltet das eigentliche Sudoku,
- * sowie Schnittstellen zwischen Model und View zur Bearbeitung des Sudoku.
+ * Beinhaltet das eigentliche Sudoku, relevante Informationen,
+ * sowie weitere Schnittstellen zwischen Model und View.
  */
-
 public class SudokuController {
-    private SudokuField field;
-    Import importer;
-    Export exporter;
-    Generator generator;
-    Solver solver;
-
     private static SudokuController ourInstance = new SudokuController();
+    private SudokuField sudokuField;    //Speichert das Sudoku und Sudoku relevante Informationen
+    private SudokuField previousSudoku; //Das zuletzt erstellte, generierte, importierte Sudoku (zum zuruecksetzen)
+    private Import importer;
+    private Export exporter;
+    private Generator generator;
+    private Solver solver;
+
+    private SudokuController () {
+        sudokuField = new SudokuField(9); //9 = Standardgroeße
+        previousSudoku = sudokuField;
+        generator = new Generator();
+        solver = new Solver();
+        importer = new Import();
+        exporter = new Export();
+    }
+
     public static SudokuController getInstance() {
         return ourInstance;
     }
-    private SudokuController () {
-        field = new SudokuField(9); //9 = Standardgroeße
-        importer = new Import();
-        exporter = new Export();
-        generator = new Generator();
-        solver = new Solver();
-    }
 
-    //Extrahiert die Dateiendung von dem Datenpfad und ruft die entsprechende Import funktion auf
-    //Das ergebnis wird anschließend in dem internen SudokuField gespeichert
-    //Aufgerufen von der GUI Explicit von einem JavaFX FileChooser Objekt
-    //Exceptions sollten in der oberen ebende (GUI) gefangen uns als fehlermedlung dem user angezeigt werden
+
+    /**Beispiel Dummy funktion damit sich alle vorstellen können was die Aufgabe des SudokuControllers ist
+     * weitere Funktionen werden erst implementiert wenn diese benoetigt werden
+     *
+     * Extrahiert die Dateiendung von dem Datenpfad und ruft die entsprechende Import funktion auf
+    *Das ergebnis wird anschließend in dem internen SudokuField gespeichert
+    *Aufgerufen von der GUI Explicit von einem JavaFX FileChooser Objekt
+    *Exceptions sollten in der oberen ebende (GUI) gefangen uns als fehlermedlung dem user angezeigt werden
     public void ImportFile(File file) throws Exception{
         String extension = "";
         String filePath = file.getPath();
@@ -55,8 +61,5 @@ public class SudokuController {
             //Fehlermeldung
         }
     }
-
-    public void ExportFile (File file) {
-
-    }
+     */
 }

@@ -1,57 +1,78 @@
 package de.fhaachen.swegrp2.controllers;
 
+import java.util.Arrays;
 /**
  * Created by basti on 23.11.2016.
  *
  * Die Klasse beinhaltet alle relevanten Informationen ueber ein
  * Sudoku Feld. Momentan ist es nur ein "Wrapper" fuer ein
  * zweidimensionales Array.
- *
- * TODO: Ueberlegen wie wir die gewuenschten Zusatzinformationen speichern.
- * Mit Zusatzinformationen sind Informationen wie "Geaendert vom Benutzer",
- * "Generiert vom System", ....
- * Diese Informationen muessen ebenfalls in die Export/Import-Formate
- * uebernommen werden!
- * Da wird es sogar komplizierter.
- *
  */
 public class SudokuField {
-    private int fieldValues[][];
-    private int size;
+    private int size;                   //Groeße des Sudoku
+    private int fieldValues[][];        //Eigentlichen Werte des Sudoku
+    private boolean fieldSysGen[][];    //Trifft Aussage ob einzelnes Feld System- o. Usergeneriert
+    private boolean isSysGen;           //Allgemeine Aussage über den Generierungstyp des Sudoku
 
-    /**
-     * Das ist eine art Copy-Konstruktor mit deep-copy.
-     * Heisst die Werte werden kopiert und es wird nicht
-     * auf den orginalwerten gearbeitet.
-     *
-     * TODO: Eventuell checks einbauen falls arr == null und co
-     *
-     * @param arr
-     */
-    public SudokuField(int arr[][]) {
-        this.size = arr.length;
-        fieldValues = arr;
-    }
-
-    /*
-     * TODO: Eventuell check einbauen, dass size > 0 sein muss? Ansonsten Exception?
-     */
     public SudokuField(int size) {
         this.size = size;
         resetSudoku();
     }
 
-    public void resetSudoku() {fieldValues = new int[size][size];}
+    /**
+     * Copy-Konstruktor mit deep-copy.*
+     * TODO: Exceptions bei den checks einbauen
+     * @param arr
+     */
+    public SudokuField(int arr[][]) {
+        //If Size not supportet -> exception
+        this.size = arr.length;
 
+        if (arr == null) {
+            //exception
+        }
 
-    //Getter & Setter
-    public int getFieldValue(int a, int b) {
-        return fieldValues[a][b];
+        fieldValues = new int[size][];
+        for (int i = 0; i < size; i++) {
+            fieldValues[i] = Arrays.copyOf(arr[i], arr[i].length);
+        }
+
+        fieldSysGen = new boolean[size][size];
+        isSysGen = false;
     }
-    public void setFieldValue(int a, int b, int value) {
-        fieldValues[a][b] = value;
+
+    public void resetSudoku() {
+        fieldValues = new int[size][size];
+        fieldSysGen = new boolean[size][size];
+        isSysGen = false;
     }
-    public int[][] getField () {return fieldValues;}
+
+    //Hilfreich zum direkten Testen & Sehen der Importe
+    public void print() {
+        for (int y = 0; y < size; y ++){
+            for (int x = 0; x < size; x++){
+                System.out.print(fieldValues[y][x]);
+                if (fieldSysGen[y][x])
+                    System.out.print("s");
+
+                System.out.print(", ");
+            }
+            System.out.println();
+        }
+    }
+
+    //Setter & Getter
+    public void setFieldValue(int y, int x, int value) {
+        fieldValues[y][x] = value;
+    }
+    public void setFieldSysGen(int y, int x, boolean value) {fieldSysGen[y][x] = value;}
+    public void SetIsSysGen(boolean value) {isSysGen = value;}
+
+    public boolean getIsSysGen() {return isSysGen;}
+    public int getFieldValue(int y, int x) {
+        return fieldValues[y][x];
+    }
+    public boolean getFieldSysGen(int y, int x) {return fieldSysGen[y][x];}
     public int getSize() {
         return size;
     }
