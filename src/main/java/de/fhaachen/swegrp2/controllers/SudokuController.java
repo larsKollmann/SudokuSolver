@@ -30,6 +30,10 @@ public class SudokuController {
         return ourInstance;
     }
 
+    public static boolean isSizeSupported(int size) {
+        return (size == 9 || size == 16 || size == 25 || size == 36);
+    }
+
 
     /**Beispiel Dummy funktion damit sich alle vorstellen können was die Aufgabe des SudokuControllers ist
      * weitere Funktionen werden erst implementiert wenn diese benoetigt werden

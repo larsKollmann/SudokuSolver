@@ -3,6 +3,7 @@ package de.fhaachen.swegrp2.models;
 import java.io.*;
 
 import de.fhaachen.swegrp2.controllers.SudokuField;
+import de.fhaachen.swegrp2.models.ExceptionSuite.*;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.*;
@@ -11,6 +12,8 @@ import java.util.Locale;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import static de.fhaachen.swegrp2.controllers.SudokuController.isSizeSupported;
 
 /**
  * Alle Öffentlichen Importfunktionen erhalten ein File Object welches ihnen vom Controller, durch die GUI,
@@ -35,9 +38,6 @@ public class Import {
         }
 
         return arr;
-    }
-    private boolean isSizeSupported(int size) {
-        return (size == 9 || size == 16 || size == 25 || size == 36);
     }
 
     public Import() {}
@@ -131,25 +131,5 @@ public class Import {
         int arr[][] = convertJSONArrayTo2DIntArray(sudokuJSONArray, size);
 
         return new SudokuField(arr);
-    }
-
-
-    /*Intern benutzte Exceptions*/
-    class SizeNotSupportedException extends Exception {
-        SizeNotSupportedException(String err) {
-            super(err);
-        }
-    }
-
-    class FaultyFormatException extends Exception {
-        FaultyFormatException (String err) {
-            super(err);
-        }
-    }
-
-    class EmptyArrayException extends Exception {
-        EmptyArrayException(String err) {
-            super(err);
-        }
     }
 }

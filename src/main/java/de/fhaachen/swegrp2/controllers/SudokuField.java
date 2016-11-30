@@ -1,6 +1,10 @@
 package de.fhaachen.swegrp2.controllers;
 
 import java.util.Arrays;
+import de.fhaachen.swegrp2.models.ExceptionSuite.*;
+
+import static de.fhaachen.swegrp2.controllers.SudokuController.isSizeSupported;
+
 /**
  * Created by basti on 23.11.2016.
  *
@@ -24,13 +28,15 @@ public class SudokuField {
      * TODO: Exceptions bei den checks einbauen
      * @param arr
      */
-    public SudokuField(int arr[][]) {
-        //If Size not supportet -> exception
-        this.size = arr.length;
+    public SudokuField(int arr[][]) throws Exception {
+        if (arr == null)
+            throw new EmptyArrayException("Kein Array an SudokuField-Konstruktor übergeben");
 
-        if (arr == null) {
-            //exception
-        }
+        if(isSizeSupported(arr.length))
+            this.size = arr.length;
+        else
+            throw new SizeNotSupportedException("Array ungültiger Größe an SudokuField-Konstrukter übergeben");
+
 
         fieldValues = new int[size][];
         for (int i = 0; i < size; i++) {

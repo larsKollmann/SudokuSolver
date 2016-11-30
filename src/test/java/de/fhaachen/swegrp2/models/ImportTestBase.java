@@ -38,10 +38,11 @@ public abstract class ImportTestBase {
     /*
         Returns "csv" for csv, "xml" for xml, "json" for json and so on.
      */
-    protected abstract String getName();
+    protected abstract String getFileExtension();
 
     private SudokuField call(String filename) throws Exception {
-        String path = "src/test/resources/importExport/" + filename + "." + getName();
+        String fileextension = getFileExtension();
+        String path = "src/test/resources/importExport/" + fileextension + "/" + filename + "." + fileextension;
         return testimporter.importSudoku(path);
     }
 
@@ -66,15 +67,15 @@ public abstract class ImportTestBase {
     /**
      * Die Anzahl Zeilen/Spalten/groeße ist nicht valide.
      */
-    @Test(expected=Import.SizeNotSupportedException.class)
-    public void test_UnsupportetSize() throws Exception {
-        call("testUnsupportetSize");
+    @Test(expected=ExceptionSuite.SizeNotSupportedException.class)
+    public void test_UnsupportedSize() throws Exception {
+        call("testUnsupportedSize");
     }
 
     /**
      * Mehr Zeilen als Size
      */
-    @Test(expected=Import.FaultyFormatException.class)
+    @Test(expected=ExceptionSuite.FaultyFormatException.class)
     public void test_RowsBiggerThanSize() throws Exception {
         call("testRowsBiggerThanSize");
     }
@@ -82,7 +83,7 @@ public abstract class ImportTestBase {
     /**
      * Weniger Zeilen als Size
      */
-    @Test(expected=Import.FaultyFormatException.class)
+    @Test(expected=ExceptionSuite.FaultyFormatException.class)
     public void test_RowsSmallerThanSize() throws Exception {
         call("testRowsSmallerThanSize");
     }
@@ -90,7 +91,7 @@ public abstract class ImportTestBase {
     /**
      * Mehr Spalten als Size
      */
-    @Test(expected=Import.FaultyFormatException.class)
+    @Test(expected=ExceptionSuite.FaultyFormatException.class)
     public void test_ColumnsBiggerThanSize() throws Exception {
         call("testColumnsBiggerThanSize");
     }
@@ -98,7 +99,7 @@ public abstract class ImportTestBase {
     /**
      * Weniger Spalten als Size
      */
-    @Test(expected=Import.FaultyFormatException.class)
+    @Test(expected=ExceptionSuite.FaultyFormatException.class)
     public void test_ColumnsSmallerThanSize() throws Exception {
         call("testColumnsSmallerThanSize");
     }
