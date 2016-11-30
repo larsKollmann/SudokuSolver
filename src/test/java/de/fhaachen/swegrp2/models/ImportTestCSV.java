@@ -15,7 +15,7 @@ public class ImportTestCSV extends ImportTestBase {
         this.testimporter = new ImportCSV();
     }
 
-    protected String getName() {
+    protected String getFileExtension() {
         return "csv";
     }
 

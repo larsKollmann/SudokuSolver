@@ -13,7 +13,7 @@ public class ImportTestJSON extends ImportTestBase {
         this.testimporter = new ImportJSON();
     }
 
-    protected String getName() {
+    protected String getFileExtension() {
         return "json";
     }
 }

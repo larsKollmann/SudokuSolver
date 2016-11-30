@@ -14,7 +14,7 @@ public class ImportTestXML extends ImportTestBase {
         this.testimporter = new ImportXML();
     }
 
-    protected String getName() {
+    protected String getFileExtension() {
         return "xml";
     }
 }
