@@ -42,7 +42,6 @@ public class Import {
 
     public Import() {}
 
-    /** Importiere Sudoku im XML format*/
     public SudokuField importXML(String path) throws Exception {
         File inputFile = new File(path);
 
@@ -54,7 +53,7 @@ public class Import {
         int size = Integer.parseInt(doc.getDocumentElement().getAttribute("size"));
         if (!isSizeSupported(size)) throw new SizeNotSupportedException("Nicht unterstützte Groeße!");
         SudokuField field = new SudokuField(size);
-        field.SetIsSysGen(Boolean.parseBoolean(doc.getDocumentElement().getAttribute("sysgen")));
+        //field.SetIsSysGen(Boolean.parseBoolean(doc.getDocumentElement().getAttribute("sysgen")));
 
         NodeList rows = doc.getElementsByTagName("row");
         if (rows.getLength() != size) throw new FaultyFormatException("Anzahl Zeilen stimmt mit Arraygroeße nicht ueberein!");
@@ -69,11 +68,11 @@ public class Import {
                 else {
                     field.setFieldValue(r, c, Integer.parseInt(cols.item(c).getTextContent()));
                     //Hat das Feld ein sysgen Attribut = true?
-                    if(field.getIsSysGen()) {
+                    /*if(field.getIsSysGen()) {
                         Node sys = cols.item(c).getAttributes().getNamedItem("sys");
                         if (sys != null)
                             field.setFieldSysGen(r, c, Boolean.parseBoolean(sys.getNodeValue()));
-                    }
+                    }*/
                 }
             }
         }
@@ -81,7 +80,6 @@ public class Import {
         return field;
     }
 
-    /**Importiere Sudoku im CSV Format*/
     public SudokuField importCSV(String path) throws Exception {
         Scanner scanner = new Scanner(new File(path), "UTF-8");
         scanner.useLocale(Locale.GERMANY);
@@ -91,17 +89,17 @@ public class Import {
         int size = Integer.parseInt(header[0].replaceAll("\\D+",""));
         if (!isSizeSupported(size)) throw new SizeNotSupportedException("Nicht unterstützte Groeße!");
         SudokuField field = new SudokuField(size);
-        field.SetIsSysGen(header[1].equals("sysgen"));
+        //field.SetIsSysGen(header[1].equals("sysgen"));
 
         for (int y = 0; y < size; y++) {
             if (scanner.hasNextLine()) {
                 String[] cols = scanner.nextLine().split(";");
                 if (cols.length > size) throw new FaultyFormatException("Anzahl Spalten stimmt mit Arraygroeße nicht ueberein!");
                 for (int x = 0; x < size; x++) {
-                    if(cols[x].contains("s")){
+                    /*if(cols[x].contains("s")){
                         cols[x] = cols[x].replace("s","");
                         field.setFieldSysGen(y, x, true);
-                    }
+                    }*/
                     if (cols[x].equals(""))
                         field.setFieldValue(y, x, 0);
                     else
@@ -114,7 +112,6 @@ public class Import {
         return field;
     }
 
-    /**Importiere Sudoku im JSON Format - Unfertig*/
     public SudokuField importJSON(String path) throws Exception {
         JSONParser parser = new JSONParser();
 
