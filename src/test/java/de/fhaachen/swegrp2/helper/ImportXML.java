@@ -9,4 +9,8 @@ public class ImportXML extends ImportBase {
     public SudokuField importSudoku(String filename) throws Exception {
         return this.importer.importXML(filename);
     }
+
+    public void exportSudoku(SudokuField field, String filename) throws Exception {
+
+    }
 }

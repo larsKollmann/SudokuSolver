@@ -9,4 +9,8 @@ public class ImportCSV extends ImportBase {
     public SudokuField importSudoku(String filename) throws Exception {
         return this.importer.importCSV(filename);
     }
+
+    public void exportSudoku(SudokuField field, String filename) throws Exception {
+
+    }
 }

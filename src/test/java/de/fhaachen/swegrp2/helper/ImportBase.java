@@ -1,5 +1,6 @@
 package de.fhaachen.swegrp2.helper;
 
+import de.fhaachen.swegrp2.models.Export;
 import de.fhaachen.swegrp2.models.Import;
 import de.fhaachen.swegrp2.controllers.SudokuField;
 
@@ -8,5 +9,7 @@ import de.fhaachen.swegrp2.controllers.SudokuField;
  */
 public abstract class ImportBase {
     protected final Import importer = new Import();
+    protected final Export exporter = new Export();
     public abstract SudokuField importSudoku(String filename) throws Exception;
+    public abstract void exportSudoku(SudokuField field, String filename) throws Exception;
 }

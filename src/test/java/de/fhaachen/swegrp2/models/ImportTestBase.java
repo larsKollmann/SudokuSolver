@@ -4,7 +4,9 @@ import de.fhaachen.swegrp2.controllers.SudokuField;
 import de.fhaachen.swegrp2.helper.ImportBase;
 import org.junit.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.UUID;
 
 
 /**
@@ -14,6 +16,7 @@ import java.io.FileNotFoundException;
  */
 public abstract class ImportTestBase {
     ImportBase testimporter;
+
 
     @Before
     public void setUp() throws Exception {
@@ -44,6 +47,22 @@ public abstract class ImportTestBase {
         String fileextension = getFileExtension();
         String path = "src/test/resources/importExport/" + fileextension + "/" + filename + "." + fileextension;
         return testimporter.importSudoku(path);
+    }
+
+    private void exportAndImportAgain() throws Exception {
+        String fileExtension = getFileExtension();
+        String filename = UUID.randomUUID().toString();
+        String path = "src/test/resources/importExport/" + "tmp/";
+        new File(path).mkdirs();
+        path = path + filename + "." + fileExtension;
+
+        SudokuField exportSudoku = getExpectedImportResult();
+
+
+        testimporter.exportSudoku(exportSudoku, path);
+
+        SudokuField importResult = testimporter.importSudoku(path);
+        TestHelper.testResult(getExpectedImportResult(), importResult);
     }
 
     /**
@@ -102,6 +121,11 @@ public abstract class ImportTestBase {
     @Test(expected=ExceptionSuite.FaultyFormatException.class)
     public void test_ColumnsSmallerThanSize() throws Exception {
         call("testColumnsSmallerThanSize");
+    }
+
+    @Test
+    public void test_ExportAndImportAgain() throws Exception {
+        exportAndImportAgain();
     }
 
 }
