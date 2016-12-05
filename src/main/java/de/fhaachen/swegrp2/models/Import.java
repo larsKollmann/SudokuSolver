@@ -100,9 +100,7 @@ public class Import {
                         cols[x] = cols[x].replace("s","");
                         field.setFieldSysGen(y, x, true);
                     }*/
-                    if (cols[x].equals(""))
-                        field.setFieldValue(y, x, 0);
-                    else
+                    if (x < cols.length && !cols[x].equals(""))
                         field.setFieldValue(y, x, Integer.parseInt(cols[x]));
                 }
             }
