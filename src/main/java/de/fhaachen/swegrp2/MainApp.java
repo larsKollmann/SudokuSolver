@@ -1,5 +1,6 @@
 package de.fhaachen.swegrp2;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,19 +19,18 @@ public class MainApp extends Application {
 
     public void start(Stage stage) throws Exception {
 
-        log.info("Starting Hello JavaFX and Maven demonstration application");
+//        log.info("Starting Hello JavaFX and Maven demonstration application");
 
         String fxmlFile = "/fxml/PrimaryStage/SudokuScene.fxml";
-        log.debug("Loading FXML for main view from: {}", fxmlFile);
+//        log.debug("Loading FXML for main view from: {}", fxmlFile);
         FXMLLoader loader = new FXMLLoader();
         Parent rootNode = (Parent) loader.load(getClass().getResourceAsStream(fxmlFile));
 
-        log.debug("Showing JFX scene");
+//        log.debug("Showing JFX scene");
         //prefHeight="700.0" prefWidth="600.0"
         Scene scene = new Scene(rootNode, 600, 700);
-//        scene.getStylesheets().add("/styles/styles.css");
 
-        stage.setTitle("Hello JavaFX and Maven");
+        stage.setTitle("Sudoku Löser");
         stage.setScene(scene);
         stage.show();
     }

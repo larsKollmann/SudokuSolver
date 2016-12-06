@@ -1,5 +1,9 @@
 package de.fhaachen.swegrp2.controllers.GUIControllers;
 
+import de.fhaachen.swegrp2.controllers.SudokuField;
+import de.fhaachen.swegrp2.models.Import;
+import de.fhaachen.swegrp2.models.solver.SudokuGrid;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.*;
 import javafx.scene.layout.*;
@@ -16,7 +20,8 @@ public class SudokuSceneController
     private static final Logger log = LoggerFactory.getLogger(SudokuSceneController.class);
 
     // Größe des zu zeichnenden Sudokus
-    private int size = 4;
+    private static int size = 6; // SudokuController.getInstance().getSudokuField().getSize();
+    private static SudokuField field = new SudokuField(size*size);
 
     @FXML private GridPane mainGridPane;
 
@@ -38,13 +43,16 @@ public class SudokuSceneController
                         Pane pane = new Pane();
                         pane.setStyle("-fx-background-color: white");
                         smallgridPane.setVgrow(pane, ALWAYS);
+                        smallgridPane.setHgrow(pane, ALWAYS);
 
                         Text text = new Text();
                         text.setMouseTransparent(true);
-                        /*DEBUG*/text.setText("0");
+//                        /*DEBUG*/text.setText("0");
                         text.setTextAlignment(TextAlignment.CENTER);
-                        text.setFont(new Font(24));
+                        text.setFont(new Font(14));
                         text.setMouseTransparent(true);
+                        int[] coords = translateGridCoordstoXY(xl,yl,xs,ys);
+                        text.setId("Text" + coords[0] + "," + coords[1]);
 
                         smallgridPane.add(pane, xs, ys);
                         smallgridPane.add(text, xs, ys);
@@ -63,6 +71,31 @@ public class SudokuSceneController
         }
     }
 
+    @FXML
+    public void myimport(Event event) {
+        Import importer = new Import();
+
+        try {
+            field = importer.importCSV("src/test/resources/size36sudoku.csv");
+            fillWithCurrentSudokuField(field);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void solve(Event event) {
+        SudokuGrid grid = SudokuGrid.getGrid(field.getSudokuField(), size);
+        if(grid.solve()) {
+            try {
+                field = new SudokuField(grid.getGridAsIntArr());
+                fillWithCurrentSudokuField(field);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void addrowcolumnconstraints(GridPane gridPane) {
         for(int i = 0; i < size; i++) {
             ColumnConstraints col = new ColumnConstraints();
@@ -73,6 +106,38 @@ public class SudokuSceneController
             row.setPrefHeight(10);
             gridPane.getColumnConstraints().add(col);
             gridPane.getRowConstraints().add(row);
+        }
+    }
+
+    private static int[] translateXYToGridCoords(int x, int y) {
+        int[] ret = new int[4];
+
+        ret[0] = x/size;
+        ret[1] = y/size;
+
+        ret[2] = x % size;
+        ret[3] = y % size;
+
+        return ret;
+    }
+
+    private static int[] translateGridCoordstoXY(int xl, int yl, int xs, int ys) {
+        int x = xl * size + xs;
+        int y = yl * size + ys;
+        return new int[]{x, y};
+    }
+
+
+    public void fillWithCurrentSudokuField(SudokuField field) {
+        int dim = size * size;
+
+        for(int x = 0; x < dim; x++) {
+            for(int y = 0; y < dim; y++) {
+                Text text = (Text) mainGridPane.lookup("#Text" + x + "," + y);
+                int number = field.getFieldValue(y,x);
+                if(number != 0)
+                    text.setText(number +"");
+            }
         }
     }
 }
