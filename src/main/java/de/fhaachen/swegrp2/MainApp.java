@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +29,12 @@ public class MainApp extends Application {
 
 //        log.debug("Showing JFX scene");
         //prefHeight="700.0" prefWidth="600.0"
-        Scene scene = new Scene(rootNode, 600, 700);
+        Scene scene = new Scene(rootNode/*, 600, 700*/);
 
         stage.setTitle("Sudoku Löser");
         stage.setScene(scene);
+        GridPane mainGridPane = (GridPane) scene.lookup("#mainGridPane");
+        stage.setMinWidth(mainGridPane.widthProperty().doubleValue());
         stage.show();
     }
 }

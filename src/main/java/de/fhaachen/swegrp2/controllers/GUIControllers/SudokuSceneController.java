@@ -10,6 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,7 @@ public class SudokuSceneController
     private static final Logger log = LoggerFactory.getLogger(SudokuSceneController.class);
 
     // Größe des zu zeichnenden Sudokus
-    private static int size = 6; // SudokuController.getInstance().getSudokuField().getSize();
+    private static int size = 3; // SudokuController.getInstance().getSudokuField().getSize();
     private static SudokuField field = new SudokuField(size*size);
 
     @FXML private GridPane mainGridPane;
@@ -28,10 +29,12 @@ public class SudokuSceneController
     @FXML
     protected void initialize() {
         addrowcolumnconstraints(mainGridPane);
+        mainGridPane.minWidthProperty().bind(mainGridPane.heightProperty());
+        mainGridPane.prefWidthProperty().bind(mainGridPane.heightProperty());
+        mainGridPane.maxWidthProperty().bind(mainGridPane.heightProperty());
         // SudokuFeld gewünschter Größe in Scene einfügen
         for(int xl = 0; xl < size; xl++){
             for(int yl = 0; yl < size; yl ++){
-
                 GridPane smallgridPane = new GridPane();
 
                 smallgridPane.setHgap(2);
@@ -137,6 +140,8 @@ public class SudokuSceneController
                 int number = field.getFieldValue(y,x);
                 if(number != 0)
                     text.setText(number +"");
+                else
+                    text.setText("");
             }
         }
     }
