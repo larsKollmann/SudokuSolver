@@ -25,4 +25,23 @@ public class ImportTestCSV extends ImportTestBase {
         SudokuField field = imp.importCSV("src/test/resources/importExport/CSV/testFine.csv");
         field.print();
     }
+
+
+    /**
+     * Weniger Zeilen als Size
+     * Wirft bei Import einer CSV-Datei keine Exceptions
+     */
+    @Test
+    public void test_RowsSmallerThanSize() throws Exception {
+        call("testRowsSmallerThanSize");
+    }
+
+    /**
+     * Weniger Spalten als Size
+     * Wirft bei Import einer CSV-Datei keine Exceptions
+     */
+    @Test
+    public void test_ColumnsSmallerThanSize() throws Exception {
+        call("testColumnsSmallerThanSize");
+    }
 }
