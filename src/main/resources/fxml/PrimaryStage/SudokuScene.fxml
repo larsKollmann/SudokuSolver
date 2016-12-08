@@ -17,7 +17,7 @@
           <Menu mnemonicParsing="false" text="Importieren">
             <items>
               <MenuItem mnemonicParsing="false" text="XML-Datei" />
-                  <MenuItem mnemonicParsing="false" text="JSON-Datei" />
+                  <MenuItem mnemonicParsing="false" onAction="#importjson" text="JSON-Datei" />
                   <MenuItem id="importDropdownCSV" fx:id="importDropdownCSV" mnemonicParsing="false" onAction="#myimport" text="CSV-Datei" />
             </items>
           </Menu>
