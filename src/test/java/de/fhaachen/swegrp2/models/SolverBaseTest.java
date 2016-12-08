@@ -18,7 +18,7 @@ public class SolverBaseTest {
         SudokuField sudokuToSolve = importer.importCSV(pathSudoku);
         SudokuField expectedResult = importer.importCSV(pathResult);
 
-        SudokuGrid grid = SudokuGrid.getGrid(sudokuToSolve.getSudokuField(), sudokuToSolve.getSubFieldSize());
+        SudokuGrid grid = SudokuGrid.getGrid(sudokuToSolve.getSudokuField(), 3);
         if(grid.solve()) {
             try {
                 sudokuToSolve = new SudokuField(grid.getGridAsIntArr());
