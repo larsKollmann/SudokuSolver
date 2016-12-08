@@ -22,6 +22,7 @@ public class SudokuField {
 
     public SudokuField(int size) {
         this.size = size;
+        subFieldSize = (int) Math.sqrt(size);
         resetSudoku();
     }
 
