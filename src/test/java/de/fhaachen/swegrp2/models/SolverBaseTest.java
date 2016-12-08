@@ -2,6 +2,7 @@ package de.fhaachen.swegrp2.models;
 
 import de.fhaachen.swegrp2.controllers.SudokuField;
 import de.fhaachen.swegrp2.models.solver.SudokuGrid;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -19,13 +20,10 @@ public class SolverBaseTest {
         SudokuField expectedResult = importer.importCSV(pathResult);
 
         SudokuGrid grid = SudokuGrid.getGrid(sudokuToSolve.getSudokuField(), 3);
-        if(grid.solve()) {
-            try {
+        if(grid.solve())
                 sudokuToSolve = new SudokuField(grid.getGridAsIntArr());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        else
+            Assert.fail("Konnte Sudoku nicht lösen");
 
         TestHelper.testResult(expectedResult, sudokuToSolve);
 
