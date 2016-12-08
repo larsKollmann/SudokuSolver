@@ -88,7 +88,7 @@ public class Import {
         String[] header = scanner.nextLine().split(";");
         int size = Integer.parseInt(header[0].replaceAll("\\D+",""));
         if (!isSizeSupported(size)) throw new SizeNotSupportedException("Nicht unterstützte Groeße!");
-        SudokuField field = new SudokuField(size);
+        int field[][] = new int[size][size];
         //field.SetIsSysGen(header[1].equals("sysgen"));
 
         for (int y = 0; y < size; y++) {
@@ -101,13 +101,13 @@ public class Import {
                         field.setFieldSysGen(y, x, true);
                     }*/
                     if (x < cols.length && !cols[x].equals(""))
-                        field.setFieldValue(y, x, Integer.parseInt(cols[x]));
+                        field[y][x] = Integer.parseInt(cols[x]);
                 }
             }
         }
         if (scanner.hasNextLine()) throw new FaultyFormatException("Es sind zu viele Zeilen beschrieben!");
 
-        return field;
+        return new SudokuField(field);
     }
 
     public SudokuField importJSON(String path) throws Exception {
