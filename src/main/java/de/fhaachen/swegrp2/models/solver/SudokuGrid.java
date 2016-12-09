@@ -1,5 +1,8 @@
 package de.fhaachen.swegrp2.models.solver;
 
+import de.fhaachen.swegrp2.controllers.SudokuField;
+
+import java.io.IOException;
 import java.util.*;
 
 
@@ -12,12 +15,12 @@ public class SudokuGrid {
 
     Cell[][] m_grid;
 
-    private SudokuGrid(Cell[][] grid, int subRow, int subCol) {
-        m_size = grid.length;
-        m_grid = grid;
-        m_subRow = subRow;
-        m_subCol = subCol;
-        for (Cell[] row : grid)
+    public SudokuGrid(SudokuField sudokuField) {
+        m_size = sudokuField.getSize();
+        m_grid = getGrid(sudokuField);
+        m_subRow = sudokuField.getSubFieldSize();
+        m_subCol = m_subRow;
+        for (Cell[] row : m_grid)
             for (Cell cell : row) {
                 if (!cell.solved())
                     this.m_constrainedCells.add(cell);
@@ -26,15 +29,16 @@ public class SudokuGrid {
             }
     }
 
-    public static SudokuGrid getGrid(int gridInput[][], int subFieldLength) {
-        int n = gridInput.length;
+    private Cell[][] getGrid(SudokuField sudokuField) {
+        int n = sudokuField.getSize();
+        int gridInput[][] = sudokuField.getSudokuField();
         Cell[][] grid = new Cell[n][n];
-        for (int i = 0; i < gridInput.length; i++) {
-            for (int j = 0; j < gridInput[i].length; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 grid[i][j] = Cell.getCell(gridInput[i][j], i, j);
             }
         }
-        return new SudokuGrid(grid, subFieldLength, subFieldLength);
+        return grid;
     }
 
 
@@ -46,6 +50,10 @@ public class SudokuGrid {
             }
         }
         return arr;
+    }
+
+    public SudokuField getGridAsSudokuField() throws Exception {
+       return new SudokuField(this.getGridAsIntArr());
     }
 
 

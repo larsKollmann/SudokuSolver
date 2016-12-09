@@ -40,7 +40,7 @@ public class SudokuGridTest {
                 {0,22,0,4,6,17,0,24,1,9,0,0,7,18,0,8,25,13,0,0,21,10,0,16,23}};
 
         SudokuField sudokuField = new SudokuField(testSudoku);
-        SudokuGrid grid = SudokuGrid.getGrid(sudokuField.getSudokuField(), sudokuField.getSubFieldSize());
+        SudokuGrid grid = new SudokuGrid(sudokuField);
         if(grid.solve()) {
             try {
                 sudokuField = new SudokuField(grid.getGridAsIntArr());

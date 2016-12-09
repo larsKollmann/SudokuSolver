@@ -25,10 +25,10 @@ public class SudokuController {
 
     public void solve(){
 
-        SudokuGrid grid = SudokuGrid.getGrid(sudokuField.getSudokuField(), sudokuField.getSubFieldSize());
+        SudokuGrid grid = new SudokuGrid(sudokuField);
         if(grid.solve()) {
             try {
-                sudokuField = new SudokuField(grid.getGridAsIntArr());
+                sudokuField = grid.getGridAsSudokuField();
             } catch (Exception e) {
                 e.printStackTrace();
             }
