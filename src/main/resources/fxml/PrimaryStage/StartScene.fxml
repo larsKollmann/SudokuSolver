@@ -1,6 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 
-<?import de.fhaachen.swegrp2.*?>
-
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="514.0" style="-fx-background-color: #92CDDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhaachen.swegrp2.controllers.GUIControllers.StartSceneController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+          <menus>
+              <Menu mnemonicParsing="false" text="Sudoku">
+                  <items>
+                      <MenuItem mnemonicParsing="false" text="Beenden" />
+                  </items>
+              </Menu>
+              <Menu mnemonicParsing="false" text="Importieren">
+                  <items>
+                      <MenuItem fx:id="importDd$XML" mnemonicParsing="false" onAction="#importFile" text="XML-Datei" />
+                      <MenuItem fx:id="importDd$JSON" mnemonicParsing="false" onAction="#importFile" text="JSON-Datei" />
+                      <MenuItem fx:id="importDd$CSV" mnemonicParsing="false" onAction="#importFile" text="CSV-Datei" />
+                  </items>
+              </Menu>
+              <Menu disable="true" mnemonicParsing="false" text="Exportieren">
+              </Menu>
+              <Menu mnemonicParsing="false" text="Hilfe" />
+              <Menu mnemonicParsing="false" text="DEBUG">
+                  <items>
+                      <MenuItem mnemonicParsing="false" onAction="#printGuiValues" text="Print GUI Values" />
+                  </items>
+              </Menu>
+          </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <ImageView fitHeight="243.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@/images/Sudoku.png" />
+         </image>
+      </ImageView>
+   </center>
+   <bottom>
+      <VBox prefHeight="67.0" prefWidth="495.0" style="-fx-border-radius: 10; -fx-border-color: BLACK; -fx-border-width: 2;" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="30.0" right="30.0" top="5.0" />
+         </BorderPane.margin>
+         <children>
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sudoku erstellen:" textAlignment="CENTER" wrappingWidth="309.13671875" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </GridPane>
+            <GridPane hgap="5.0" vgap="5.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button mnemonicParsing="false" prefWidth="1000.0" text="3 X 3" onAction="#test"/>
+                  <Button mnemonicParsing="false" prefWidth="1000.0" text="4 X 4" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" prefWidth="1000.0" text="5 X 5" GridPane.columnIndex="2" />
+                  <Button mnemonicParsing="false" prefWidth="1000.0" text="6 X 6" GridPane.columnIndex="3" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </GridPane>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>

@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +17,13 @@ public class MainApp extends Application {
         launch(args);
     }
 
+    public static Stage primaryStage;
+
     public void start(Stage stage) throws Exception {
-        String fxmlFile = "/fxml/PrimaryStage/SudokuScene.fxml";
+        this.primaryStage = stage;
+//        String fxmlFile = "/fxml/PrimaryStage/SudokuScene.fxml";
+        String fxmlFile = "/fxml/PrimaryStage/StartScene.fxml";
+
         FXMLLoader loader = new FXMLLoader();
         Parent rootNode = loader.load(getClass().getResourceAsStream(fxmlFile));
 
@@ -25,12 +31,7 @@ public class MainApp extends Application {
 
         stage.setTitle("Sudoku Löser");
         stage.setScene(scene);
-        GridPane mainGridPane = (GridPane) scene.lookup("#mainGridPane");
 
-        stage.setMinHeight(152 * 3);
-        stage.setMinWidth(139 * 3);
         stage.show();
-
-        stage.minWidthProperty().bind(((BorderPane)rootNode).widthProperty());
     }
 }
