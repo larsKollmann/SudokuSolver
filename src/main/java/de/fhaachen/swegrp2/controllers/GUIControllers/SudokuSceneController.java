@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static java.lang.Math.sqrt;
 import static javafx.scene.layout.Priority.*;
@@ -178,6 +179,7 @@ public class SudokuSceneController
         }
     }
 
+
     @FXML
     public void changeSize(ActionEvent actionEvent) throws IOException {
         String sourceID = actionEvent.getSource().toString();
@@ -240,6 +242,19 @@ public class SudokuSceneController
     public void clearField(ActionEvent actionEvent) {
         control.clear();
         fillWithCurrentSudokuField();
+    }
+
+    private void changeFieldColor(int x, int y, Color color) {
+        Text text = (Text) mainGridPane.lookup("#Text" + x + "," + y);
+        text.setFill(color);
+    }
+    public void markConflictFields(ActionEvent actionEvent) {
+        List<int[]> conflictTuples = control.getConflicts();
+        for (int [] conflict:
+             conflictTuples) {
+            changeFieldColor(conflict[1],conflict[0],Color.RED);
+        }
+
     }
 
 }

@@ -3,6 +3,7 @@ import de.fhaachen.swegrp2.models.*;
 import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Singleton Sudoku Controller:
@@ -36,6 +37,10 @@ public class SudokuController {
             }
         }
 
+    }
+
+    public List<int[]> getConflicts() {
+        return sudokuField.getConflictCoordinates();
     }
 
     public void generate () {
