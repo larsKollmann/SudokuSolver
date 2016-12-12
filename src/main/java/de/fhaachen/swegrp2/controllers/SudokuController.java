@@ -54,4 +54,20 @@ public class SudokuController {
     public static boolean isSizeSupported(int size) {
         return (size == 9 || size == 16 || size == 25 || size == 36);
     }
+
+    public int getSubFieldsize() {
+        return (int) Math.sqrt(sudokuField.getSize());
+    }
+
+    public int getSize() {
+        return sudokuField.getSize();
+    }
+
+    public int getFieldValue(int y, int x) {
+        return sudokuField.getFieldValue(y, x);
+    }
+
+    public void reset(int i) {
+        sudokuField = new SudokuField(i);
+    }
 }

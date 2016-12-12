@@ -21,30 +21,30 @@ public class Generator {
      */
     public boolean generate (int size) throws Exception {
         SudokuGrid grid;
-        do {
+
             field = new SudokuField(size);
 
             //random row & col & number
-            int row = new Random().nextInt(size + 1);
-            int col = new Random().nextInt(size + 1);
-            int num = new Random().nextInt(size + 1);
+            int row = new Random().nextInt(size);
+            int col = new Random().nextInt(size);
+            int num = new Random().nextInt(size);
 
             field.setFieldValue(row, col, num);
 
             grid = new SudokuGrid(this.field);
 
-        } while (!grid.solve());
+            grid.solve();
 
         this.field = grid.getGridAsSudokuField();
 
         //anzahl an hinweisen die noch übrig gelassen werden sollen
-        int hints = ((size* size)/ 2) - (2 * size);
+        int hints = ((size* size)/ 2) + (3 * size);
 
         //Lösche felder
         for (int i = 0; i < hints; i++) {
-            int row = new Random().nextInt(size + 1);
-            int col = new Random().nextInt(size + 1);
-            field.setFieldValue(row, col, 0);
+            int rowtodel = new Random().nextInt(size);
+            int coltodel = new Random().nextInt(size);
+            field.setFieldValue(rowtodel, coltodel, 0);
         }
 
         return true;

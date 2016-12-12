@@ -4,6 +4,7 @@ import de.fhaachen.swegrp2.controllers.SudokuController;
 import de.fhaachen.swegrp2.controllers.SudokuField;
 import de.fhaachen.swegrp2.models.Import;
 //import de.fhaachen.swegrp2.models.solver.SudokuGrid;
+import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -186,22 +187,12 @@ public class SudokuSceneController
         redrawGrid();
     }
 
-//    @FXML
-//    public void solve(Event event) {
-//        SudokuGrid grid = SudokuGrid.getGrid(field.getSudokuField(), size);
-//
-//        if(grid.solve()) {
-//            try {
-//                field = new SudokuField(grid.getGridAsIntArr());
-//                fillWithCurrentSudokuField(field);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        else {
-//            System.out.println("Not solvable");
-//        }
-//    }
+    @FXML
+    public void solve(Event event) {
+        control.solve();
+
+        fillWithCurrentSudokuField();
+    }
 
     @FXML
     public void importFile(ActionEvent actionEvent) {
@@ -241,6 +232,9 @@ public class SudokuSceneController
 
 
     public void generate(ActionEvent actionEvent) {
+        control.generate();
+
+        fillWithCurrentSudokuField(Color.BROWN);
     }
 
 }
