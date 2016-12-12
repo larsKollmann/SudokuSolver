@@ -1,7 +1,6 @@
 package de.fhaachen.swegrp2.controllers;
 import de.fhaachen.swegrp2.models.*;
-
-import java.io.File;
+import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 
 /**
  * Singleton Sudoku Controller:
@@ -15,15 +14,26 @@ public class SudokuController {
     private Import importer;
     private Export exporter;
     private Generator generator;
-    private Solver solver;
 
     private SudokuController () {
         sudokuField = new SudokuField(9); //9 = Standardgroeße
         previousSudoku = sudokuField;
         generator = new Generator();
-        solver = new Solver();
         importer = new Import();
         exporter = new Export();
+    }
+
+    public void solve(){
+
+        SudokuGrid grid = new SudokuGrid(sudokuField);
+        if(grid.solve()) {
+            try {
+                sudokuField = grid.getGridAsSudokuField();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public static SudokuController getInstance() {
