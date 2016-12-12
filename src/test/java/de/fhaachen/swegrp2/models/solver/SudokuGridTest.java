@@ -63,4 +63,16 @@ public class SudokuGridTest {
     }
 
 
+    @Test
+    public void testChecker() throws Exception {
+        Import imp = new Import();
+        SudokuField field = imp.importCSV("src/test/resources/size36sudoku.csv");
+        field.setFieldValue(0,2,32);
+        System.out.println(field.getConflictCoordinates().size());
+
+        for (int arr[] : field.getConflictCoordinates()) {
+            System.out.println(arr[0] + " " + arr[1]);
+        }
+    }
+
 }
