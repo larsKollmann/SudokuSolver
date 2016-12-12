@@ -36,6 +36,17 @@ public class SudokuController {
 
     }
 
+    public void generate () {
+
+        try {
+            generator.generate(sudokuField.getSize());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        sudokuField = generator.getSudokuField();
+    }
+
     public static SudokuController getInstance() {
         return ourInstance;
     }
