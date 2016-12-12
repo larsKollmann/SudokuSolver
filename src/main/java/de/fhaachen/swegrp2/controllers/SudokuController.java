@@ -2,6 +2,8 @@ package de.fhaachen.swegrp2.controllers;
 import de.fhaachen.swegrp2.models.*;
 import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 
+import java.io.File;
+
 /**
  * Singleton Sudoku Controller:
  * Beinhaltet das eigentliche Sudoku, relevante Informationen,
@@ -49,6 +51,30 @@ public class SudokuController {
 
     public static SudokuController getInstance() {
         return ourInstance;
+    }
+
+    public void ImportFile(File file) throws Exception{
+        String extension = "";
+        String filePath = file.getPath();
+        int i = filePath.lastIndexOf('.');
+        if (i > 0) {
+            extension = filePath.substring(i+1);
+            if (extension.equals("xml")) {
+                sudokuField = importer.importXML(filePath);
+            }
+            else if (extension.equals("csv")) {
+                sudokuField = importer.importCSV(filePath);
+            }
+            else if (extension.equals("json")) {
+                sudokuField = importer.importJSON(filePath);
+            }
+            else {
+                //Fehlermeldung
+            }
+        }
+        else {
+            //Fehlermeldung
+        }
     }
 
     public static boolean isSizeSupported(int size) {

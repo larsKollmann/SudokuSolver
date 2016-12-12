@@ -196,23 +196,23 @@ public class SudokuSceneController
 
     @FXML
     public void importFile(ActionEvent actionEvent) {
-//
-//        String sourceID = actionEvent.getSource().toString();
-//        String fileType = sourceID.substring(sourceID.indexOf('$') + 1, sourceID.indexOf(','));
-//
-//        FileChooser fileChooser = new FileChooser();
-//        fileChooser.setTitle(fileType + "-Datei importieren");
-//        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileType + "-Dateien", "*." + fileType.toLowerCase()));
-//
-//        File file = fileChooser.showOpenDialog((Stage)mainGridPane.getScene().getWindow());
-//        try {
-//            field = control.importFile(file);
-//
-//            redrawGrid(control.getSubFieldsize());
-//            fillWithCurrentSudokuField(field, Color.BLUE);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+
+        String sourceID = actionEvent.getSource().toString();
+        String fileType = sourceID.substring(sourceID.indexOf('$') + 1, sourceID.indexOf(','));
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(fileType + "-Datei importieren");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileType + "-Dateien", "*." + fileType.toLowerCase()));
+
+        File file = fileChooser.showOpenDialog((Stage)mainGridPane.getScene().getWindow());
+        try {
+            control.ImportFile(file);
+
+            redrawGrid();
+            fillWithCurrentSudokuField(Color.BLUE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
