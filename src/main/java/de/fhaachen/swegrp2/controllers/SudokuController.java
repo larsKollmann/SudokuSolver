@@ -49,6 +49,10 @@ public class SudokuController {
         sudokuField = generator.getSudokuField();
     }
 
+    public void clear() {
+        sudokuField = new SudokuField(sudokuField.getSize());
+    }
+
     public static SudokuController getInstance() {
         return ourInstance;
     }

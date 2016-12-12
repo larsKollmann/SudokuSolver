@@ -237,4 +237,9 @@ public class SudokuSceneController
         fillWithCurrentSudokuField(Color.BROWN);
     }
 
+    public void clearField(ActionEvent actionEvent) {
+        control.clear();
+        fillWithCurrentSudokuField();
+    }
+
 }

@@ -11,7 +11,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Sudoku">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Sudoku zurücksetzen" />
+                  <MenuItem mnemonicParsing="false" onAction="#clearField" text="Sudoku zurücksetzen" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#generate" text="Sudoku zufällig generieren" />
                   <MenuItem mnemonicParsing="false" text="Eingaben überprüfen" />

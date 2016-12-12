@@ -90,7 +90,7 @@ public class SudokuField {
         List<int[]> conflictFields = new ArrayList<int[]>();
         for (int i = 0; i < size; i++) {
             for(int b = 0; b < size; b++) {
-                if (fieldValues[i][b] != 0 && !valid(i,b,fieldValues[i][b])){
+                if (fieldValues[i][b] != 0 && !isCellValid(i,b,fieldValues[i][b])){
                     conflictFields.add(new int[]{i,b});
                 }
             }
@@ -99,7 +99,7 @@ public class SudokuField {
     }
 
 
-    private boolean valid(int row, int col, int k) {
+    private boolean isCellValid(int row, int col, int k) {
 
         for (int ind = 0; ind < size; ind++) {
             if ((row != ind && fieldValues[ind][col] == k) ||
