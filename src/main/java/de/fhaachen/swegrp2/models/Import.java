@@ -101,11 +101,7 @@ public class Import {
                         field.setFieldSysGen(y, x, true);
                     }*/
                     if (x < cols.length && !cols[x].equals(""))
-<<<<<<< HEAD
-                        field.setFieldValue(y, x, Integer.parseInt(cols[x]));
-=======
                         field[y][x] = Integer.parseInt(cols[x]);
->>>>>>> origin/import_dev
                 }
             }
         }
