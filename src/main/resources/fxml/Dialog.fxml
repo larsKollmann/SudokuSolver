@@ -20,7 +20,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="63.0" prefWidth="253.0">
          <children>
-            <Button layoutX="180.0" layoutY="7.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="59.0" text="OK" />
+            <Button layoutX="180.0" layoutY="7.0" mnemonicParsing="false" onAction="#onOkButtonAction" prefHeight="27.0" prefWidth="59.0" text="OK" />
          </children>
       </AnchorPane>
    </children>
