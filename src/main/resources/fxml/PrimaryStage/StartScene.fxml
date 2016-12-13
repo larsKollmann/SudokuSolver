@@ -76,8 +76,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" prefWidth="1000.0" text="3 X 3" onAction="#test"/>
-                  <Button mnemonicParsing="false" prefWidth="1000.0" text="4 X 4" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#test" prefWidth="1000.0" text="3 X 3" />
+                  <Button mnemonicParsing="false" onAction="#neutest" prefWidth="1000.0" text="4 X 4" GridPane.columnIndex="1" />
                   <Button mnemonicParsing="false" prefWidth="1000.0" text="5 X 5" GridPane.columnIndex="2" />
                   <Button mnemonicParsing="false" prefWidth="1000.0" text="6 X 6" GridPane.columnIndex="3" />
                </children>

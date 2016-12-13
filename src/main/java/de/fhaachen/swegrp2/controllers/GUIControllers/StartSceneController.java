@@ -5,6 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
+import java.io.IOException;
+
 /**
  * Created by simon on 12.12.2016.
  */
@@ -16,7 +18,12 @@ public class StartSceneController {
     }
 
     public void test(ActionEvent actionEvent) {
-        DialogStage test = new DialogStage("a", "b", MainApp.primaryStage );
+        DialogStage test = new DialogStage("Dies ist ein Testhinweis. \nBeachten Sie das fehlende Bild!", "Hinweis", false, MainApp.primaryStage );
         test.showAndWait();
+    }
+
+    public void neutest(ActionEvent actionEvent) {
+            DialogStage test = new DialogStage("Ist dies ein Test?", "Frage", true, MainApp.primaryStage);
+            test.showAndWait();
     }
 }
