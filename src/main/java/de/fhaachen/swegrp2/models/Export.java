@@ -15,7 +15,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-
+import java.io.IOException;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -86,4 +86,29 @@ public class Export {
     writer.close();
   }
 
+    
+    public static void ExportJSON(int wert[][]) throws IOException{
+		StringBuilder builder = new StringBuilder();
+		builder.append("{\r\n");
+		builder.append("  \"size\": " + wert.length + ",\r\n");
+		builder.append("  \"sudoku\": [\r\n");
+		
+		for(int i = 0; i < wert.length; i++){
+			builder.append("    ");
+			for(int j = 0; j < wert.length; j++){
+				builder.append(wert[i][j]);
+				if(!(i== wert.length-1 && j== wert.length-1)){
+					builder.append(",");
+				}
+			}
+			builder.append("\r\n");
+		}
+		builder.append("  ]\r\n");
+		builder.append("}");
+		
+		BufferedWriter writer = new BufferedWriter(new FileWriter("sudoku.json"));     
+		writer.write(builder.toString());     
+		writer.close();
+	}
+    
 }
