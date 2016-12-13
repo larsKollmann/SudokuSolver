@@ -11,9 +11,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.text.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -92,7 +90,7 @@ public class SudokuSceneController
                         text.setMouseTransparent(true);
 //                        /*DEBUG*/text.setText("0");
                         text.setTextAlignment(TextAlignment.CENTER);
-                        text.setFont(new Font(14));
+                        text.setFont(Font.font(null, FontWeight.BOLD, 14));
                         text.setMouseTransparent(true);
                         text.setId("Text" + coords[0] + "," + coords[1]);
 
@@ -158,18 +156,24 @@ public class SudokuSceneController
     }
 
     private void fillWithCurrentSudokuField() {
-        fillWithCurrentSudokuField(Color.BLACK);
+        fillWithCurrentSudokuField(Color.BLACK, "white");
     }
 
     private void fillWithCurrentSudokuField(Color color) {
+        fillWithCurrentSudokuField(color, "white");
+    }
+
+    private void fillWithCurrentSudokuField(Color textcolor, String cssPanecolor) {
         int dim = control.getSize();
 
         for(int x = 0; x < dim; x++) {
             for(int y = 0; y < dim; y++) {
                 Text text = (Text) mainGridPane.lookup("#Text" + x + "," + y);
+                Pane pane = (Pane) mainGridPane.lookup("#Pane" + x + "," + y);
                 int number = control.getFieldValue(y, x);
                 if (!text.getText().equals(number + "")) {
-                    text.setFill(color);
+                    text.setFill(textcolor);
+                    pane.setStyle("-fx-background-color: " + cssPanecolor);
                     if (number != 0)
                         text.setText(number + "");
                     else
@@ -246,8 +250,11 @@ public class SudokuSceneController
 
     private void changeFieldColor(int x, int y, Color color) {
         Text text = (Text) mainGridPane.lookup("#Text" + x + "," + y);
+        Pane pane = (Pane) mainGridPane.lookup("#Pane" + x + "," + y);
         text.setFill(color);
+        pane.setStyle("-fx-background-color: lightgrey");
     }
+
     public void markConflictFields(ActionEvent actionEvent) {
         List<int[]> conflictTuples = control.getConflicts();
         for (int [] conflict:
