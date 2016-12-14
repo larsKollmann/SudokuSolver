@@ -1,10 +1,8 @@
 package de.fhaachen.swegrp2.controllers.GUIControllers;
 
+import de.fhaachen.swegrp2.MainApp;
 import de.fhaachen.swegrp2.controllers.SudokuController;
-import de.fhaachen.swegrp2.controllers.SudokuField;
-import de.fhaachen.swegrp2.models.Import;
 //import de.fhaachen.swegrp2.models.solver.SudokuGrid;
-import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -20,37 +18,10 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
-import static java.lang.Math.sqrt;
 import static javafx.scene.layout.Priority.*;
 
-public class SudokuSceneController
-{
-    private SudokuController control = SudokuController.getInstance();
-
-    private static class GuiPropertiesBySize{
-        int subFieldSize;
-        int mainSize;
-
-        int fontSize;
-
-        int stageMinHeight;
-        int stageMinWidth;
-
-        GuiPropertiesBySize(int subFieldSize, int fontSize, int stageMinHeight, int stageMinWidth) {
-            this.subFieldSize = subFieldSize;
-            this.mainSize = subFieldSize*subFieldSize;
-            this.fontSize = fontSize;
-            this.stageMinHeight = stageMinHeight;
-            this.stageMinWidth = stageMinWidth;
-        }
-    }
-
-    static GuiPropertiesBySize[] guiprop = new GuiPropertiesBySize[] {
-            new GuiPropertiesBySize(3, 22, 495, 415),
-            new GuiPropertiesBySize(4, 20, 615, 540),
-            new GuiPropertiesBySize(5, 17, 765, 688),
-            new GuiPropertiesBySize(6, 14, 910, 830)
-    };
+public class SudokuSceneController {
+    private SudokuController controller = SudokuController.getInstance();
 
     @FXML private GridPane mainGridPane;
 
@@ -61,10 +32,11 @@ public class SudokuSceneController
         mainGridPane.maxWidthProperty().bind(mainGridPane.heightProperty());
 
         drawGrid();
+        fillWithCurrentSudokuField(Color.BLUE);
     }
 
     private void drawGrid() {
-        int size = control.getSubFieldsize();
+        int size = controller.getSubFieldsize();
 
         addrowcolumnconstraints(mainGridPane);
         // SudokuFeld gewünschter Größe in Scene einfügen
@@ -126,7 +98,7 @@ public class SudokuSceneController
     }
 
     private void addrowcolumnconstraints(GridPane gridPane) {
-        int size = control.getSubFieldsize();
+        int size = controller.getSubFieldsize();
         for(int i = 0; i < size; i++) {
             ColumnConstraints col = new ColumnConstraints();
             col.setHgrow(ALWAYS);
@@ -161,12 +133,12 @@ public class SudokuSceneController
     }
 
     private void fillWithCurrentSudokuField(Color color) {
-        int dim = control.getSize();
+        int dim = controller.getSize();
 
         for(int x = 0; x < dim; x++) {
             for(int y = 0; y < dim; y++) {
                 Text text = (Text) mainGridPane.lookup("#Text" + x + "," + y);
-                int number = control.getFieldValue(y, x);
+                int number = controller.getFieldValue(y, x);
                 if (!text.getText().equals(number + "")) {
                     text.setFill(color);
                     if (number != 0)
@@ -178,18 +150,24 @@ public class SudokuSceneController
         }
     }
 
+
+    @FXML
+    public void close(ActionEvent actionEvent) {
+        MainApp.primaryStage.close();
+    }
+
     @FXML
     public void changeSize(ActionEvent actionEvent) throws IOException {
         String sourceID = actionEvent.getSource().toString();
         int size = Integer.parseInt(sourceID.substring(sourceID.indexOf('=') + 10, sourceID.indexOf(',')));
 
-        control.reset(size*size);
+        controller.reset(size*size);
         redrawGrid();
     }
 
     @FXML
     public void solve(Event event) {
-        control.solve();
+        controller.solve();
 
         fillWithCurrentSudokuField();
     }
@@ -204,9 +182,9 @@ public class SudokuSceneController
         fileChooser.setTitle(fileType + "-Datei importieren");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileType + "-Dateien", "*." + fileType.toLowerCase()));
 
-        File file = fileChooser.showOpenDialog((Stage)mainGridPane.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(MainApp.primaryStage);
         try {
-            control.ImportFile(file);
+            controller.ImportFile(file);
 
             redrawGrid();
             fillWithCurrentSudokuField(Color.BLUE);
@@ -230,11 +208,10 @@ public class SudokuSceneController
         System.out.println("W: " + stage.getWidth() + " H: " + stage.getHeight());
     }
 
-
+    @FXML
     public void generate(ActionEvent actionEvent) {
-        control.generate();
+        controller.generate();
 
         fillWithCurrentSudokuField(Color.BROWN);
     }
-
 }

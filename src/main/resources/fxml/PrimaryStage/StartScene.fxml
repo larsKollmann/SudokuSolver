@@ -13,7 +13,9 @@
           <menus>
               <Menu mnemonicParsing="false" text="Sudoku">
                   <items>
-                      <MenuItem mnemonicParsing="false" text="Beenden" />
+                      <MenuItem mnemonicParsing="false" onAction="#generate" text="Sudoku zufällig generieren" />
+                      <SeparatorMenuItem mnemonicParsing="false" />
+                      <MenuItem mnemonicParsing="false" onAction="#close" text="Beenden" />
                   </items>
               </Menu>
               <Menu mnemonicParsing="false" text="Importieren">
