@@ -221,7 +221,7 @@ public class SudokuSceneController {
     }
 
     public void clearField(ActionEvent actionEvent) {
-        control.clear();
+        controller.clear();
         fillWithCurrentSudokuField();
     }
 
@@ -233,7 +233,7 @@ public class SudokuSceneController {
     }
 
     public void markConflictFields(ActionEvent actionEvent) {
-        List<int[]> conflictTuples = control.getConflicts();
+        List<int[]> conflictTuples = controller.getConflicts();
         for (int [] conflict:
              conflictTuples) {
             changeFieldColor(conflict[1],conflict[0],Color.RED);
