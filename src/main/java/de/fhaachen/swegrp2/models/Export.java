@@ -17,6 +17,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import de.fhaachen.swegrp2.controllers.SudokuField;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -26,8 +27,10 @@ import org.w3c.dom.Element;
  */
 public class Export {
 
-	public static void ExportXML(int size, int wert[][], String path) {
+	public static void ExportXML(SudokuField field, String path) {
 		try {
+			int size = field.getSize();
+			int wert[][] = field.getSudokuField();
 
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -71,23 +74,24 @@ public class Export {
 	}
 	
 	
-    public static void ExportCSV(int wert[][]) throws Exception {
+    public static void ExportCSV(SudokuField field, String path) throws Exception {
+		int wert[][] = field.getSudokuField();
+		int size = field.getSize();
     StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < wert.length; i++) {
-      for (int j = 0; j < wert.length; j++) {
+    for (int i = 0; i < size; i++) {
+      for (int j = 0; j < size; j++) {
         builder.append(wert[i][j] + "");
-        if (j < wert.length - 1)
+        if (j < size - 1)
           builder.append(",");
       }
       builder.append("\n");
     }
-    BufferedWriter writer = new BufferedWriter(new FileWriter("export.csv"));
-    writer.write(builder.toString());
-    writer.close();
+  		exportToDisk(builder,path);
   }
 
     
-    public static void ExportJSON(int wert[][]) throws IOException{
+    public static void ExportJSON(SudokuField field, String path) throws IOException{
+		int wert[][] = field.getSudokuField();
 		StringBuilder builder = new StringBuilder();
 		builder.append("{\r\n");
 		builder.append("  \"size\": " + wert.length + ",\r\n");
@@ -105,10 +109,23 @@ public class Export {
 		}
 		builder.append("  ]\r\n");
 		builder.append("}");
-		
-		BufferedWriter writer = new BufferedWriter(new FileWriter("sudoku.json"));     
-		writer.write(builder.toString());     
-		writer.close();
+
+		exportToDisk(builder,path);
 	}
+
+
+	private static void exportToDisk(StringBuilder field, String path) {
+		try
+		{
+			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+			writer.write(field.toString());
+			writer.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
     
 }
