@@ -170,7 +170,6 @@ public class SolverBaseTest {
         testBase("master_05");
     }
 
-/*
     @Test
     public void NoSolution_DuplicatedColumn01() throws Exception {
         testNoSolution("noSolution_DuplicatedColumn01");
@@ -298,14 +297,13 @@ public class SolverBaseTest {
 
     @Test
     public void NoSolution_DuplicatedField08() throws Exception {
-        testNoSolution("noSolution_DuplicatedField8");
+        testNoSolution("noSolution_DuplicatedField08");
     }
 
     @Test
     public void NoSolution_DuplicatedField09() throws Exception {
         testNoSolution("noSolution_DuplicatedField09");
     }
-*/
 
     @Test
     public void emptySudoku() throws Exception {
