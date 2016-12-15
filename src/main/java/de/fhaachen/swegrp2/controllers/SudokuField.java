@@ -1,8 +1,11 @@
 package de.fhaachen.swegrp2.controllers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import de.fhaachen.swegrp2.models.ExceptionSuite.*;
+import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 
 import static de.fhaachen.swegrp2.controllers.SudokuController.isSizeSupported;
 
@@ -79,6 +82,39 @@ public class SudokuField {
             }
             System.out.println();
         }
+    }
+
+//TODO: Testen
+
+    public List<int[]> getConflictCoordinates () {
+        List<int[]> conflictFields = new ArrayList<int[]>();
+        for (int i = 0; i < size; i++) {
+            for(int b = 0; b < size; b++) {
+                if (fieldValues[i][b] != 0 && !isCellValid(i,b,fieldValues[i][b])){
+                    conflictFields.add(new int[]{i,b});
+                }
+            }
+        }
+        return conflictFields;
+    }
+
+
+    private boolean isCellValid(int row, int col, int k) {
+
+        for (int ind = 0; ind < size; ind++) {
+            if ((row != ind && fieldValues[ind][col] == k) ||
+                    (col != ind && fieldValues[row][ind] == k))
+                return false;
+        }
+        int m = (row / subFieldSize) * subFieldSize;
+        int n = (col / subFieldSize) * subFieldSize;
+        for (int i = m; i < m + subFieldSize; i++)
+            for (int j = n; j < n + subFieldSize; j++) {
+                if (i == row && j == col) continue;
+                if (this.fieldValues[i][j] == k)
+                    return false;
+            }
+        return true;
     }
 
     //Setter & Getter
