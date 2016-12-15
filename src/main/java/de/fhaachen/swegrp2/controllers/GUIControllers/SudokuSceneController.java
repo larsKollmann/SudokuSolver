@@ -239,25 +239,29 @@ public class SudokuSceneController
     public void exportPDF(ActionEvent actionEvent) {
         WritableImage image = mainGridPane.snapshot(new SnapshotParameters(), null);
 
-        // TODO: probably use a file chooser here
-        File file = new File("chart.png");
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("-PDF exportieren");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF-Dateien", "*.pdf"));
+        File pdfFile = fileChooser.showSaveDialog((Stage)mainGridPane.getScene().getWindow());
+        File pngFile = new File("temp.png");
+
 
         try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", pngFile);
         } catch (IOException e) {
-            // TODO: handle exception here
+            e.printStackTrace();
         }
         PDDocument doc = null;
         doc = new PDDocument();
         PDPage page = new PDPage();
         doc.addPage(page);
         try{
-            BufferedImage awtImage = ImageIO.read( new File( "chart.png" ) );
+            BufferedImage awtImage = ImageIO.read( new File( pngFile.getPath() ));
             PDImageXObject pdImageXObject = LosslessFactory.createFromImage(doc, awtImage);
             PDPageContentStream contentStream = new PDPageContentStream(doc, page, true, false);
             contentStream.drawImage(pdImageXObject, 50, 50, 500, 500);
             contentStream.close();
-            doc.save( "PDF_image.pdf" );
+            doc.save( pdfFile.getPath() );
             doc.close();
         } catch (Exception io){
             System.out.println(" -- fail --" + io);
