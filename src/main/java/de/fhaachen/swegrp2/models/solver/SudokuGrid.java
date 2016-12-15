@@ -14,8 +14,10 @@ public class SudokuGrid {
     int m_numNodesExpanded = 0;
 
     Cell[][] m_grid;
+    SudokuField sudokuField;
 
     public SudokuGrid(SudokuField sudokuField) {
+        this.sudokuField = sudokuField;
         m_size = sudokuField.getSize();
         m_grid = getGrid(sudokuField);
         m_subRow = sudokuField.getSubFieldSize();
@@ -56,8 +58,13 @@ public class SudokuGrid {
        return new SudokuField(this.getGridAsIntArr());
     }
 
-
     public boolean solve() {
+        if(sudokuField.getConflictCoordinates().size() > 0) return false;
+        else return solveGrid();
+    }
+
+
+    private boolean solveGrid() {
         m_numNodesExpanded++;
         Cell cell = this.getNextUnoccupiedCell();
         if (cell == null) return true;
