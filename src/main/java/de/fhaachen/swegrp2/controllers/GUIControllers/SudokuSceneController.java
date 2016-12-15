@@ -5,10 +5,13 @@ import de.fhaachen.swegrp2.controllers.SudokuField;
 import de.fhaachen.swegrp2.models.Import;
 //import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 import de.fhaachen.swegrp2.models.solver.SudokuGrid;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.*;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -17,8 +20,15 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+
 
 import static java.lang.Math.sqrt;
 import static javafx.scene.layout.Priority.*;
@@ -221,6 +231,32 @@ public class SudokuSceneController
 
     @FXML
     public void exportPDF(ActionEvent actionEvent) {
+        WritableImage image = mainGridPane.snapshot(new SnapshotParameters(), null);
+
+        // TODO: probably use a file chooser here
+        File file = new File("chart.png");
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        } catch (IOException e) {
+            // TODO: handle exception here
+        }
+        PDDocument doc = null;
+        doc = new PDDocument();
+        PDPage page = new PDPage();
+        doc.addPage(page);
+        try{
+            BufferedImage awtImage = ImageIO.read( new File( "chart.png" ) );
+            PDImageXObject pdImageXObject = LosslessFactory.createFromImage(doc, awtImage);
+            PDPageContentStream contentStream = new PDPageContentStream(doc, page, true, false);
+            contentStream.drawImage(pdImageXObject, 50, 50, 500, 500);
+            contentStream.close();
+            doc.save( "PDF_image.pdf" );
+            doc.close();
+        } catch (Exception io){
+            System.out.println(" -- fail --" + io);
+        }
+
     }
 
     @FXML
