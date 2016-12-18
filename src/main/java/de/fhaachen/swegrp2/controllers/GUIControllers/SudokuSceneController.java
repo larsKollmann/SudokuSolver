@@ -3,20 +3,34 @@ package de.fhaachen.swegrp2.controllers.GUIControllers;
 import de.fhaachen.swegrp2.MainApp;
 import de.fhaachen.swegrp2.controllers.SudokuController;
 //import de.fhaachen.swegrp2.models.solver.SudokuGrid;
+
+import de.fhaachen.swegrp2.models.solver.SudokuGrid;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.*;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+
+import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+
+
+import static java.lang.Math.sqrt;
 import static javafx.scene.layout.Priority.*;
 
 public class SudokuSceneController {
@@ -202,8 +216,43 @@ public class SudokuSceneController {
     public void exportFile(ActionEvent actionEvent) {
     }
 
+    private void exportSnapshotAsPNG(String path) throws IOException{
+        WritableImage image = mainGridPane.snapshot(new SnapshotParameters(), null);
+        File pngFile = new File(path);
+        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", pngFile);
+    }
+
+    private void insertPNGintoPDF(BufferedImage png,PDDocument pdf) throws Exception {
+        PDPage page = new PDPage();
+        pdf.addPage(page);
+        PDImageXObject pdImageXObject = LosslessFactory.createFromImage(pdf, png);
+        PDPageContentStream contentStream = new PDPageContentStream(pdf, page, true, false);
+        contentStream.drawImage(pdImageXObject, 50, 150, 500, 500);
+        contentStream.close();
+    }
+
     @FXML
     public void exportPDF(ActionEvent actionEvent) {
+
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("-PDF exportieren");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF-Dateien", "*.pdf"));
+        File pdfFile = fileChooser.showSaveDialog((Stage)mainGridPane.getScene().getWindow());
+
+        try {
+            File pngFile = new File("temp.png");
+            exportSnapshotAsPNG(pngFile.getPath());
+            BufferedImage png = ImageIO.read(pngFile);
+            PDDocument pdf = new PDDocument();
+            insertPNGintoPDF(png,pdf);
+            pdf.save( pdfFile.getPath() );
+            pdf.close();
+            pngFile.delete();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
