@@ -235,38 +235,43 @@ public class SudokuSceneController
     public void exportFile(ActionEvent actionEvent) {
     }
 
+    private void exportSnapshotAsPNG(String path) throws IOException{
+        WritableImage image = mainGridPane.snapshot(new SnapshotParameters(), null);
+        File pngFile = new File(path);
+        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", pngFile);
+    }
+
+    private void insertPNGintoPDF(BufferedImage png,PDDocument pdf) throws Exception {
+        PDPage page = new PDPage();
+        pdf.addPage(page);
+        PDImageXObject pdImageXObject = LosslessFactory.createFromImage(pdf, png);
+        PDPageContentStream contentStream = new PDPageContentStream(pdf, page, true, false);
+        contentStream.drawImage(pdImageXObject, 50, 150, 500, 500);
+        contentStream.close();
+    }
+
     @FXML
     public void exportPDF(ActionEvent actionEvent) {
-        WritableImage image = mainGridPane.snapshot(new SnapshotParameters(), null);
+
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("-PDF exportieren");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF-Dateien", "*.pdf"));
         File pdfFile = fileChooser.showSaveDialog((Stage)mainGridPane.getScene().getWindow());
-        File pngFile = new File("temp.png");
-
 
         try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", pngFile);
-        } catch (IOException e) {
+            File pngFile = new File("temp.png");
+            exportSnapshotAsPNG(pngFile.getPath());
+            BufferedImage png = ImageIO.read(pngFile);
+            PDDocument pdf = new PDDocument();
+            insertPNGintoPDF(png,pdf);
+            pdf.save( pdfFile.getPath() );
+            pdf.close();
+            pngFile.delete();
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
-        PDDocument doc = null;
-        doc = new PDDocument();
-        PDPage page = new PDPage();
-        doc.addPage(page);
-        try{
-            BufferedImage awtImage = ImageIO.read( new File( pngFile.getPath() ));
-            PDImageXObject pdImageXObject = LosslessFactory.createFromImage(doc, awtImage);
-            PDPageContentStream contentStream = new PDPageContentStream(doc, page, true, false);
-            contentStream.drawImage(pdImageXObject, 50, 50, 500, 500);
-            contentStream.close();
-            doc.save( pdfFile.getPath() );
-            doc.close();
-        } catch (Exception io){
-            System.out.println(" -- fail --" + io);
-        }
-
     }
 
     @FXML
