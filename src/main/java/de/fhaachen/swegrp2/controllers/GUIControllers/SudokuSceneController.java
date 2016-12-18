@@ -2,9 +2,6 @@ package de.fhaachen.swegrp2.controllers.GUIControllers;
 
 import de.fhaachen.swegrp2.MainApp;
 import de.fhaachen.swegrp2.controllers.SudokuController;
-//import de.fhaachen.swegrp2.models.solver.SudokuGrid;
-
-import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -30,7 +27,6 @@ import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 
-import static java.lang.Math.sqrt;
 import static javafx.scene.layout.Priority.*;
 
 public class SudokuSceneController {
@@ -238,10 +234,11 @@ public class SudokuSceneController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("-PDF exportieren");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF-Dateien", "*.pdf"));
+
         File pdfFile = fileChooser.showSaveDialog((Stage)mainGridPane.getScene().getWindow());
+        File pngFile = new File("temp.png");
 
         try {
-            File pngFile = new File("temp.png");
             exportSnapshotAsPNG(pngFile.getPath());
             BufferedImage png = ImageIO.read(pngFile);
             PDDocument pdf = new PDDocument();
