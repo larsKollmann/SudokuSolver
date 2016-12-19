@@ -11,6 +11,6 @@ public class ImportJSON extends ImportBase {
     }
 
     public void exportSudoku(SudokuField field, String filename) throws Exception {
-
+        this.exporter.exportJSON(field, filename);
     }
 }

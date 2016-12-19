@@ -11,5 +11,6 @@ public class ImportCSV extends ImportBase {
     }
 
     public void exportSudoku(SudokuField field, String filename) throws Exception {
+        this.exporter.exportCSV(field, filename);
     }
 }

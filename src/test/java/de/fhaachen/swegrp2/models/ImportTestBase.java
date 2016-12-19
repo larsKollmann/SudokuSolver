@@ -60,9 +60,12 @@ public abstract class ImportTestBase {
 
 
         testimporter.exportSudoku(exportSudoku, path);
-
-        SudokuField importResult = testimporter.importSudoku(path);
-        TestHelper.testResult(getExpectedImportResult(), importResult);
+        try {
+            SudokuField importResult = testimporter.importSudoku(path);
+            TestHelper.testResult(getExpectedImportResult(), importResult);
+        } finally {
+            new File(path).delete();
+        }
     }
 
     /**

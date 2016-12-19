@@ -11,6 +11,6 @@ public class ImportXML extends ImportBase {
     }
 
     public void exportSudoku(SudokuField field, String filename) throws Exception {
-
+        this.exporter.exportXML(field, filename);
     }
 }
