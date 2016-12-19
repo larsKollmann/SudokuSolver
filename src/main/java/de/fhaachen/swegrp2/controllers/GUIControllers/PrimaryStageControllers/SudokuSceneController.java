@@ -130,7 +130,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             text.setText((newvalue == 0 ? "" : newvalue) + "");
         } catch (Exception e) {
             DialogStage error = new DialogStage(
-                    "Eingabe ist keine gültige Zahl!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden",
+                    "Die eingegebene Zahl ist ungültig!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden",
                     "Fehler", false, MainApp.primaryStage);
             error.showAndWait();
             return;
@@ -284,8 +284,12 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     @FXML
     public void solve(Event event) {
-        controller.solve();
+        boolean solved = controller.solve();
         fillWithCurrentSudokuField(Color.BLACK);
+        if(!solved) {
+            DialogStage test = new DialogStage("Das Sudoku ist nicht lösbar", "Fehler", false, MainApp.primaryStage );
+            test.showAndWait();
+        }
     }
 
     @FXML
