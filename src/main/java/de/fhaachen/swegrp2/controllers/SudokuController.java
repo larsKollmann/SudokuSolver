@@ -112,8 +112,12 @@ public class SudokuController {
     public void reset(int size) {
         sudokuField = new SudokuField(size);
     }
-
+    
     //Getterfunktionen
+    public void setFieldValue(int y, int x, int value) {
+        sudokuField.setFieldValue(y, x, value);
+    }
+
     public int getSubFieldsize() {
         return (int) Math.sqrt(sudokuField.getSize());
     }
