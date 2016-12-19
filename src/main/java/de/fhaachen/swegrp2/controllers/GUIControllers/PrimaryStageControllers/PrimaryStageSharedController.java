@@ -36,7 +36,8 @@ public class PrimaryStageSharedController {
         try {
             controller.ImportFile(file);
         } catch (Exception e) {
-            e.printStackTrace();
+            DialogStage test = new DialogStage("Die gewählte Datei ist nicht korrekt", "Fehler", false, MainApp.primaryStage );
+            test.showAndWait();
         }
     }
 
