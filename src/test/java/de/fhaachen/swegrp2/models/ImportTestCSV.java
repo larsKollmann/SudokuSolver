@@ -23,7 +23,6 @@ public class ImportTestCSV extends ImportTestBase {
     public void test () throws Exception {
         Import imp = new Import();
         SudokuField field = imp.importCSV("src/test/resources/importExport/CSV/testFine.csv");
-        field.print();
     }
 
 

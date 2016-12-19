@@ -54,12 +54,8 @@ public class SudokuGridTest {
 
     @Test
     public void solve36() throws Exception {
-
-
         Import imp = new Import();
         SudokuField field = imp.importCSV("src/test/resources/size36sudoku.csv");
-        field.print();
-
     }
 
 

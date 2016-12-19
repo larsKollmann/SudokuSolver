@@ -12,14 +12,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-<<<<<<< HEAD:src/main/java/de/fhaachen/swegrp2/controllers/GUIControllers/StartSceneController.java
-public class StartSceneController {
-=======
 /**
  * Created by simon on 12.12.2016.
  */
 public class StartSceneController extends PrimaryStageSharedController {
->>>>>>> ae274fa1ea4f88e0584511543cb864aa5050e3a7:src/main/java/de/fhaachen/swegrp2/controllers/GUIControllers/PrimaryStageControllers/StartSceneController.java
     private SudokuController controller = SudokuController.getInstance();
 
     private void switchToSudokuScene() {
