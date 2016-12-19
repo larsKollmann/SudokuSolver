@@ -112,24 +112,27 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     private void tryUpdate(String textinput, int x, int y) {
         int newvalue = 0;
-        if(textinput == null || StringUtils.isBlank(textinput))
-            newvalue = 0;
-        else
-            newvalue = Integer.parseInt(textinput);
         int max = controller.getSize();
 
+        try {
+            if(textinput == null || StringUtils.isBlank(textinput))
+                newvalue = 0;
+            else
+                newvalue = Integer.parseInt(textinput);
 
-        if (newvalue < 0 || newvalue > max) {
+            if (newvalue < 0 || newvalue > max) throw new IOException();
+
+            controller.setFieldValue(y, x, newvalue);
+            Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
+            text.setText((newvalue == 0 ? "" : newvalue) + "");
+        }
+        catch (Exception e) {
             DialogStage error = new DialogStage(
                     "Eingabe ist keine gültige Zahl!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden",
                     "Fehler", false, MainApp.primaryStage);
             error.showAndWait();
             return;
         }
-
-        controller.setFieldValue(y, x, newvalue);
-        Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
-        text.setText((newvalue == 0 ? "" : newvalue) + "");
     }
 
     private void drawGrid() {
