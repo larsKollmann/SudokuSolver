@@ -22,10 +22,17 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * Created by lars on 17.11.16.
+ * <p><b>Titel:</b> Export</p>
+ * <p><b>Beschreibung</b>: Beinhaltet Methoden zum exportieren des Sudokus in ein gegebenes Dateiformat.</p>
  */
 public class Export {
 
+	/**
+	 * Exportiert ein gegebenes Sudoku, bestimmter größe in einen gegebenen Pfad im XML-Dateiformat.
+	 * @param size Die größe des zu exportierenden Sudoku.
+	 * @param wert Das 2D int Feld, welches das Sudoku darstellt.
+	 * @param path Der Dateipfad in das das Sudoku exportiert werden soll.
+	 */
 	public static void ExportXML(int size, int wert[][], String path) {
 		try {
 
@@ -70,7 +77,7 @@ public class Export {
 		}
 	}
 	
-	
+
     public static void ExportCSV(int wert[][]) throws Exception {
     StringBuilder builder = new StringBuilder();
     for (int i = 0; i < wert.length; i++) {

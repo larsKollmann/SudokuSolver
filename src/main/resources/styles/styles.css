@@ -1,5 +1,4 @@
 /* Application wide styles */
-
 .label {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
@@ -20,8 +19,6 @@
 }
 
 /* Component specific styles */
-
-
 .main-panel {
     -fx-background-image: url("../images/background.jpg");
 }

@@ -1,8 +1,7 @@
 package de.fhaachen.swegrp2.models;
 
-/**
- * Die ExceptionSuite sammelt alle für das Projekt erstellen Exceptions in einer zentralen public-Klasse
- * Created by simon on 30.11.2016.
+/** <p><b>Titel:</b> ExceptionSuide</p>
+ * <p><b>Beschreibung:</b> Sammelt alle für das Projekt erstellen Exceptions in einer zentralen public-Klasse.</p>
  */
 public class ExceptionSuite {
 
@@ -23,5 +22,4 @@ public class ExceptionSuite {
             super(err);
         }
     }
-
 }
