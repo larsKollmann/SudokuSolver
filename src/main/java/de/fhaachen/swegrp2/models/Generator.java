@@ -52,6 +52,7 @@ public class Generator {
         return true;
     }
 
+    //Getterfuntkionen
     public SudokuField getSudokuField () {return field;}
 
 }

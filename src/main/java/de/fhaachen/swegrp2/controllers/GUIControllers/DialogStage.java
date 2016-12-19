@@ -31,13 +31,10 @@ public class DialogStage extends Stage implements Initializable {
     private Button Nein;
 
 
-
-
     private String message;
     private Stage parentStage;
     private Boolean isConfirmDialog;
     private Image image;
-
     private boolean clicked;
 
 
@@ -45,7 +42,6 @@ public class DialogStage extends Stage implements Initializable {
         showAndWait();
         return clicked;
     }
-
 
     public DialogStage(String message, String title, Boolean isConfirmDialog, Stage parentStage) {
         setTitle(title);
