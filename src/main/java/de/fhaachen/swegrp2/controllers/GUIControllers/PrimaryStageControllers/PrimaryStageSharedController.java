@@ -80,13 +80,16 @@ public class PrimaryStageSharedController {
 
     @FXML
     public void test(ActionEvent actionEvent) {
-        DialogStage test = new DialogStage("Dies ist ein Testhinweis. \nBeachten Sie das fehlende Bild!", "Hinweis", false, MainApp.primaryStage );
+        DialogStage test = new DialogStage("Dies ist ein Testhinweis. \nBeachten Sie das vorhandene Bild!", "Hinweis", false, MainApp.primaryStage );
         test.showAndWait();
     }
 
     @FXML
     public void neutest(ActionEvent actionEvent) {
         DialogStage test = new DialogStage("Ist dies ein Test?", "Frage", true, MainApp.primaryStage);
-        test.showAndWait();
+        if(test.showAndWaitGetResult()){
+            DialogStage test2 = new DialogStage("Das ist toll!", "Awesome", false, MainApp.primaryStage);
+            test2.showAndWait();
+        }
     }
 }
