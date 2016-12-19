@@ -84,10 +84,10 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="newSudoku$9" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="3 X 3" />
-                  <Button fx:id="newSudoku$16" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="4 X 4" GridPane.columnIndex="1" />
-                  <Button fx:id="newSudoku$25" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="5 X 5" GridPane.columnIndex="2" />
-                  <Button fx:id="newSudoku$36" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="6 X 6" GridPane.columnIndex="3" />
+                  <Button fx:id="newSudoku$9" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="9 X 9" />
+                  <Button fx:id="newSudoku$16" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="16 X 16" GridPane.columnIndex="1" />
+                  <Button fx:id="newSudoku$25" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="25 X 25" GridPane.columnIndex="2" />
+                  <Button fx:id="newSudoku$36" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="36 X 36" GridPane.columnIndex="3" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
