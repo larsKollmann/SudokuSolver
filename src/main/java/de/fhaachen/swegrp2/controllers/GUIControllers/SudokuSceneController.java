@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.util.List;
 
 
-import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
@@ -226,10 +228,8 @@ public class SudokuSceneController {
         contentStream.drawImage(pdImageXObject, 50, 150, 500, 500);
         contentStream.close();
     }
-
     @FXML
     public void exportPDF(ActionEvent actionEvent) {
-
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("-PDF exportieren");
