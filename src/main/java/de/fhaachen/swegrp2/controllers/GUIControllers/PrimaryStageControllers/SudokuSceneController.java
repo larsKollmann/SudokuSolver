@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import static javafx.geometry.Pos.CENTER;
 import static javafx.scene.layout.Priority.ALWAYS;
 
 public class SudokuSceneController extends PrimaryStageSharedController {
@@ -62,6 +63,10 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             String text = controller.getFieldValue(y, x) + "";
             if(!Objects.equals(text, "0"))
               textField.setText(text);
+
+            textField.setPrefHeight(1000);
+            textField.autosize();
+            textField.setAlignment(CENTER);
 
             textField.setOnAction(event1 -> {
                 mainGridPane.requestFocus();
