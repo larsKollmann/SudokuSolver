@@ -1,7 +1,7 @@
 package de.fhaachen.swegrp2.models;
 
 import de.fhaachen.swegrp2.controllers.SudokuField;
-import de.fhaachen.swegrp2.helper.ImportBase;
+import de.fhaachen.swegrp2.helper.ImportExportBase;
 import org.junit.*;
 
 import java.io.File;
@@ -14,8 +14,8 @@ import java.util.UUID;
  *
  * TODO: Write tests for Exception handling.
  */
-public abstract class ImportTestBase {
-    ImportBase testimporter;
+public abstract class ImportExportTestBase {
+    ImportExportBase testImporterExporter;
 
 
     @Before
@@ -46,7 +46,7 @@ public abstract class ImportTestBase {
     SudokuField call(String filename) throws Exception {
         String fileextension = getFileExtension();
         String path = "src/test/resources/importExport/" + fileextension + "/" + filename + "." + fileextension;
-        return testimporter.importSudoku(path);
+        return testImporterExporter.importSudoku(path);
     }
 
     private void exportAndImportAgain() throws Exception {
@@ -59,9 +59,9 @@ public abstract class ImportTestBase {
         SudokuField exportSudoku = getExpectedImportResult();
 
 
-        testimporter.exportSudoku(exportSudoku, path);
+        testImporterExporter.exportSudoku(exportSudoku, path);
         try {
-            SudokuField importResult = testimporter.importSudoku(path);
+            SudokuField importResult = testImporterExporter.importSudoku(path);
             TestHelper.testResult(getExpectedImportResult(), importResult);
         } finally {
             new File(path).delete();

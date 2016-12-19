@@ -7,7 +7,7 @@ import de.fhaachen.swegrp2.controllers.SudokuField;
 /**
  * Created by basti on 24.11.2016.
  */
-public abstract class ImportBase {
+public abstract class ImportExportBase {
     protected final Import importer = new Import();
     protected final Export exporter = new Export();
     public abstract SudokuField importSudoku(String filename) throws Exception;

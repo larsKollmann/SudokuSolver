@@ -1,18 +1,18 @@
 package de.fhaachen.swegrp2.models;
 
 import de.fhaachen.swegrp2.controllers.SudokuField;
-import de.fhaachen.swegrp2.helper.ImportCSV;
+import de.fhaachen.swegrp2.helper.ImportExportCSV;
 import org.junit.Test;
 
 /**
  * Created by basti on 24.11.2016.
  */
-public class ImportTestCSV extends ImportTestBase {
+public class ImportExportTestCSV extends ImportExportTestBase {
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        this.testimporter = new ImportCSV();
+        this.testImporterExporter = new ImportExportCSV();
     }
 
     protected String getFileExtension() {

@@ -5,7 +5,7 @@ import de.fhaachen.swegrp2.controllers.SudokuField;
 /**
  * Created by basti on 24.11.2016.
  */
-public class ImportCSV extends ImportBase {
+public class ImportExportCSV extends ImportExportBase {
     public SudokuField importSudoku(String filename) throws Exception {
         return this.importer.importCSV(filename);
     }
