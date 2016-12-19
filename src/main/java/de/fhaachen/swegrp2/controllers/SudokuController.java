@@ -37,7 +37,7 @@ public class SudokuController {
     /**
      * Löst das Sudoku und speichert dies im internen Sudokufeld.
      */
-    public void solve(){
+    public boolean solve(){
         SudokuGrid grid = new SudokuGrid(sudokuField);
         if(grid.solve()) {
             try {
@@ -45,7 +45,9 @@ public class SudokuController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            return true;
         }
+        return false;
     }
 
     /**
