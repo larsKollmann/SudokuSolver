@@ -43,6 +43,8 @@ import java.util.Objects;
 
 import static javafx.geometry.Pos.CENTER;
 import static javafx.scene.layout.Priority.ALWAYS;
+import static javafx.scene.layout.Priority.NEVER;
+import static javafx.scene.layout.Priority.SOMETIMES;
 
 public class SudokuSceneController extends PrimaryStageSharedController {
     private SudokuController controller = SudokuController.getInstance();
@@ -62,9 +64,11 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
             String text = controller.getFieldValue(y, x) + "";
             if(!Objects.equals(text, "0"))
-              textField.setText(text);
+                textField.setText(text);
 
             textField.setPrefHeight(1000);
+            textField.setMinHeight(40);
+            textField.setMinWidth(40);
             textField.autosize();
             textField.setAlignment(CENTER);
 
@@ -88,6 +92,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             });
 
             subGrid.add(textField, gridCoords[2], gridCoords[3]);
+            subGrid.setHalignment(textField, HPos.CENTER);
             textField.requestFocus();
             textField.selectAll();
         }
@@ -151,8 +156,8 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                         pane.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> ((Pane)event.getSource()).setStyle("-fx-background-color: #dbdbdb"));
                         pane.addEventHandler(MouseEvent.MOUSE_EXITED, event -> ((Pane)event.getSource()).setStyle("-fx-background-color: white"));
 
-                        GridPane.setVgrow(pane, ALWAYS);
-                        GridPane.setHgrow(pane, ALWAYS);
+                        GridPane.setVgrow(pane, NEVER);
+                        GridPane.setHgrow(pane, NEVER);
 
                         Text text = new Text();
                         text.setMouseTransparent(true);
