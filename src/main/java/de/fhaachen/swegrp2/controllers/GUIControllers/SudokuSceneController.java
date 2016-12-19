@@ -12,14 +12,17 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -202,11 +205,11 @@ public class SudokuSceneController {
         File file = fileChooser.showOpenDialog(MainApp.primaryStage);
         try {
             controller.ImportFile(file);
-
             redrawGrid();
             fillWithCurrentSudokuField(Color.BLUE);
         } catch (Exception e) {
-            e.printStackTrace();
+            DialogStage test = new DialogStage("Die gewählte Datei ist nicht korrekt", "Fehler", false, MainApp.primaryStage );
+            test.showAndWait();
         }
     }
 
@@ -225,7 +228,7 @@ public class SudokuSceneController {
         pdf.addPage(page);
         PDImageXObject pdImageXObject = LosslessFactory.createFromImage(pdf, png);
         PDPageContentStream contentStream = new PDPageContentStream(pdf, page, true, false);
-        contentStream.drawImage(pdImageXObject, 50, 150, 500, 500);
+        contentStream.drawImage(pdImageXObject, 100, 150, 500, 500);
         contentStream.close();
     }
     @FXML
@@ -267,8 +270,14 @@ public class SudokuSceneController {
     }
 
     public void clearField(ActionEvent actionEvent) {
-        controller.clear();
-        fillWithCurrentSudokuField();
+        DialogStage test = new DialogStage("Sudoku zurücksetzen?\nNicht exportierte Änderungen gehen verloren.", "Hinweis", true, MainApp.primaryStage );
+        boolean result = test.showAndWaitGetResult();
+
+        if(result){
+            controller.clear();
+            fillWithCurrentSudokuField();
+        }
+
     }
 
     private void changeFieldColor(int x, int y, Color color) {
