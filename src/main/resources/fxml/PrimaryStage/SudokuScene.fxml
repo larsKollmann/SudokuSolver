@@ -42,7 +42,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#exportPDF" text="PDF-Datei" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Hilfe" />
+            <Menu mnemonicParsing="false" text="Hilfe" >
+            <items>
+                <MenuItem mnemonicParsing="false" onAction="#showHelpStage" text="Hilfe anzeigen" />
+            </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="DEBUG">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#printGuiValues" text="Print GUI Values" />

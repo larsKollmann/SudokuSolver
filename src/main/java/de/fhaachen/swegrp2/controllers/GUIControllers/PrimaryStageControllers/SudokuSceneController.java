@@ -130,7 +130,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             text.setText((newvalue == 0 ? "" : newvalue) + "");
         } catch (Exception e) {
             DialogStage error = new DialogStage(
-                    "Die eingegebene Zahl ist ungültig!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden",
+                    "Die eingegebene Zahl ist ungültig!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden.",
                     "Fehler", false, MainApp.primaryStage);
             error.showAndWait();
             return;

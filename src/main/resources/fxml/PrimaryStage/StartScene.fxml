@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
@@ -26,7 +27,11 @@
               </Menu>
               <Menu disable="true" mnemonicParsing="false" text="Exportieren">
               </Menu>
-              <Menu mnemonicParsing="false" text="Hilfe" />
+              <Menu mnemonicParsing="false" text="Hilfe">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showHelpStage" text="Hilfe anzeigen" />
+               </items>
+              </Menu>
               <Menu mnemonicParsing="false" text="DEBUG">
                   <items>
                       <MenuItem mnemonicParsing="false" onAction="#printGuiValues" text="Print GUI Values" />
