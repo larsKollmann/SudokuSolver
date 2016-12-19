@@ -1,6 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<?import de.fhaachen.swegrp2.*?>
+<BorderPane minHeight="460.0" minWidth="400.0" style="-fx-background-color: #92CDDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhaachen.swegrp2.controllers.GUIControllers.SudokuSceneController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Sudoku">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Sudoku zurücksetzen" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#generate" text="Sudoku zufällig generieren" />
+                  <MenuItem mnemonicParsing="false" text="Eingaben überprüfen" />
+                  <Menu mnemonicParsing="false" text="Größe ändern">
+                    <items>
+                      <MenuItem fx:id="setSizeTo3" mnemonicParsing="false" onAction="#changeSize" text="9 X 9" />
+                        <MenuItem fx:id="setSizeTo4" mnemonicParsing="false" onAction="#changeSize" text="16 X 16" />
+                        <MenuItem fx:id="setSizeTo5" mnemonicParsing="false" onAction="#changeSize" text="25 X 25" />
+                        <MenuItem fx:id="setSizeTo6" mnemonicParsing="false" onAction="#changeSize" text="36 X 36" />
+                    </items>
+                  </Menu>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" onAction="#close" text="Beenden" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Importieren">
+            <items>
+              <MenuItem fx:id="importDd$XML" mnemonicParsing="false" onAction="#importFile" text="XML-Datei" />
+                  <MenuItem fx:id="importDd$JSON" mnemonicParsing="false" onAction="#importFile" text="JSON-Datei" />
+                  <MenuItem fx:id="importDd$CSV" mnemonicParsing="false" onAction="#importFile" text="CSV-Datei" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Exportieren">
+            <items>
+              <MenuItem fx:id="export$XML" mnemonicParsing="false" onAction="#exportFile" text="XML-Datei" />
+                  <MenuItem fx:id="export$JSON" mnemonicParsing="false" onAction="#exportFile" text="JSON-Datei" />
+                  <MenuItem fx:id="export$CSV" mnemonicParsing="false" onAction="#exportFile" text="CSV-Datei" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#exportPDF" text="PDF-Datei" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Hilfe" />
+            <Menu mnemonicParsing="false" text="DEBUG">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#printGuiValues" text="Print GUI Values" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <GridPane fx:id="mainGridPane" alignment="CENTER" hgap="8.0" style="-fx-background-color: black;" vgap="8.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </GridPane>
+   </center>
+   <bottom>
+      <GridPane prefHeight="30.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button id="mainSolveButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#solve" text="LÖSEN" GridPane.vgrow="ALWAYS">
+               <GridPane.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+   </bottom>
+   <left>
+      <Pane BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>

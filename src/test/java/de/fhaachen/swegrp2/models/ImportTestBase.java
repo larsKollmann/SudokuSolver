@@ -43,7 +43,7 @@ public abstract class ImportTestBase {
      */
     protected abstract String getFileExtension();
 
-    private SudokuField call(String filename) throws Exception {
+    SudokuField call(String filename) throws Exception {
         String fileextension = getFileExtension();
         String path = "src/test/resources/importExport/" + fileextension + "/" + filename + "." + fileextension;
         return testimporter.importSudoku(path);
