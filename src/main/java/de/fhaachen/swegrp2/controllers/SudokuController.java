@@ -96,9 +96,9 @@ public class SudokuController {
             if (extension.equals("xml"))
                 exporter.exportXML(sudokuField, filePath);
             else if (extension.equals("csv"))
-                exporter.exportXML(sudokuField, filePath);
+                exporter.exportCSV(sudokuField, filePath);
             else if (extension.equals("json"))
-                exporter.exportXML(sudokuField, filePath);
+                exporter.exportJSON(sudokuField, filePath);
             else if (extension.equals("pdf")) {
 
             }

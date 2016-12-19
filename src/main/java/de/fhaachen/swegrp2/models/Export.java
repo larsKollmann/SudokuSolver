@@ -90,11 +90,12 @@ public class Export {
 
         StringBuilder builder = new StringBuilder();
 
+        builder.append(size + ";\n");
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
                 builder.append(arr[y][x] + "");
                 if (x < size - 1)
-                    builder.append(",");
+                    builder.append(";");
             }
             builder.append("\n");
         }

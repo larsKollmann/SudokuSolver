@@ -274,6 +274,15 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     }
 
     //onAction methods
+    public void clearField(ActionEvent actionEvent) {
+        DialogStage test = new DialogStage("Sudoku zurücksetzen?\nNicht exportierte Änderungen gehen verloren.", "Hinweis", true, MainApp.primaryStage);
+        boolean result = test.showAndWaitGetResult();
+
+        if (result) {
+            controller.clear();
+            fillWithCurrentSudokuField();
+        }
+    }
 
     @FXML
     public void generate(ActionEvent actionEvent) {
@@ -320,15 +329,19 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     @FXML
     public void exportFile(ActionEvent actionEvent) {
-    }
+        String sourceID = actionEvent.getSource().toString();
+        String fileType = sourceID.substring(sourceID.indexOf('$') + 1, sourceID.indexOf(','));
 
-    public void clearField(ActionEvent actionEvent) {
-        DialogStage test = new DialogStage("Sudoku zurücksetzen?\nNicht exportierte Änderungen gehen verloren.", "Hinweis", true, MainApp.primaryStage);
-        boolean result = test.showAndWaitGetResult();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(fileType + "-Datei exportieren");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileType + "-Dateien", "*." + fileType.toLowerCase()));
 
-        if (result) {
-            controller.clear();
-            fillWithCurrentSudokuField();
+        File file = fileChooser.showSaveDialog(MainApp.primaryStage);
+        try {
+            controller.exportFile(file);
+        } catch (Exception e) {
+            DialogStage test = new DialogStage("Fehler!", "Fehler", false, MainApp.primaryStage );
+            test.showAndWait();
         }
     }
 
