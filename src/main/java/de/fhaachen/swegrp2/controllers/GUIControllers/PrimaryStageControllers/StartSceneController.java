@@ -23,6 +23,7 @@ public class StartSceneController extends PrimaryStageSharedController {
             FXMLLoader loader = new FXMLLoader();
             Parent parent = loader.load(getClass().getResourceAsStream("/fxml/PrimaryStage/SudokuScene.fxml"));
             MainApp.primaryStage.setScene(new Scene(parent));
+            MainApp.primaryStage.setResizable(true);
             MainApp.primaryStage.sizeToScene();
         } catch (IOException e) {
             e.printStackTrace();

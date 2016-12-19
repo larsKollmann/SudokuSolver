@@ -43,6 +43,7 @@ public class MainApp extends Application {
 
         stage.setTitle("Sudoku Löser");
         stage.setScene(scene);
+        stage.setResizable(false);
 
         stage.show();
     }
