@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane minHeight="460.0" minWidth="400.0" style="-fx-background-color: #92CDDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhaachen.swegrp2.controllers.GUIControllers.SudokuSceneController">
+<BorderPane minHeight="460.0" minWidth="400.0" style="-fx-background-color: #92CDDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhaachen.swegrp2.controllers.GUIControllers.PrimaryStageControllers.SudokuSceneController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -14,10 +13,10 @@
                   <MenuItem mnemonicParsing="false" onAction="#clearField" text="Sudoku zurücksetzen" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#generate" text="Sudoku zufällig generieren" />
-                  <MenuItem mnemonicParsing="false" text="Eingaben überprüfen" onAction="#markConflictFields"/>
+                  <MenuItem mnemonicParsing="false" onAction="#markConflictFields" text="Eingaben überprüfen" />
                   <Menu mnemonicParsing="false" text="Größe ändern">
                     <items>
-                      <MenuItem fx:id="setSizeTo3" mnemonicParsing="false" onAction="#changeSize" text="9 X 9" />
+                        <MenuItem fx:id="setSizeTo3" mnemonicParsing="false" onAction="#changeSize" text="9 X 9" />
                         <MenuItem fx:id="setSizeTo4" mnemonicParsing="false" onAction="#changeSize" text="16 X 16" />
                         <MenuItem fx:id="setSizeTo5" mnemonicParsing="false" onAction="#changeSize" text="25 X 25" />
                         <MenuItem fx:id="setSizeTo6" mnemonicParsing="false" onAction="#changeSize" text="36 X 36" />
@@ -46,7 +45,9 @@
             <Menu mnemonicParsing="false" text="Hilfe" />
             <Menu mnemonicParsing="false" text="DEBUG">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#printGuiValues" text="Print GUI Values" />
+                  <MenuItem mnemonicParsing="false" onAction="#printGuiValues" text="Print GUI Values" />
+                  <MenuItem mnemonicParsing="false" onAction="#test" text="Test Dialog" />
+                  <MenuItem mnemonicParsing="false" onAction="#neutest" text="Test Confirm Dialog" />
               </items>
             </Menu>
         </menus>
