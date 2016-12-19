@@ -69,10 +69,12 @@ public class DialogStage extends Stage implements Initializable {
     {
         if(isConfirmDialog) {
             Ok.setVisible(false);
+            Nein.setDefaultButton(true);
         }
         else {
             Ja.setVisible(false);
             Nein.setVisible(false);
+            Ok.setDefaultButton(true);
         }
 
         text.setText(message);

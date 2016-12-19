@@ -4,10 +4,9 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="514.0" style="-fx-background-color: #92CDDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhaachen.swegrp2.controllers.GUIControllers.StartSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="514.0" style="-fx-background-color: #92CDDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhaachen.swegrp2.controllers.GUIControllers.PrimaryStageControllers.StartSceneController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
           <menus>
@@ -31,6 +30,8 @@
               <Menu mnemonicParsing="false" text="DEBUG">
                   <items>
                       <MenuItem mnemonicParsing="false" onAction="#printGuiValues" text="Print GUI Values" />
+                      <MenuItem mnemonicParsing="false" onAction="#test" text="Test Dialog" />
+                      <MenuItem mnemonicParsing="false" onAction="#neutest" text="Test Confirm Dialog" />
                   </items>
               </Menu>
           </menus>
@@ -70,18 +71,18 @@
             <GridPane hgap="5.0" vgap="5.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#test" prefWidth="1000.0" text="3 X 3" />
-                  <Button mnemonicParsing="false" onAction="#neutest" prefWidth="1000.0" text="4 X 4" GridPane.columnIndex="1" />
-                  <Button mnemonicParsing="false" prefWidth="1000.0" text="5 X 5" GridPane.columnIndex="2" />
-                  <Button mnemonicParsing="false" prefWidth="1000.0" text="6 X 6" GridPane.columnIndex="3" />
+                  <Button fx:id="newSudoku$9" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="3 X 3" />
+                  <Button fx:id="newSudoku$16" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="4 X 4" GridPane.columnIndex="1" />
+                  <Button fx:id="newSudoku$25" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="5 X 5" GridPane.columnIndex="2" />
+                  <Button fx:id="newSudoku$36" mnemonicParsing="false" onAction="#NewSudoku" prefWidth="1000.0" text="6 X 6" GridPane.columnIndex="3" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -90,6 +90,10 @@ public class SudokuController {
         return (size == 9 || size == 16 || size == 25 || size == 36);
     }
 
+    public void setFieldValue(int y, int x, int value) {
+        sudokuField.setFieldValue(y, x, value);
+    }
+
     public int getSubFieldsize() {
         return (int) Math.sqrt(sudokuField.getSize());
     }
