@@ -3,6 +3,8 @@ package de.fhaachen.swegrp2.controllers.GUIControllers.PrimaryStageControllers;
 import de.fhaachen.swegrp2.MainApp;
 import de.fhaachen.swegrp2.controllers.GUIControllers.DialogStage;
 import de.fhaachen.swegrp2.controllers.SudokuController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -37,6 +39,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import static javafx.scene.layout.Priority.ALWAYS;
 
@@ -50,14 +53,16 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             String p = event.getSource().toString();
             int x = Integer.parseInt(p.substring(p.indexOf("$") + 1, p.indexOf(',')));
             int y = Integer.parseInt(p.substring(p.indexOf(',') + 1, p.indexOf(']')));
-            /*DEBUG*/System.out.println(x + ", " + y);
 
             int[] gridCoords = translateXYToGridCoords(x, y, controller.getSubFieldsize());
             GridPane subGrid = (GridPane) mainGridPane.lookup("#SubGrid$" + gridCoords[0] + "," + gridCoords[1]);
 
             TextField textField = new TextField();
-            textField.setText(controller.getFieldValue(y, x) + "");
-            textField.setFocusTraversable(true);
+
+            String text = controller.getFieldValue(y, x) + "";
+            if(!Objects.equals(text, "0"))
+              textField.setText(text);
+
             textField.setOnAction(event1 -> {
                 mainGridPane.requestFocus();
             });
@@ -67,9 +72,19 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                     subGrid.getChildren().remove(textField);
                 }
             });
+            // force the field to be numeric only
+            textField.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    if (!newValue.matches("\\d*")) {
+                        textField.setText(newValue.replaceAll("[^\\d]", ""));
+                    }
+                }
+            });
 
             subGrid.add(textField, gridCoords[2], gridCoords[3]);
             textField.requestFocus();
+            textField.selectAll();
         }
     }
 
@@ -85,25 +100,26 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         fillWithCurrentSudokuField(Color.BLUE);
     }
 
-    //TODO: leeren String dem SudokuField als "0" übergeben
     private void tryUpdate(String textinput, int x, int y) {
-        if(textinput == null || StringUtils.isBlank(textinput)) return;
         int newvalue = 0;
-        int max = controller.getSize();
-        try {
+        if(textinput == null || StringUtils.isBlank(textinput))
+            newvalue = 0;
+        else
             newvalue = Integer.parseInt(textinput);
-            if (newvalue == 0) return;
-            if (newvalue < 1 || newvalue > max) throw new IOException();
-        } catch (Exception e) {
+        int max = controller.getSize();
+
+
+        if (newvalue < 0 || newvalue > max) {
             DialogStage error = new DialogStage(
                     "Eingabe ist keine gültige Zahl!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden",
                     "Fehler", false, MainApp.primaryStage);
             error.showAndWait();
             return;
         }
+
         controller.setFieldValue(y, x, newvalue);
         Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
-        text.setText(newvalue + "");
+        text.setText((newvalue == 0 ? "" : newvalue) + "");
     }
 
     private void drawGrid() {
@@ -242,7 +258,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         contentStream.close();
     }
 
-//onAction methods
+    //onAction methods
     @FXML
     public void clearField(ActionEvent actionEvent) {
         controller.clear();
