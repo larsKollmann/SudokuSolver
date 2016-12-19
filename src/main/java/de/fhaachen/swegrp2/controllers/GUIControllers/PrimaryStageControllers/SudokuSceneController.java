@@ -47,14 +47,6 @@ import static javafx.scene.layout.Priority.ALWAYS;
 import static javafx.scene.layout.Priority.NEVER;
 import static javafx.scene.layout.Priority.SOMETIMES;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-
-
-import static javafx.scene.layout.Priority.*;
 
 public class SudokuSceneController extends PrimaryStageSharedController {
     private SudokuController controller = SudokuController.getInstance();
@@ -282,11 +274,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     }
 
     //onAction methods
-    @FXML
-    public void clearField(ActionEvent actionEvent) {
-        controller.clear();
-        fillWithCurrentSudokuField();
-    }
 
     @FXML
     public void generate(ActionEvent actionEvent) {
@@ -295,6 +282,11 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         fillWithCurrentSudokuField(Color.BROWN);
     }
 
+    @FXML
+    public void solve(Event event) {
+        controller.solve();
+        fillWithCurrentSudokuField(Color.BLACK);
+    }
     @FXML
     public void markConflictFields(ActionEvent actionEvent) {
         List<int[]> conflictTuples = controller.getConflicts();
@@ -317,7 +309,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         super.importFile(actionEvent);
 
         try {
-            controller.ImportFile(file);
             redrawGrid();
             fillWithCurrentSudokuField(Color.BLUE);
         } catch (Exception e) {
@@ -330,19 +321,14 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     public void exportFile(ActionEvent actionEvent) {
     }
 
-    private void exportSnapshotAsPNG(String path) throws IOException{
-        WritableImage image = mainGridPane.snapshot(new SnapshotParameters(), null);
-        File pngFile = new File(path);
-        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", pngFile);
-    }
+    public void clearField(ActionEvent actionEvent) {
+        DialogStage test = new DialogStage("Sudoku zurücksetzen?\nNicht exportierte Änderungen gehen verloren.", "Hinweis", true, MainApp.primaryStage );
+        boolean result = test.showAndWaitGetResult();
 
-    private void insertPNGintoPDF(BufferedImage png,PDDocument pdf) throws Exception {
-        PDPage page = new PDPage();
-        pdf.addPage(page);
-        PDImageXObject pdImageXObject = LosslessFactory.createFromImage(pdf, png);
-        PDPageContentStream contentStream = new PDPageContentStream(pdf, page, true, false);
-        contentStream.drawImage(pdImageXObject, 100, 150, 500, 500);
-        contentStream.close();
+        if(result){
+            controller.clear();
+            fillWithCurrentSudokuField();
+        }
     }
     @FXML
     public void exportPDF(ActionEvent actionEvent) {
@@ -368,17 +354,5 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         }
     }
 
-    @FXML
-    public void solve(Event event) {
-        controller.solve();
 
-    public void clearField(ActionEvent actionEvent) {
-        DialogStage test = new DialogStage("Sudoku zurücksetzen?\nNicht exportierte Änderungen gehen verloren.", "Hinweis", true, MainApp.primaryStage );
-        boolean result = test.showAndWaitGetResult();
-
-        if(result){
-            controller.clear();
-            fillWithCurrentSudokuField();
-        }
-    }
 }
