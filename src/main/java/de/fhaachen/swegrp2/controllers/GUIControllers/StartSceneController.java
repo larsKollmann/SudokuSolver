@@ -12,9 +12,6 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 
-/**
- * Created by simon on 12.12.2016.
- */
 public class StartSceneController {
     private SudokuController controller = SudokuController.getInstance();
 

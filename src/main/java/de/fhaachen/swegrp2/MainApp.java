@@ -5,23 +5,35 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+/**
+ * <p><b>Titel:</b> MainApp </p>
+ * <p><b>Beschreibung:</b> Zentrale Klasse der Applikation,
+ * setzt die nötigen Parameter und startet die GUI.</p>
+ */
 public class MainApp extends Application {
-    public static void main(String[] args) throws Exception {
+    /**
+     * Java main, startet die Applikation.
+     * @param args Argumente, die dem Programm beim start übergeben werden können. Nicht benutzt.
+     */
+    public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Das globale Fenster der JavaFX Anwendung.
+     */
     public static Stage primaryStage;
 
+    /**
+     * Start methode, die von Applikation geerbt wird.
+     * Lädt für das Fesnter nötige Dateien, setzt Parameter und startet dies.
+     * @param stage Das Hauptfenster der Anwendung
+     * @throws Exception Wird vom loader geworfen, wenn das laden nötiger Dateien fehlschlägt.
+     */
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
-//        String fxmlFile = "/fxml/PrimaryStage/SudokuScene.fxml";
         String fxmlFile = "/fxml/PrimaryStage/StartScene.fxml";
 
         FXMLLoader loader = new FXMLLoader();

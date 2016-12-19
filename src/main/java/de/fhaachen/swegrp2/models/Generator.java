@@ -6,7 +6,9 @@ import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 import java.util.Random;
 
 /**
- * Created by lars on 17.11.16.
+ * <p><b>Titel:</b> Generator</p>
+ * <p><b>Beschreibung:</b> Generiert ein zufälluges Sudoku angebebener Größe
+ * und speichert dies für weitere externe Zugriffe.</p>
  */
 public class Generator {
     private SudokuField field; //Backup field, falls man das generierte Sudoku zuruücksetzen will

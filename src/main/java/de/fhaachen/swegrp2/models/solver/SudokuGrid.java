@@ -5,9 +5,11 @@ import de.fhaachen.swegrp2.controllers.SudokuField;
 import java.io.IOException;
 import java.util.*;
 
-
+/**<p><b>Titel:</b> SudokuGrid</p>
+ * <p><b>Beschreibung:</b> Beinhaltet das Sudokufeld, weist diesem zusätzliche, für den Solver essentielle Eigenschaften zu
+ * und enthält die primären Methoden zum Lösen des Sudoku. </p>
+ */
 public class SudokuGrid {
-
     int m_size;
     int m_subRow;
     int m_subCol;
@@ -16,6 +18,10 @@ public class SudokuGrid {
     Cell[][] m_grid;
     SudokuField sudokuField;
 
+    /**
+     * Konstruktor, intitialisiert Parameter und führt Umwandlung des SudokuField durch.
+     * @param sudokuField Das zu lösende Sudoku Feld.
+     */
     public SudokuGrid(SudokuField sudokuField) {
         this.sudokuField = sudokuField;
         m_size = sudokuField.getSize();
@@ -31,6 +37,7 @@ public class SudokuGrid {
             }
     }
 
+    //Interne Funtkionen
     private Cell[][] getGrid(SudokuField sudokuField) {
         int n = sudokuField.getSize();
         int gridInput[][] = sudokuField.getSudokuField();
@@ -43,27 +50,6 @@ public class SudokuGrid {
         return grid;
     }
 
-
-    public int[][] getGridAsIntArr() {
-        int arr[][] = new int[m_size][m_size];
-        for (int i = 0; i < m_grid.length; i++) {
-            for (int b = 0; b < m_grid[i].length; b++) {
-                arr[i][b] = m_grid[i][b].m_val;
-            }
-        }
-        return arr;
-    }
-
-    public SudokuField getGridAsSudokuField() throws Exception {
-       return new SudokuField(this.getGridAsIntArr());
-    }
-
-    public boolean solve() {
-        if(sudokuField.getConflictCoordinates().size() > 0) return false;
-        else return solveGrid();
-    }
-
-
     private boolean solveGrid() {
         m_numNodesExpanded++;
         Cell cell = this.getNextUnoccupiedCell();
@@ -74,26 +60,15 @@ public class SudokuGrid {
             if (this.valid(cell.row(), cell.col(), val)) {
                 int prevVal = cell.val();
                 this.m_constrainedCells.remove(cell);
-                List<Cell> modifiedCells = setVal(cell, val); //m_grid[row][col].setVal(val);
+                List<Cell> modifiedCells = setVal(cell, val);
                 if (this.solve())
                     return true;
                 cell.setVal(prevVal);
                 this.m_constrainedCells.add(cell);
-                resetVal(modifiedCells, val); //m_grid[row][col].setVal(Cell.DEF);
+                resetVal(modifiedCells, val);
             }
         }
         return false;
-    }
-
-    @Override
-    public String toString() {
-        StringBuffer buff = new StringBuffer();
-        for (Cell[] row : m_grid) {
-            for (Cell cell : row)
-                buff.append(cell.val() + ",");
-            buff.append("\n");
-        }
-        return buff.toString();
     }
 
     private List<Cell> addConstraints(Cell cell, int k) {
@@ -131,8 +106,6 @@ public class SudokuGrid {
     private List<Cell> setVal(Cell cell, int val) {
         cell.setVal(val);
         List<Cell> constraints = addConstraints(cell, val);
-//		for(Cell cell1: constraints)
-//			this.updateTree(cell1);
         return constraints;
     }
 
@@ -172,6 +145,53 @@ public class SudokuGrid {
 //			updateTree(cell);
         }
     }
+    //Interne Funktionen
 
+    /**
+     * Gibt das Sudoku als ein String aus.
+     * @return Der Sudokustring.
+     */
+    @Override
+    public String toString() {
+        StringBuffer buff = new StringBuffer();
+        for (Cell[] row : m_grid) {
+            for (Cell cell : row)
+                buff.append(cell.val() + ",");
+            buff.append("\n");
+        }
+        return buff.toString();
+    }
 
+    /**
+     * Wandelt das als Cell Array gespeicherte Sudoku in ein 2D integer Array um.
+     * @return 2D int Array des Sudoku.
+     */
+    public int[][] getGridAsIntArr() {
+        int arr[][] = new int[m_size][m_size];
+        for (int i = 0; i < m_grid.length; i++) {
+            for (int b = 0; b < m_grid[i].length; b++) {
+                arr[i][b] = m_grid[i][b].m_val;
+            }
+        }
+        return arr;
+    }
+
+    /**
+     * Wandelt das als Cell Array gespeicherte Sudoku in ein SudokuField um.
+     * @return SudokuField des Sudoku.
+     * @throws Exception Fehler die bei der erstellung eines SudokuField auftreten können.
+     * @see SudokuField
+     */
+    public SudokuField getGridAsSudokuField() throws Exception {
+        return new SudokuField(this.getGridAsIntArr());
+    }
+
+    /**
+     * Schnittstelle des internen Solver Algorithmus. Wird zum lösen des Sudoku von außen aufgerufen.
+     * @return Boolean ob das Sudoku erfolgreich gelöst werden konnte.
+     */
+    public boolean solve() {
+        if(sudokuField.getConflictCoordinates().size() > 0) return false;
+        else return solveGrid();
+    }
 }

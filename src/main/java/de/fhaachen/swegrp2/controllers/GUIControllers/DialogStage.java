@@ -16,9 +16,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Created by simon on 12.12.2016.
- */
 public class DialogStage extends Stage implements Initializable {
 
     @FXML private ImageView imageView;
