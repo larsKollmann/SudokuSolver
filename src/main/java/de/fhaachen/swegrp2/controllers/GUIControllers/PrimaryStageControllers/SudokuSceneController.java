@@ -35,6 +35,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -316,10 +317,12 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         super.importFile(actionEvent);
 
         try {
+            controller.ImportFile(file);
             redrawGrid();
             fillWithCurrentSudokuField(Color.BLUE);
         } catch (Exception e) {
-            e.printStackTrace();
+            DialogStage test = new DialogStage("Die gewählte Datei ist nicht korrekt", "Fehler", false, MainApp.primaryStage );
+            test.showAndWait();
         }
     }
 
@@ -327,6 +330,20 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     public void exportFile(ActionEvent actionEvent) {
     }
 
+    private void exportSnapshotAsPNG(String path) throws IOException{
+        WritableImage image = mainGridPane.snapshot(new SnapshotParameters(), null);
+        File pngFile = new File(path);
+        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", pngFile);
+    }
+
+    private void insertPNGintoPDF(BufferedImage png,PDDocument pdf) throws Exception {
+        PDPage page = new PDPage();
+        pdf.addPage(page);
+        PDImageXObject pdImageXObject = LosslessFactory.createFromImage(pdf, png);
+        PDPageContentStream contentStream = new PDPageContentStream(pdf, page, true, false);
+        contentStream.drawImage(pdImageXObject, 100, 150, 500, 500);
+        contentStream.close();
+    }
     @FXML
     public void exportPDF(ActionEvent actionEvent) {
 
@@ -355,6 +372,13 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     public void solve(Event event) {
         controller.solve();
 
-        fillWithCurrentSudokuField();
+    public void clearField(ActionEvent actionEvent) {
+        DialogStage test = new DialogStage("Sudoku zurücksetzen?\nNicht exportierte Änderungen gehen verloren.", "Hinweis", true, MainApp.primaryStage );
+        boolean result = test.showAndWaitGetResult();
+
+        if(result){
+            controller.clear();
+            fillWithCurrentSudokuField();
+        }
     }
 }
