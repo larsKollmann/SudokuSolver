@@ -184,7 +184,7 @@ public class SudokuSceneController {
 
         File file = fileChooser.showOpenDialog(MainApp.primaryStage);
         try {
-            controller.ImportFile(file);
+            controller.importFile(file);
 
             redrawGrid();
             fillWithCurrentSudokuField(Color.BLUE);
