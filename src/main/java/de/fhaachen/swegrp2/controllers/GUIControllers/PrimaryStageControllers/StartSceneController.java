@@ -30,10 +30,12 @@ public class StartSceneController extends PrimaryStageSharedController {
     }
 
     @FXML
-    public void importFile(ActionEvent actionEvent) {
-        super.importFile(actionEvent);
-
-        switchToSudokuScene();
+    public boolean importFile(ActionEvent actionEvent) {
+        if(super.importFile(actionEvent))  {
+            switchToSudokuScene();
+            return true;
+        }
+        return false;
     }
 
     @FXML

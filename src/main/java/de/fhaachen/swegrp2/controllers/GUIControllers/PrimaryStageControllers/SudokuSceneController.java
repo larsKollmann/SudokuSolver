@@ -305,10 +305,13 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     }
 
     @FXML
-    public void importFile(ActionEvent actionEvent) {
-            super.importFile(actionEvent);
+    public boolean importFile(ActionEvent actionEvent) {
+        if(super.importFile(actionEvent)){
             redrawGrid();
             fillWithCurrentSudokuField(Color.BLUE);
+            return true;
+        }
+        return false;
     }
 
     @FXML
