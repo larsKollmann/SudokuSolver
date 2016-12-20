@@ -188,6 +188,24 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             }
         }
 
+        switch(size) {
+            case 3:
+                MainApp.primaryStage.setMinWidth(418);
+                MainApp.primaryStage.setMinHeight(496);
+                break;
+            case 4:
+                MainApp.primaryStage.setMinWidth(485);
+                MainApp.primaryStage.setMinHeight(564);
+                break;
+            case 5:
+                MainApp.primaryStage.setMinWidth(704);
+                MainApp.primaryStage.setMinHeight(781);
+                break;
+            case 6:
+                MainApp.primaryStage.setMinWidth(900);
+                MainApp.primaryStage.setMinHeight(980);
+                break;
+        }
         MainApp.primaryStage.sizeToScene();
     }
 
