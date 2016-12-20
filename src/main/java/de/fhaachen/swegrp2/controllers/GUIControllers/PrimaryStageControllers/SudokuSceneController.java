@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -35,7 +36,6 @@ import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +45,6 @@ import java.util.Objects;
 import static javafx.geometry.Pos.CENTER;
 import static javafx.scene.layout.Priority.ALWAYS;
 import static javafx.scene.layout.Priority.NEVER;
-import static javafx.scene.layout.Priority.SOMETIMES;
 
 
 public class SudokuSceneController extends PrimaryStageSharedController {
@@ -94,7 +93,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             });
 
             subGrid.add(textField, gridCoords[2], gridCoords[3]);
-            subGrid.setHalignment(textField, HPos.CENTER);
+            GridPane.setHalignment(textField, HPos.CENTER);
             textField.requestFocus();
             textField.selectAll();
         }
@@ -102,12 +101,16 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     @FXML
     private GridPane mainGridPane;
+    @FXML
+    private Button mainSolveButton;
 
     @FXML
     protected void initialize() {
         mainGridPane.minWidthProperty().bind(mainGridPane.heightProperty());
         mainGridPane.prefWidthProperty().bind(mainGridPane.heightProperty());
         mainGridPane.maxWidthProperty().bind(mainGridPane.heightProperty());
+
+        mainSolveButton.maxWidthProperty().bind(mainGridPane.widthProperty());
 
         drawGrid();
         fillWithCurrentSudokuField(Color.BLUE);
@@ -133,7 +136,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                     "Die eingegebene Zahl ist ungültig!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden.",
                     "Fehler", false, MainApp.primaryStage);
             error.showAndWait();
-            return;
         }
     }
 
@@ -168,7 +170,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                         text.setMouseTransparent(true);
                         text.setTextAlignment(TextAlignment.CENTER);
                         text.setFont(Font.font(null, FontWeight.BOLD, 14));
-                        text.setMouseTransparent(true);
                         text.setId("Text$" + coords[0] + "," + coords[1]);
 
                         smallgridPane.add(pane, xs, ys);

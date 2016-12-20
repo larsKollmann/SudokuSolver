@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="374.0" style="-fx-background-color: #92CDDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhaachen.swegrp2.controllers.GUIControllers.PrimaryStageControllers.StartSceneController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="374.0" style="-fx-background-color: #92CDDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhaachen.swegrp2.controllers.GUIControllers.HelpSceneController">
    <bottom>
       <AnchorPane prefHeight="52.0" prefWidth="374.0" BorderPane.alignment="CENTER">
          <children>
@@ -15,34 +15,23 @@
       </AnchorPane>
    </bottom>
    <top>
-      <ComboBox prefHeight="25.0" prefWidth="360.0" promptText="Hilfethema auswählen" BorderPane.alignment="CENTER">
+      <ComboBox fx:id="comboBox" prefHeight="25.0" prefWidth="360.0" promptText="Hilfethema auswählen" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </BorderPane.margin>
       </ComboBox>
    </top>
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <center>
-            <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" pannable="true" prefHeight="287.0" prefWidth="345.0" BorderPane.alignment="CENTER">
-              <content>
-                  <TextArea fx:id="textArea" editable="false" layoutX="-69.0" layoutY="-12.0" prefHeight="700.0" prefWidth="343.0" text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." wrapText="true">
-                     <padding>
-                        <Insets right="12.0" />
-                     </padding>
-                     <opaqueInsets>
-                        <Insets right="10.0" />
-                     </opaqueInsets>
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextArea>
-              </content>
-               <BorderPane.margin>
-                  <Insets left="15.0" right="15.0" />
-               </BorderPane.margin>
-            </ScrollPane>
-         </center>
-      </BorderPane>
+      <TextArea fx:id="textArea" editable="false" prefHeight="596.0" prefWidth="371.0" text="Hier wird Hilfe für das ausgewählte Hilfethema angezeigt." wrapText="true" BorderPane.alignment="CENTER">
+         <opaqueInsets>
+            <Insets right="10.0" />
+         </opaqueInsets>
+         <font>
+            <Font size="14.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets left="15.0" right="15.0" />
+         </BorderPane.margin>
+      </TextArea>
    </center>
 </BorderPane>
