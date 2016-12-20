@@ -5,11 +5,10 @@ import de.fhaachen.swegrp2.MainApp;
 import de.fhaachen.swegrp2.models.Help;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -67,6 +66,10 @@ public class HelpSceneController {
         }
     }
 
+    @FXML
+    public void close(ActionEvent actionEvent) {
+        ((Stage)((Button)actionEvent.getSource()).getScene().getWindow()).close();
+    }
 
 }
 

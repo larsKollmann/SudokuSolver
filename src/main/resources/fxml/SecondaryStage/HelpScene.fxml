@@ -10,7 +10,7 @@
    <bottom>
       <AnchorPane prefHeight="52.0" prefWidth="374.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="OK" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+            <Button mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="64.0" text="OK" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
          </children>
       </AnchorPane>
    </bottom>
