@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -42,7 +43,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#exportPDF" text="PDF-Datei" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Hilfe" />
+            <Menu mnemonicParsing="false" text="Hilfe">
+            <items>
+                <MenuItem mnemonicParsing="false" onAction="#showHelpStage" text="Hilfe anzeigen" />
+            </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="DEBUG">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#printGuiValues" text="Print GUI Values" />
@@ -72,7 +77,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button id="mainSolveButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#solve" text="LÖSEN" GridPane.vgrow="ALWAYS">
+            <Button fx:id="mainSolveButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#solve" text="LÖSEN" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" />
                </GridPane.margin>

@@ -13,4 +13,7 @@ public class Help {
         this.titel = titel;
     }
 
+    public String toString() {
+        return titel;
+    }
 }

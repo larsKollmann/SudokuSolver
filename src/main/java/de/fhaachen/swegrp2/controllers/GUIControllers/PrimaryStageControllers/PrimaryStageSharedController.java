@@ -4,7 +4,14 @@ import de.fhaachen.swegrp2.MainApp;
 import de.fhaachen.swegrp2.controllers.GUIControllers.DialogStage;
 import de.fhaachen.swegrp2.controllers.SudokuController;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.ButtonBuilder;
+import javafx.scene.control.Menu;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -44,7 +51,23 @@ public class PrimaryStageSharedController {
     }
 
     @FXML
-    public void openHelpStage(ActionEvent actionEvent) {
+    public void showHelpStage(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Parent rootNode = loader.load(getClass().getResourceAsStream("/fxml/SecondaryStage/HelpScene.fxml"));
+
+            Scene scene = new Scene(rootNode);
+
+            stage.setTitle("Hilfe");
+            stage.setScene(scene);
+            stage.setResizable(false);
+
+            stage.show();
+        } catch (Exception e ) {
+            DialogStage dialogStage = new DialogStage("Keine Hilfe für dich!", "Hilfe", false, MainApp.primaryStage );
+            dialogStage.showAndWait();
+        }
     }
 
     //DEBUG
@@ -57,13 +80,16 @@ public class PrimaryStageSharedController {
 
     @FXML
     public void test(ActionEvent actionEvent) {
-        DialogStage test = new DialogStage("Dies ist ein Testhinweis. \nBeachten Sie das fehlende Bild!", "Hinweis", false, MainApp.primaryStage );
+        DialogStage test = new DialogStage("Dies ist ein Testhinweis. \nBeachten Sie das vorhandene Bild!", "Hinweis", false, MainApp.primaryStage );
         test.showAndWait();
     }
 
     @FXML
     public void neutest(ActionEvent actionEvent) {
         DialogStage test = new DialogStage("Ist dies ein Test?", "Frage", true, MainApp.primaryStage);
-        test.showAndWait();
+        if(test.showAndWaitGetResult()){
+            DialogStage test2 = new DialogStage("Das ist toll!", "Awesome", false, MainApp.primaryStage);
+            test2.showAndWait();
+        }
     }
 }
