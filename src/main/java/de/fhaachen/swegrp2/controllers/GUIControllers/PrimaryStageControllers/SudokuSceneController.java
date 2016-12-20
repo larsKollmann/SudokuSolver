@@ -333,18 +333,16 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     @FXML
     public void exportPDF(ActionEvent actionEvent) {
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("-PDF exportieren");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF-Dateien", "*.pdf"));
 
-        File pdfFile = fileChooser.showSaveDialog((Stage) mainGridPane.getScene().getWindow());
-
+        File pdfFile = fileChooser.showSaveDialog(mainGridPane.getScene().getWindow());
         try {
-
             controller.exportPDF(pdfFile,mainGridPane.snapshot(new SnapshotParameters(),null));
         } catch (Exception e) {
-            e.printStackTrace();
+            DialogStage test = new DialogStage("Fehler!", "Fehler", false, MainApp.primaryStage );
+            test.showAndWait();
         }
     }
 
