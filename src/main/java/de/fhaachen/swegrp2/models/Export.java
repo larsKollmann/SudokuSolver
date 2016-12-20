@@ -1,6 +1,8 @@
 package de.fhaachen.swegrp2.models;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,6 +18,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import de.fhaachen.swegrp2.controllers.SudokuField;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -141,4 +150,37 @@ public class Export {
         writer.write(field.toString());
         writer.close();
     }
+
+    private void exportSnapshotAsPNG(String path, WritableImage png) throws IOException {
+        WritableImage image = png;
+        File pngFile = new File(path);
+        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", pngFile);
+    }
+
+    private void insertPNGintoPDF(BufferedImage png, PDDocument pdf) throws Exception {
+        PDPage page = new PDPage();
+        pdf.addPage(page);
+        PDImageXObject pdImageXObject = LosslessFactory.createFromImage(pdf, png);
+        PDPageContentStream contentStream = new PDPageContentStream(pdf, page, true, false);
+        contentStream.drawImage(pdImageXObject, 50, 150, 500, 500);
+        contentStream.close();
+    }
+    public void exportPDF(String path, WritableImage png) {
+
+        File pngFile = new File("temp.png");
+        File pdfFile = new File(path);
+
+        try {
+            exportSnapshotAsPNG(pngFile.getPath(), png);
+            BufferedImage bufferedImagePng = ImageIO.read(pngFile);
+            PDDocument pdf = new PDDocument();
+            insertPNGintoPDF(bufferedImagePng, pdf);
+            pdf.save(pdfFile.getPath());
+            pdf.close();
+            pngFile.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

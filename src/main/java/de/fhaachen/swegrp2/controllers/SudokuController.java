@@ -1,7 +1,9 @@
 package de.fhaachen.swegrp2.controllers;
 import de.fhaachen.swegrp2.models.*;
 import de.fhaachen.swegrp2.models.solver.SudokuGrid;
+import javafx.scene.image.WritableImage;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
@@ -99,14 +101,18 @@ public class SudokuController {
                 exporter.exportCSV(sudokuField, filePath);
             else if (extension.equals("json"))
                 exporter.exportJSON(sudokuField, filePath);
-            else if (extension.equals("pdf")) {
-
-            }
             else
                 throw new ExceptionSuite.FaultyFormatException("Dateiformat nicht unterstützt!");
         }
         else
             throw new ExceptionSuite.FaultyFormatException("Keine Dateiendung gefunden!");
+    }
+
+    public void exportPDF(File file, WritableImage png) {
+        String filepath = file.getPath();
+
+        exporter.exportPDF(filepath, png);
+
     }
 
     /**

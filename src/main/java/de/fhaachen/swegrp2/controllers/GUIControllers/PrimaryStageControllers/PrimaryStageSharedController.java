@@ -11,9 +11,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-/**
- * Created by simon on 17.12.2016.
- */
 public class PrimaryStageSharedController {
     SudokuController controller = SudokuController.getInstance();
 
