@@ -1,7 +1,7 @@
 package de.fhaachen.swegrp2.controllers;
 
-
 import de.fhaachen.swegrp2.models.Help;
+import javafx.scene.control.ComboBox;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -30,7 +30,6 @@ public class HelpSceneController {
         }
         return helpList;
     }
-
 
 }
 
