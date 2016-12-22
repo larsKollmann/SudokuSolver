@@ -100,9 +100,19 @@ public class SudokuField {
     }
     public int getSubFieldSize() {
         return subFieldSize;
-    }
+    } 
     public int getSize() {
         return size;
+    }
+    
+    public boolean checkNumbersInRange() {
+    	for(int y = 0; y < size ; y++) {
+    		for(int x = 0; x < size; x++) {
+    			if(fieldValues[y][x] < 0 || fieldValues[y][x] > size)
+    				return false;
+    		}
+    	}
+    	return true;
     }
 
     //Setterfunktionen
