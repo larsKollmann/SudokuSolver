@@ -5,7 +5,6 @@ import de.fhaachen.swegrp2.controllers.GUIControllers.DialogStage;
 import de.fhaachen.swegrp2.controllers.SudokuController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -14,8 +13,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -27,16 +26,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.apache.commons.lang.StringUtils;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -49,6 +40,14 @@ import static javafx.scene.layout.Priority.NEVER;
 
 public class SudokuSceneController extends PrimaryStageSharedController {
     private SudokuController controller = SudokuController.getInstance();
+
+    @FXML private GridPane mainGridPane;
+    @FXML private Button mainSolveButton;
+    @FXML private RadioMenuItem setSizeTo3;
+    @FXML private RadioMenuItem setSizeTo4;
+    @FXML private RadioMenuItem setSizeTo5;
+    @FXML private RadioMenuItem setSizeTo6;
+
     private CellEvent cellEvent = new CellEvent();
 
     private class CellEvent implements EventHandler<MouseEvent> {
@@ -100,11 +99,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     }
 
     @FXML
-    private GridPane mainGridPane;
-    @FXML
-    private Button mainSolveButton;
-
-    @FXML
     protected void initialize() {
         mainGridPane.minWidthProperty().bind(mainGridPane.heightProperty());
         mainGridPane.prefWidthProperty().bind(mainGridPane.heightProperty());
@@ -113,6 +107,22 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         mainSolveButton.maxWidthProperty().bind(mainGridPane.widthProperty());
 
         drawGrid();
+
+        switch(controller.getSubFieldsize()) {
+            case 3:
+                setSizeTo3.setSelected(true);
+                break;
+            case 4:
+                setSizeTo4.setSelected(true);
+                break;
+            case 5:
+                setSizeTo5.setSelected(true);
+                break;
+            case 6:
+                setSizeTo6.setSelected(true);
+                break;
+        }
+
         fillWithCurrentSudokuField(Color.BLUE);
     }
 
@@ -316,10 +326,12 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     @FXML
     public void changeSize(ActionEvent actionEvent) throws IOException {
-        String sourceID = actionEvent.getSource().toString();
+        RadioMenuItem menuItem = (RadioMenuItem)actionEvent.getSource();
+        String sourceID = menuItem.toString();
         int size = Integer.parseInt(sourceID.substring(sourceID.indexOf('=') + 10, sourceID.indexOf(',')));
         controller.reset(size * size);
         redrawGrid();
+        menuItem.setSelected(true);
     }
 
     @FXML
