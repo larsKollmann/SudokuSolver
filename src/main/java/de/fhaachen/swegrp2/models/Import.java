@@ -74,10 +74,6 @@ public class Import {
                 }
             }
         }
-        
-        if(!field.checkNumbersInRange()) throw new Exception();
-
-        
         return field;
     }
 
@@ -110,9 +106,6 @@ public class Import {
         if (scanner.hasNextLine()) throw new FaultyFormatException("Es sind zu viele Zeilen beschrieben!");
 
         SudokuField sudokuField = new SudokuField(field);
-        
-        if(!sudokuField.checkNumbersInRange()) throw new Exception();
-        
         return sudokuField;
     }
 
@@ -138,9 +131,6 @@ public class Import {
         int arr[][] = convertJSONArrayTo2DIntArray(sudokuJSONArray, size);
         
         SudokuField sudokuField = new SudokuField(arr);
-        
-        if(!sudokuField.checkNumbersInRange()) throw new Exception();
-        
         return sudokuField;
     }
 }
