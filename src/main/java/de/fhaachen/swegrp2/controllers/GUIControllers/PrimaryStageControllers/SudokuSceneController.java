@@ -131,6 +131,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             controller.setFieldValue(y, x, newvalue);
             Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
             text.setText((newvalue == 0 ? "" : newvalue) + "");
+            changeTextColor(x,y,Color.BLACK);
         } catch (Exception e) {
             DialogStage error = new DialogStage(
                     "Die eingegebene Zahl ist ungültig!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden.",
@@ -277,6 +278,11 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         pane.setStyle("-fx-background-color: lightgrey");
     }
 
+    private void changeTextColor(int x, int y, Color color){
+        Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
+        Pane pane = (Pane) mainGridPane.lookup("#Pane$" + x + "," + y);
+        text.setFill(color);
+    }
 
     //onAction methods
     public void clearField(ActionEvent actionEvent) {
@@ -291,9 +297,10 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     @FXML
     public void generate(ActionEvent actionEvent) {
+        controller.clear();
+        fillWithCurrentSudokuField();
         controller.generate();
-
-        fillWithCurrentSudokuField(Color.BROWN);
+        fillWithCurrentSudokuField(Color.BLUE);
     }
 
     @FXML
@@ -310,7 +317,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     public void markConflictFields(ActionEvent actionEvent) {
         List<int[]> conflictTuples = controller.getConflicts();
         for (int[] conflict : conflictTuples) {
-            changeFieldColor(conflict[1], conflict[0], Color.RED);
+            changeTextColor(conflict[1], conflict[0], Color.RED);
         }
     }
 
