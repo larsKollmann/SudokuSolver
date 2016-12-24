@@ -34,7 +34,6 @@
                 <version>8.7.0</version>
                 <configuration>
 
-
                     <mainClass>de.fhaachen.swegrp2.MainApp</mainClass>
 
                     <!-- only required if signing the jar file -->
@@ -101,7 +100,47 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                <artifactId>launch4j-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>l4j-clui</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <configuration>
+                            <icon>src/main/resources/images/Sudoku.ico</icon>
+                            <headerType>console</headerType>
+                            <jar>target/sudoku-jar-with-dependencies.jar</jar>
+                            <outfile>target/SudokuSolver.exe</outfile>
+                            <downloadUrl>http://java.com/download</downloadUrl>
+                            <classPath>
+                                <mainClass>de.fhaachen.swegrp2.MainApp</mainClass>
+                            </classPath>
+                            <jre>
+                                <bundledJre64Bit>false</bundledJre64Bit>
+                                <bundledJreAsFallback>false</bundledJreAsFallback>
+                                <minVersion>1.8.0</minVersion>
+                                <jdkPreference>preferJre</jdkPreference>
+                                <runtimeBits>32</runtimeBits>
+                            </jre>
+                            <versionInfo>
+                                <fileVersion>1.0.0.0</fileVersion>
+                                <txtFileVersion>${project.version}</txtFileVersion>
+                                <fileDescription>${project.name}</fileDescription>
+                                <copyright>C</copyright>
+                                <productVersion>1.0.0.0</productVersion>
+                                <txtProductVersion>1.0.0.0</txtProductVersion>
+                                <productName>${project.name}</productName>
+                                <internalName>AppName</internalName>
+                                <originalFilename>SudokuSolver.exe</originalFilename>
+                            </versionInfo>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
