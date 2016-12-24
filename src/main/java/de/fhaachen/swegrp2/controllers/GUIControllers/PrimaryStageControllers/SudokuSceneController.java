@@ -333,7 +333,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     public boolean importFile(ActionEvent actionEvent) {
         if(super.importFile(actionEvent)){
             redrawGrid();
-            fillWithCurrentSudokuField(Color.BLUE);
+            fillWithCurrentSudokuField(Color.BLACK);
             return true;
         }
         return false;
