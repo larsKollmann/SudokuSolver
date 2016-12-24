@@ -131,7 +131,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                 break;
         }
 
-        fillWithCurrentSudokuField(generated);
+        fillWithCurrentSudokuField(generated, true);
     }
 
     private void tryUpdate(String textinput, int x, int y) {
@@ -149,7 +149,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             controller.setFieldValue(y, x, newvalue);
             Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
             text.setText((newvalue == 0 ? "" : newvalue) + "");
-            text.setFill(Color.BLACK);
+            text.setFill(inserted);
         } catch (Exception e) {
             DialogStage error = new DialogStage(
                     "Die eingegebene Zahl ist ungültig!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden.",
@@ -256,15 +256,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         return new int[]{x, y};
     }
 
-    private void fillWithCurrentSudokuField() {
-        fillWithCurrentSudokuField(Color.BLACK, "white");
-    }
-
-    private void fillWithCurrentSudokuField(Color color) {
-        fillWithCurrentSudokuField(color, "white");
-    }
-
-    //TODO: Felderfarben inkonsistent
     private void fillWithCurrentSudokuField(Color textcolor, Boolean all) {
         int dim = controller.getSize();
 
@@ -288,20 +279,13 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         }
     }
 
-    private void changeFieldColor(int x, int y, Color color) {
-        Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
-//        Pane pane = (Pane) mainGridPane.lookup("#Pane$" + x + "," + y);
-        text.setFill(color);
-//        pane.setStyle("-fx-background-color: lightgrey");
-    }
-
-    private void resetMarkedCells() {
+    private void resetConflictCells() {
         int dim  = controller.getSize();
         for (int x = 0; x < dim; x++) {
             for (int y = 0; y < dim; y++) {
                 Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
-                if(text.getFill() == Color.RED) {
-                    text.setFill(Color.BLACK);
+                if(text.getFill() == conflicts) {
+                    text.setFill(inserted);
                 }
             }
         }
@@ -310,7 +294,9 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     private void changeTextColor(int x, int y, Color color){
         Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
         Pane pane = (Pane) mainGridPane.lookup("#Pane$" + x + "," + y);
-        text.setFill(color);
+        if(text.getFill() == inserted)
+            text.setFill(color);
+        pane.setStyle("-fx-background-color: MistyRose");
     }
 
     //onAction methods
@@ -320,24 +306,22 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
         if (result) {
             controller.clear();
-            fillWithCurrentSudokuField();
+            fillWithCurrentSudokuField(Color.BLACK, true);
         }
     }
 
     @FXML
     public void generate(ActionEvent actionEvent) {
-        controller.clear();
-        fillWithCurrentSudokuField();
         controller.generate();
-        fillWithCurrentSudokuField(generated);
+        fillWithCurrentSudokuField(generated, true);
     }
 
     @FXML
     public void solve(Event event) {
-        resetMarkedCells();
-        boolean solved = controller.solve();
-        fillWithCurrentSudokuField(this.solved);
-        if(!solved) {
+        if (controller.solve()) {
+            fillWithCurrentSudokuField(solved, false);
+            resetConflictCells();
+        } else {
             DialogStage test = new DialogStage("Das Sudoku ist nicht lösbar", "Fehler", false, MainApp.primaryStage );
             test.showAndWait();
         }
@@ -345,7 +329,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     @FXML
     public void markConflictFields(ActionEvent actionEvent) {
-        resetMarkedCells();
+        resetConflictCells();
         List<int[]> conflictTuples = controller.getConflicts();
         for (int[] conflict : conflictTuples) {
             changeTextColor(conflict[1], conflict[0], conflicts);
@@ -366,7 +350,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     public boolean importFile(ActionEvent actionEvent) {
         if(super.importFile(actionEvent)){
             redrawGrid();
-            fillWithCurrentSudokuField(imported);
+            fillWithCurrentSudokuField(imported, true);
             return true;
         }
         return false;
