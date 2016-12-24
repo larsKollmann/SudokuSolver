@@ -50,6 +50,13 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     private CellEvent cellEvent = new CellEvent();
 
+
+    private Color imported = Color.BLACK;
+    private Color inserted = Color.BLACK;
+    private Color generated = Color.BLUE;
+    private Color solved = Color.BLACK;
+    private Color conflicts = Color.RED;
+
     private class CellEvent implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent event) {
@@ -124,7 +131,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                 break;
         }
 
-        fillWithCurrentSudokuField(Color.BLUE);
+        fillWithCurrentSudokuField(generated);
     }
 
     private void tryUpdate(String textinput, int x, int y) {
@@ -300,6 +307,11 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         }
     }
 
+    private void changeTextColor(int x, int y, Color color){
+        Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
+        Pane pane = (Pane) mainGridPane.lookup("#Pane$" + x + "," + y);
+        text.setFill(color);
+    }
 
     //onAction methods
     public void clearField(ActionEvent actionEvent) {
@@ -314,16 +326,17 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     @FXML
     public void generate(ActionEvent actionEvent) {
+        controller.clear();
+        fillWithCurrentSudokuField();
         controller.generate();
-
-        fillWithCurrentSudokuField(Color.BROWN);
+        fillWithCurrentSudokuField(generated);
     }
 
     @FXML
     public void solve(Event event) {
         resetMarkedCells();
         boolean solved = controller.solve();
-        fillWithCurrentSudokuField(Color.BLACK);
+        fillWithCurrentSudokuField(this.solved);
         if(!solved) {
             DialogStage test = new DialogStage("Das Sudoku ist nicht lösbar", "Fehler", false, MainApp.primaryStage );
             test.showAndWait();
@@ -335,7 +348,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         resetMarkedCells();
         List<int[]> conflictTuples = controller.getConflicts();
         for (int[] conflict : conflictTuples) {
-            changeFieldColor(conflict[1], conflict[0], Color.RED);
+            changeTextColor(conflict[1], conflict[0], conflicts);
         }
     }
 
@@ -353,7 +366,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     public boolean importFile(ActionEvent actionEvent) {
         if(super.importFile(actionEvent)){
             redrawGrid();
-            fillWithCurrentSudokuField(Color.BLUE);
+            fillWithCurrentSudokuField(imported);
             return true;
         }
         return false;

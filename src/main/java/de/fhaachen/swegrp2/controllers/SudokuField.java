@@ -49,6 +49,7 @@ public class SudokuField {
         for (int i = 0; i < size; i++) {
             fieldValues[i] = Arrays.copyOf(arr[i], arr[i].length);
         }
+        if(!checkNumbersInRange()) throw new Exception("Zahlen nicht im erlaubten Bereich");
     }
 
     private boolean isCellValid(int row, int col, int k) {
@@ -100,9 +101,19 @@ public class SudokuField {
     }
     public int getSubFieldSize() {
         return subFieldSize;
-    }
+    } 
     public int getSize() {
         return size;
+    }
+    
+    public boolean checkNumbersInRange() {
+    	for(int y = 0; y < size ; y++) {
+    		for(int x = 0; x < size; x++) {
+    			if(fieldValues[y][x] < 0 || fieldValues[y][x] > size)
+    				return false;
+    		}
+    	}
+    	return true;
     }
 
     //Setterfunktionen

@@ -4,11 +4,14 @@ import java.io.*;
 
 import de.fhaachen.swegrp2.controllers.SudokuField;
 import de.fhaachen.swegrp2.models.ExceptionSuite.*;
+
 import org.w3c.dom.*;
 
 import javax.xml.parsers.*;
+
 import java.util.Scanner;
 import java.util.Locale;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -71,7 +74,6 @@ public class Import {
                 }
             }
         }
-
         return field;
     }
 
@@ -103,7 +105,8 @@ public class Import {
         }
         if (scanner.hasNextLine()) throw new FaultyFormatException("Es sind zu viele Zeilen beschrieben!");
 
-        return new SudokuField(field);
+        SudokuField sudokuField = new SudokuField(field);
+        return sudokuField;
     }
 
     /**
@@ -126,7 +129,8 @@ public class Import {
         if (sudokuJSONArray.size() != size*size) throw new FaultyFormatException("Sudokugröße entspricht nicht der angegebenen Größe");
 
         int arr[][] = convertJSONArrayTo2DIntArray(sudokuJSONArray, size);
-
-        return new SudokuField(arr);
+        
+        SudokuField sudokuField = new SudokuField(arr);
+        return sudokuField;
     }
 }

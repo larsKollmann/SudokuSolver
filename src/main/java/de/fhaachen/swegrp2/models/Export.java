@@ -71,7 +71,7 @@ public class Export {
             for (int x = 0; x < size; x++) {
                 // column elements
                 Element col = doc.createElement("col");
-                if (arr[y][x] > 0 && arr[y][x] < size)
+                if (arr[y][x] > 0 && arr[y][x] <= size)
                     col.appendChild(doc.createTextNode(String.valueOf(arr[y][x])));
                 row.appendChild(col);
             }
