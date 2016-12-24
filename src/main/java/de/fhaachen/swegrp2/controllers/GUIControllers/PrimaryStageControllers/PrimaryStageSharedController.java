@@ -62,8 +62,8 @@ public class PrimaryStageSharedController {
 
             stage.show();
         } catch (Exception e ) {
-            DialogStage dialogStage = new DialogStage("Keine Hilfe für dich!", "Hilfe", false, MainApp.primaryStage );
-            dialogStage.showAndWait();
+                DialogStage error = new DialogStage("Die Hilfedatei ist beschädigt\noder nicht vorhanden.", "Fehler", false, MainApp.primaryStage);
+                error.showAndWait();
         }
     }
 

@@ -45,8 +45,8 @@ public class HelpSceneController {
     }
 
     @FXML
-    protected void initialize() {
-        try {
+    protected void initialize() throws Exception {
+
             List<Help> list = getHelpList();
             for (Help  help: list) {
                 comboBox.getItems().add(help);
@@ -60,10 +60,6 @@ public class HelpSceneController {
             });
 
 
-        } catch (Exception e) {
-            DialogStage error = new DialogStage("Die Hilfedatei ist beschödigt\noder nicht vorhanden.", "Fehler", false, MainApp.primaryStage);
-            error.showAndWait();
-        }
     }
 
     @FXML
