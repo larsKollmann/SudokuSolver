@@ -112,7 +112,7 @@
                         </goals>
                         <configuration>
                             <icon>src/main/resources/images/Sudoku.ico</icon>
-                            <headerType>console</headerType>
+                            <headerType>gui</headerType>
                             <jar>target/sudoku-jar-with-dependencies.jar</jar>
                             <outfile>target/SudokuSolver.exe</outfile>
                             <downloadUrl>http://java.com/download</downloadUrl>
