@@ -6,11 +6,11 @@
 
     <groupId>de.fhaachen.swegrp2</groupId>
     <artifactId>sudoku</artifactId>
-    <name>sudoku</name>
+    <name>Sudoku Löser</name>
     <description>Dieses Programm ist der SudokuSolver der Gruppe 2</description>
 
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-KW52-SNAPSHOT</version>
 
     <organization>
         <!-- Used as the 'Vendor' for JNLP generation -->
@@ -114,7 +114,7 @@
                             <icon>src/main/resources/images/Sudoku.ico</icon>
                             <headerType>gui</headerType>
                             <jar>target/sudoku-jar-with-dependencies.jar</jar>
-                            <outfile>target/SudokuSolver.exe</outfile>
+                            <outfile>target/SudokuSolver-${project.version}.exe</outfile>
                             <downloadUrl>http://java.com/download</downloadUrl>
                             <classPath>
                                 <mainClass>de.fhaachen.swegrp2.MainApp</mainClass>
@@ -132,10 +132,10 @@
                                 <fileDescription>${project.name}</fileDescription>
                                 <copyright>C</copyright>
                                 <productVersion>1.0.0.0</productVersion>
-                                <txtProductVersion>1.0.0.0</txtProductVersion>
+                                <txtProductVersion>${project.version}</txtProductVersion>
                                 <productName>${project.name}</productName>
                                 <internalName>AppName</internalName>
-                                <originalFilename>SudokuSolver.exe</originalFilename>
+                                <originalFilename>SudokuSolver-${project.version}.exe</originalFilename>
                             </versionInfo>
                         </configuration>
                     </execution>
