@@ -4,22 +4,17 @@ import de.fhaachen.swegrp2.MainApp;
 import de.fhaachen.swegrp2.controllers.GUIControllers.DialogStage;
 import de.fhaachen.swegrp2.controllers.SudokuController;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonBuilder;
-import javafx.scene.control.Menu;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 
 public class PrimaryStageSharedController {
-    SudokuController controller = SudokuController.getInstance();
+    private SudokuController controller = SudokuController.getInstance();
 
     @FXML
     public void close(ActionEvent actionEvent) {
@@ -34,13 +29,15 @@ public class PrimaryStageSharedController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(fileType + "-Datei importieren");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileType + "-Dateien", "*." + fileType.toLowerCase()));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileType + "-Dateien",
+                "*." + fileType.toLowerCase()));
 
         File file = fileChooser.showOpenDialog(MainApp.primaryStage);
         try {
-            controller.ImportFile(file);
+            if(file != null)
+                controller.ImportFile(file);
         } catch (Exception e) {
-            DialogStage test = new DialogStage("Die gewählte Datei ist nicht korrekt", "Fehler", false, MainApp.primaryStage );
+            DialogStage test = new DialogStage("Die gewählte Datei ist nicht korrekt", "Fehler", false);
             test.showAndWait();
             return false;
         }
@@ -62,8 +59,9 @@ public class PrimaryStageSharedController {
 
             stage.show();
         } catch (Exception e ) {
-                DialogStage error = new DialogStage("Die Hilfedatei ist beschädigt\noder nicht vorhanden.", "Fehler", false, MainApp.primaryStage);
-                error.showAndWait();
+            DialogStage error = new DialogStage("Die Hilfedatei ist beschädigt\noder nicht vorhanden.",
+                    "Fehler", false);
+            error.showAndWait();
         }
     }
 
@@ -77,15 +75,16 @@ public class PrimaryStageSharedController {
 
     @FXML
     public void test(ActionEvent actionEvent) {
-        DialogStage test = new DialogStage("Dies ist ein Testhinweis. \nBeachten Sie das vorhandene Bild!", "Hinweis", false, MainApp.primaryStage );
+        DialogStage test = new DialogStage("Dies ist ein Testhinweis. \nBeachten Sie das vorhandene Bild!",
+                "Hinweis", false);
         test.showAndWait();
     }
 
     @FXML
     public void neutest(ActionEvent actionEvent) {
-        DialogStage test = new DialogStage("Ist dies ein Test?", "Frage", true, MainApp.primaryStage);
+        DialogStage test = new DialogStage("Ist dies ein Test?", "Frage", true);
         if(test.showAndWaitGetResult()){
-            DialogStage test2 = new DialogStage("Das ist toll!", "Awesome", false, MainApp.primaryStage);
+            DialogStage test2 = new DialogStage("Das ist toll!", "Awesome", false);
             test2.showAndWait();
         }
     }

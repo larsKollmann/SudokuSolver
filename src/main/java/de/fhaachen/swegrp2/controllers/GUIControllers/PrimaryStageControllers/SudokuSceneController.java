@@ -3,8 +3,6 @@ package de.fhaachen.swegrp2.controllers.GUIControllers.PrimaryStageControllers;
 import de.fhaachen.swegrp2.MainApp;
 import de.fhaachen.swegrp2.controllers.GUIControllers.DialogStage;
 import de.fhaachen.swegrp2.controllers.SudokuController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -35,8 +33,6 @@ import java.util.Objects;
 
 import static javafx.geometry.Pos.CENTER;
 import static javafx.scene.layout.Priority.ALWAYS;
-import static javafx.scene.layout.Priority.NEVER;
-
 
 public class SudokuSceneController extends PrimaryStageSharedController {
     private SudokuController controller = SudokuController.getInstance();
@@ -48,14 +44,13 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     @FXML private RadioMenuItem setSizeTo5;
     @FXML private RadioMenuItem setSizeTo6;
 
+    private Color colorImported = Color.BLACK;
+    private Color colorInserted = Color.BLACK;
+    private Color colorGenerated = Color.BLUE;
+    private Color colorSolved = Color.BLACK;
+    private Color colorConflicts = Color.RED;
+
     private CellEvent cellEvent = new CellEvent();
-
-
-    private Color imported = Color.BLACK;
-    private Color inserted = Color.BLACK;
-    private Color generated = Color.BLUE;
-    private Color solved = Color.BLACK;
-    private Color conflicts = Color.RED;
 
     private class CellEvent implements EventHandler<MouseEvent> {
         @Override
@@ -64,7 +59,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             int x = Integer.parseInt(p.substring(p.indexOf("$") + 1, p.indexOf(',')));
             int y = Integer.parseInt(p.substring(p.indexOf(',') + 1, p.indexOf(']')));
 
-            int[] gridCoords = translateXYToGridCoords(x, y, controller.getSubFieldsize());
+            int[] gridCoords = translateXYToGridCoords(x, y);
             GridPane subGrid = (GridPane) mainGridPane.lookup("#SubGrid$" + gridCoords[0] + "," + gridCoords[1]);
 
             TextField textField = new TextField();
@@ -73,15 +68,12 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             if (!Objects.equals(text, "0"))
                 textField.setText(text);
 
-            textField.setPrefHeight(1000);
+            textField.setPrefHeight(Integer.MAX_VALUE);
             textField.setMinHeight(40);
             textField.setMinWidth(40);
-            textField.autosize();
             textField.setAlignment(CENTER);
 
-            textField.setOnAction(event1 -> {
-                mainGridPane.requestFocus();
-            });
+            textField.setOnAction(event1 -> mainGridPane.requestFocus());
             textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue) {
                     tryUpdate(textField.getText(), x, y);
@@ -89,12 +81,9 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                 }
             });
             // force the field to be numeric only
-            textField.textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    if (!newValue.matches("\\d*")) {
-                        textField.setText(newValue.replaceAll("[^\\d]", ""));
-                    }
+            textField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("\\d*")) {
+                    textField.setText(newValue.replaceAll("[^\\d]", ""));
                 }
             });
 
@@ -131,11 +120,11 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                 break;
         }
 
-        fillWithCurrentSudokuField(generated, true);
+        fillWithCurrentSudokuField(colorGenerated, true);
     }
 
     private void tryUpdate(String textinput, int x, int y) {
-        int newvalue = 0;
+        int newvalue;
         int max = controller.getSize();
 
         try {
@@ -149,11 +138,11 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             controller.setFieldValue(y, x, newvalue);
             Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
             text.setText((newvalue == 0 ? "" : newvalue) + "");
-            text.setFill(inserted);
+            text.setFill(colorInserted);
         } catch (Exception e) {
             DialogStage error = new DialogStage(
                     "Die eingegebene Zahl ist ungültig!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden.",
-                    "Fehler", false, MainApp.primaryStage);
+                    "Fehler", false);
             error.showAndWait();
         }
     }
@@ -162,7 +151,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         int size = controller.getSubFieldsize();
 
         addrowcolumnconstraints(mainGridPane);
-        // SudokuFeld gewünschter Größe in Scene einfügen
         for (int xl = 0; xl < size; xl++) {
             for (int yl = 0; yl < size; yl++) {
                 GridPane smallgridPane = new GridPane();
@@ -173,7 +161,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
                 for (int xs = 0; xs < size; xs++) {
                     for (int ys = 0; ys < size; ys++) {
-                        int[] coords = translateGridCoordstoXY(xl, yl, xs, ys, size);
+                        int[] coords = translateGridCoordstoXY(xl, yl, xs, ys);
 
                         Pane pane = new Pane();
                         pane.setStyle("-fx-background-color: white");
@@ -181,9 +169,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                         pane.addEventHandler(MouseEvent.MOUSE_CLICKED, cellEvent);
                         pane.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> ((Pane) event.getSource()).setStyle("-fx-background-color: #dbdbdb"));
                         pane.addEventHandler(MouseEvent.MOUSE_EXITED, event -> ((Pane) event.getSource()).setStyle("-fx-background-color: white"));
-
-                        GridPane.setVgrow(pane, NEVER);
-                        GridPane.setHgrow(pane, NEVER);
 
                         Text text = new Text();
                         text.setMouseTransparent(true);
@@ -196,8 +181,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
                         GridPane.setHalignment(text, HPos.CENTER);
                         GridPane.setValignment(text, VPos.CENTER);
-                        GridPane.setHgrow(text, ALWAYS);
-                        GridPane.setVgrow(text, ALWAYS);
                     }
                 }
 
@@ -207,20 +190,8 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             }
         }
 
-        switch(size) {
-            case 3:
-                MainApp.primaryStage.setMinHeight(496);
-                break;
-            case 4:
-                MainApp.primaryStage.setMinHeight(564);
-                break;
-            case 5:
-                MainApp.primaryStage.setMinHeight(781);
-                break;
-            case 6:
-                MainApp.primaryStage.setMinHeight(980);
-                break;
-        }
+        int[] stageHeightBySize = new int[]{496, 564, 781, 980};
+        MainApp.primaryStage.setMinHeight(stageHeightBySize[size - 3]);
         MainApp.primaryStage.sizeToScene();
     }
 
@@ -237,55 +208,58 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         for (int i = 0; i < size; i++) {
             ColumnConstraints col = new ColumnConstraints();
             col.setHgrow(ALWAYS);
-            col.setPrefWidth(10);
+            col.setMinWidth(15);
+            col.setPrefWidth(15);
             RowConstraints row = new RowConstraints();
             row.setVgrow(ALWAYS);
-            row.setPrefHeight(10);
+            row.setMinHeight(15);
+            row.setPrefHeight(15);
             gridPane.getColumnConstraints().add(col);
             gridPane.getRowConstraints().add(row);
         }
     }
 
-    private static int[] translateXYToGridCoords(int x, int y, int size) {
-        return new int[]{x / size, y / size, x % size, y % size};
+    private int[] translateXYToGridCoords(int x, int y) {
+        int subFieldsize = controller.getSubFieldsize();
+        return new int[]{x / subFieldsize, y / subFieldsize, x % subFieldsize, y % subFieldsize};
     }
 
-    private static int[] translateGridCoordstoXY(int xl, int yl, int xs, int ys, int size) {
-        int x = xl * size + xs;
-        int y = yl * size + ys;
+    private int[] translateGridCoordstoXY(int xl, int yl, int xs, int ys) {
+        int subFieldsize = controller.getSubFieldsize();
+        int x = xl * subFieldsize + xs;
+        int y = yl * subFieldsize + ys;
         return new int[]{x, y};
     }
 
     private void fillWithCurrentSudokuField(Color textcolor, Boolean all) {
-        int dim = controller.getSize();
+        int size = controller.getSize();
 
-        for (int x = 0; x < dim; x++) {
-            for (int y = 0; y < dim; y++) {
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
                 Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
                 int number = controller.getFieldValue(y, x);
                 if (!all && text.getText().equals(number + ""))
                     continue;
-
-                text.setFill(textcolor);
-                Pane pane = (Pane) mainGridPane.lookup("#Pane$" + x + "," + y);
-                pane.setStyle("-fx-background-color: white");
 
                 if (number != 0)
                     text.setText(number + "");
                 else
                     text.setText("");
 
+                text.setFill(textcolor);
+                Pane pane = (Pane) mainGridPane.lookup("#Pane$" + x + "," + y);
+                pane.setStyle("-fx-background-color: white");
             }
         }
     }
 
     private void resetConflictCells() {
-        int dim  = controller.getSize();
-        for (int x = 0; x < dim; x++) {
-            for (int y = 0; y < dim; y++) {
+        int size  = controller.getSize();
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
                 Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
-                if(text.getFill() == conflicts) {
-                    text.setFill(inserted);
+                if(text.getFill() == colorConflicts) {
+                    text.setFill(colorInserted);
                 }
             }
         }
@@ -294,15 +268,17 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     private void changeTextColor(int x, int y, Color color){
         Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
         Pane pane = (Pane) mainGridPane.lookup("#Pane$" + x + "," + y);
-        if(text.getFill() == inserted)
+        if(text.getFill() == colorInserted)
             text.setFill(color);
         pane.setStyle("-fx-background-color: MistyRose");
     }
 
     //onAction methods
+    @FXML
     public void clearField(ActionEvent actionEvent) {
-        DialogStage test = new DialogStage("Sudoku zurücksetzen?\nNicht exportierte Änderungen gehen verloren.", "Hinweis", true, MainApp.primaryStage);
-        boolean result = test.showAndWaitGetResult();
+        DialogStage confirmDialog = new DialogStage("Sudoku zurücksetzen?\nNicht exportierte Änderungen gehen verloren.",
+                "Hinweis", true);
+        boolean result = confirmDialog.showAndWaitGetResult();
 
         if (result) {
             controller.clear();
@@ -313,26 +289,26 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     @FXML
     public void generate(ActionEvent actionEvent) {
         controller.generate();
-        fillWithCurrentSudokuField(generated, true);
+        fillWithCurrentSudokuField(colorGenerated, true);
     }
 
     @FXML
     public void solve(Event event) {
         if (controller.solve()) {
-            fillWithCurrentSudokuField(solved, false);
+            fillWithCurrentSudokuField(colorSolved, false);
             resetConflictCells();
         } else {
-            DialogStage test = new DialogStage("Das Sudoku ist nicht lösbar", "Fehler", false, MainApp.primaryStage );
+            DialogStage test = new DialogStage("Das Sudoku ist nicht lösbar", "Fehler", false);
             test.showAndWait();
         }
     }
 
     @FXML
-    public void markConflictFields(ActionEvent actionEvent) {
+    public void markConflictCells(ActionEvent actionEvent) {
         resetConflictCells();
         List<int[]> conflictTuples = controller.getConflicts();
         for (int[] conflict : conflictTuples) {
-            changeTextColor(conflict[1], conflict[0], conflicts);
+            changeTextColor(conflict[1], conflict[0], colorConflicts);
         }
     }
 
@@ -341,8 +317,10 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         RadioMenuItem menuItem = (RadioMenuItem)actionEvent.getSource();
         String sourceID = menuItem.toString();
         int size = Integer.parseInt(sourceID.substring(sourceID.indexOf('=') + 10, sourceID.indexOf(',')));
+
         controller.reset(size * size);
         redrawGrid();
+
         menuItem.setSelected(true);
     }
 
@@ -350,7 +328,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     public boolean importFile(ActionEvent actionEvent) {
         if(super.importFile(actionEvent)){
             redrawGrid();
-            fillWithCurrentSudokuField(imported, true);
+            fillWithCurrentSudokuField(colorImported, true);
             return true;
         }
         return false;
@@ -363,31 +341,30 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(fileType + "-Datei exportieren");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileType + "-Dateien", "*." + fileType.toLowerCase()));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileType + "-Dateien",
+                "*." + fileType.toLowerCase()));
 
         File file = fileChooser.showSaveDialog(MainApp.primaryStage);
         try {
             controller.exportFile(file);
         } catch (Exception e) {
-            DialogStage test = new DialogStage("Fehler!", "Fehler", false, MainApp.primaryStage );
-            test.showAndWait();
+            DialogStage error = new DialogStage("Fehler!", "Fehler", false);
+            error.showAndWait();
         }
     }
 
     @FXML
     public void exportPDF(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("-PDF exportieren");
+        fileChooser.setTitle("PDF-Datei exportieren");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF-Dateien", "*.pdf"));
 
         File pdfFile = fileChooser.showSaveDialog(mainGridPane.getScene().getWindow());
         try {
             controller.exportPDF(pdfFile,mainGridPane.snapshot(new SnapshotParameters(),null));
         } catch (Exception e) {
-            DialogStage test = new DialogStage("Fehler!", "Fehler", false, MainApp.primaryStage );
-            test.showAndWait();
+            DialogStage error = new DialogStage("Fehler!", "Fehler", false);
+            error.showAndWait();
         }
     }
-
-
 }

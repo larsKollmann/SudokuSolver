@@ -1,20 +1,15 @@
 package de.fhaachen.swegrp2.controllers.GUIControllers.PrimaryStageControllers;
 
 import de.fhaachen.swegrp2.MainApp;
-import de.fhaachen.swegrp2.controllers.GUIControllers.DialogStage;
 import de.fhaachen.swegrp2.controllers.SudokuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/**
- * Created by simon on 12.12.2016.
- */
 public class StartSceneController extends PrimaryStageSharedController {
     private SudokuController controller = SudokuController.getInstance();
 

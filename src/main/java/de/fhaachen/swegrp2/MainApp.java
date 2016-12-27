@@ -1,6 +1,5 @@
 package de.fhaachen.swegrp2;
 
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,7 +15,7 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
     /**
      * Java main, startet die Applikation.
-     * @param args Argumente, die dem Programm beim start übergeben werden können. Nicht benutzt.
+     * @param args Argumente, die dem Programm beim Start übergeben werden können. Nicht benutzt.
      */
     public static void main(String[] args) {
         launch(args);
@@ -28,13 +27,13 @@ public class MainApp extends Application {
     public static Stage primaryStage;
 
     /**
-     * Start methode, die von Applikation geerbt wird.
-     * Lädt für das Fesnter nötige Dateien, setzt Parameter und startet dies.
+     * Start Methode, die von Applikation geerbt wird.
+     * Lädt für das Fenster nötige Dateien, setzt Parameter und startet dies.
      * @param stage Das Hauptfenster der Anwendung
      * @throws Exception Wird vom loader geworfen, wenn das laden nötiger Dateien fehlschlägt.
      */
     public void start(Stage stage) throws Exception {
-        this.primaryStage = stage;
+        primaryStage = stage;
         String fxmlFile = "/fxml/PrimaryStage/StartScene.fxml";
 
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/Sudoku.png")));

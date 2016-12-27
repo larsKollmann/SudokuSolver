@@ -1,11 +1,11 @@
 package de.fhaachen.swegrp2.controllers;
 
+import de.fhaachen.swegrp2.models.ExceptionSuite.EmptyArrayException;
+import de.fhaachen.swegrp2.models.ExceptionSuite.SizeNotSupportedException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import de.fhaachen.swegrp2.models.ExceptionSuite.*;
-import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 
 import static de.fhaachen.swegrp2.controllers.SudokuController.isSizeSupported;
 
@@ -26,13 +26,13 @@ public class SudokuField {
     public SudokuField(int size) {
         this.size = size;
         subFieldSize = (int) Math.sqrt(size);
-        resetSudoku();
+        fieldValues = new int[size][size];
     }
 
     /**
      * Konstruktor, erstellt aus einem gegebenen 2D int Array ein Deep-Copy für das SudokuField.
      * @param arr Das 2D int Array welches das Sudoku darstellt.
-     * @throws Exception Wirft diverse Excpetions, wenn das übergebene int Array Fehlerbehaftet (ungültig) ist.
+     * @throws Exception Wirft diverse Excpetions, wenn das übergebene int Array fehlerbehaftet (ungültig) ist.
      */
     public SudokuField(int arr[][]) throws Exception {
         if (arr == null)
@@ -69,11 +69,14 @@ public class SudokuField {
         return true;
     }
 
-    /**
-     * Leert das SudokuFeld und füllt es mit 0en aus.
-     */
-    public void resetSudoku() {
-        fieldValues = new int[size][size];
+    private boolean checkNumbersInRange() {
+        for(int y = 0; y < size ; y++) {
+            for(int x = 0; x < size; x++) {
+                if(fieldValues[y][x] < 0 || fieldValues[y][x] > size)
+                    return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -81,7 +84,7 @@ public class SudokuField {
      * @return Liste aller Konfliktbehafteten Felder.
      */
     public List<int[]> getConflictCoordinates () {
-        List<int[]> conflictFields = new ArrayList<int[]>();
+        List<int[]> conflictFields = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             for(int b = 0; b < size; b++) {
                 if (fieldValues[i][b] != 0 && !isCellValid(i,b,fieldValues[i][b])){
@@ -101,19 +104,9 @@ public class SudokuField {
     }
     public int getSubFieldSize() {
         return subFieldSize;
-    } 
+    }
     public int getSize() {
         return size;
-    }
-    
-    public boolean checkNumbersInRange() {
-    	for(int y = 0; y < size ; y++) {
-    		for(int x = 0; x < size; x++) {
-    			if(fieldValues[y][x] < 0 || fieldValues[y][x] > size)
-    				return false;
-    		}
-    	}
-    	return true;
     }
 
     //Setterfunktionen

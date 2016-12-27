@@ -1,10 +1,10 @@
 package de.fhaachen.swegrp2.controllers.GUIControllers;
 
+import de.fhaachen.swegrp2.MainApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,17 +19,11 @@ import java.util.ResourceBundle;
 
 public class DialogStage extends Stage implements Initializable {
 
-    @FXML
-    private ImageView imageView;
-    @FXML
-    private Label text;
-    @FXML
-    private Button Ok;
-    @FXML
-    private Button Ja;
-    @FXML
-    private Button Nein;
-
+    @FXML private ImageView imageView;
+    @FXML private Label text;
+    @FXML private Button Ok;
+    @FXML private Button Ja;
+    @FXML private Button Nein;
 
     private String message;
     private Stage parentStage;
@@ -37,18 +31,17 @@ public class DialogStage extends Stage implements Initializable {
     private Image image;
     private boolean clicked;
 
-
     public boolean showAndWaitGetResult() {
         showAndWait();
         return clicked;
     }
 
-    public DialogStage(String message, String title, Boolean isConfirmDialog, Stage parentStage) {
+    public DialogStage(String message, String title, Boolean isConfirmDialog) {
         setTitle(title);
 
         this.message = message;
-        this.parentStage = parentStage;
         this.isConfirmDialog = isConfirmDialog;
+        this.parentStage = MainApp.primaryStage;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Dialog.fxml"));
         fxmlLoader.setController(this);
@@ -56,24 +49,17 @@ public class DialogStage extends Stage implements Initializable {
         if (isConfirmDialog) {
             image = new Image(getClass().getResourceAsStream("/images/question.png"));
         }
-        else{
+        else {
             image = new Image(getClass().getResourceAsStream("/images/error.png"));
         }
 
-        try
-        {
-            setScene(new Scene((Parent) fxmlLoader.load()));
+        try {
+            setScene(new Scene(fxmlLoader.load()));
         }
-
-        catch(
-                IOException e
-                )
-
-        {
+        catch(IOException e) {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     public void onOkButtonAction(ActionEvent event){

@@ -1,9 +1,12 @@
 package de.fhaachen.swegrp2.controllers;
-import de.fhaachen.swegrp2.models.*;
+
+import de.fhaachen.swegrp2.models.ExceptionSuite;
+import de.fhaachen.swegrp2.models.Export;
+import de.fhaachen.swegrp2.models.Generator;
+import de.fhaachen.swegrp2.models.Import;
 import de.fhaachen.swegrp2.models.solver.SudokuGrid;
 import javafx.scene.image.WritableImage;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import java.util.List;
 public class SudokuController {
     private static SudokuController ourInstance = new SudokuController();
     private SudokuField sudokuField;    //Speichert das Sudoku und Sudoku relevante Informationen
+    //TODO: noch benötigt?
     private SudokuField previousSudoku; //Das zuletzt erstellte, generierte, importierte Sudoku (zum zuruecksetzen)
     private Import importer;
     private Export exporter;
@@ -23,7 +27,7 @@ public class SudokuController {
     public static SudokuController getInstance() {
         return ourInstance;
     }
-    //Statische Methode zur überprüfung ob eine gegebene Groeße für das Sudoku unterstuetzt wird.
+    //Statische Methode zur Überprüfung ob eine gegebene Groeße für das Sudoku unterstuetzt wird.
     public static boolean isSizeSupported(int size) {
         return (size == 9 || size == 16 || size == 25 || size == 36);
     }
@@ -71,38 +75,48 @@ public class SudokuController {
      * @throws Exception Warnungen zu korrupten oder sonstig beschädigteten Dateien.
      */
     public void ImportFile(File file) throws Exception{
-        String extension = "";
+        String extension;
         String filePath = file.getPath();
         int i = filePath.lastIndexOf('.');
         if (i > 0) {
             extension = filePath.substring(i+1).toLowerCase();
-            if (extension.equals("xml"))
-                sudokuField = importer.importXML(filePath);
-            else if (extension.equals("csv"))
-                sudokuField = importer.importCSV(filePath);
-            else if (extension.equals("json"))
-                sudokuField = importer.importJSON(filePath);
-            else
-                throw new ExceptionSuite.FaultyFormatException("Dateiformat nicht unterstützt!");
+            switch (extension) {
+                case "xml":
+                    sudokuField = importer.importXML(filePath);
+                    break;
+                case "csv":
+                    sudokuField = importer.importCSV(filePath);
+                    break;
+                case "json":
+                    sudokuField = importer.importJSON(filePath);
+                    break;
+                default:
+                    throw new ExceptionSuite.FaultyFormatException("Dateiformat nicht unterstützt!");
+            }
         }
         else
             throw new ExceptionSuite.FaultyFormatException("Keine Dateiendung gefunden!");
     }
 
     public void exportFile(File file) throws Exception {
-        String extension = "";
+        String extension;
         String filePath = file.getPath();
         int i = filePath.lastIndexOf('.');
         if (i > 0) {
             extension = filePath.substring(i+1).toLowerCase();
-            if (extension.equals("xml"))
-                exporter.exportXML(sudokuField, filePath);
-            else if (extension.equals("csv"))
-                exporter.exportCSV(sudokuField, filePath);
-            else if (extension.equals("json"))
-                exporter.exportJSON(sudokuField, filePath);
-            else
-                throw new ExceptionSuite.FaultyFormatException("Dateiformat nicht unterstützt!");
+            switch (extension) {
+                case "xml":
+                    exporter.exportXML(sudokuField, filePath);
+                    break;
+                case "csv":
+                    exporter.exportCSV(sudokuField, filePath);
+                    break;
+                case "json":
+                    exporter.exportJSON(sudokuField, filePath);
+                    break;
+                default:
+                    throw new ExceptionSuite.FaultyFormatException("Dateiformat nicht unterstützt!");
+            }
         }
         else
             throw new ExceptionSuite.FaultyFormatException("Keine Dateiendung gefunden!");
@@ -112,7 +126,6 @@ public class SudokuController {
         String filepath = file.getPath();
 
         exporter.exportPDF(filepath, png);
-
     }
 
     /**
