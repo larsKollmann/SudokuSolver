@@ -346,7 +346,8 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
         File file = fileChooser.showSaveDialog(MainApp.primaryStage);
         try {
-            controller.exportFile(file);
+            if(file != null)
+                controller.exportFile(file);
         } catch (Exception e) {
             DialogStage error = new DialogStage("Fehler!", "Fehler", false);
             error.showAndWait();
@@ -361,7 +362,8 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
         File pdfFile = fileChooser.showSaveDialog(mainGridPane.getScene().getWindow());
         try {
-            controller.exportPDF(pdfFile,mainGridPane.snapshot(new SnapshotParameters(),null));
+            if(pdfFile != null)
+                controller.exportPDF(pdfFile,mainGridPane.snapshot(new SnapshotParameters(),null));
         } catch (Exception e) {
             DialogStage error = new DialogStage("Fehler!", "Fehler", false);
             error.showAndWait();

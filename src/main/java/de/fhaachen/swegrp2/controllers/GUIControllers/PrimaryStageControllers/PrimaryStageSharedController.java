@@ -23,6 +23,7 @@ public class PrimaryStageSharedController {
 
     @FXML
     public boolean importFile(ActionEvent actionEvent) {
+        Boolean  returnValue = false;
 
         String sourceID = actionEvent.getSource().toString();
         String fileType = sourceID.substring(sourceID.indexOf('$') + 1, sourceID.indexOf(','));
@@ -34,14 +35,16 @@ public class PrimaryStageSharedController {
 
         File file = fileChooser.showOpenDialog(MainApp.primaryStage);
         try {
-            if(file != null)
+            if(file != null) {
                 controller.ImportFile(file);
+                returnValue = true;
+            }
         } catch (Exception e) {
             DialogStage test = new DialogStage("Die gewählte Datei ist nicht korrekt", "Fehler", false);
             test.showAndWait();
-            return false;
+            returnValue = false;
         }
-        return true;
+        return returnValue;
     }
 
     @FXML
