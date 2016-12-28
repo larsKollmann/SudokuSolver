@@ -27,7 +27,7 @@ public class HelpSceneController {
 
         String path = "./hilfetexte.json";
         FileInputStream fis = new FileInputStream(path);
-        BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+        BufferedReader in = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
         Object obj = parser.parse(in);
 
         JSONObject jsonObject = (JSONObject) obj;
