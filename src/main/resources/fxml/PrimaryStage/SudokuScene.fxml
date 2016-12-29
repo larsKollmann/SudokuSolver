@@ -44,11 +44,6 @@
            <Menu mnemonicParsing="false" text="Hilfe">
                <MenuItem mnemonicParsing="false" onAction="#showHelpStage" text="Hilfe anzeigen"/>
            </Menu>
-           <Menu mnemonicParsing="false" text="DEBUG">
-               <MenuItem mnemonicParsing="false" onAction="#printGuiValues" text="Print GUI Values"/>
-               <MenuItem mnemonicParsing="false" onAction="#test" text="Test Dialog"/>
-               <MenuItem mnemonicParsing="false" onAction="#neutest" text="Test Confirm Dialog"/>
-           </Menu>
        </MenuBar>
    </top>
    <center>

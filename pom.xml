@@ -10,7 +10,7 @@
     <description>Dieses Programm ist der SudokuSolver der Gruppe 2</description>
 
     <packaging>jar</packaging>
-    <version>1.0-KW52-SNAPSHOT</version>
+    <version>1.0-KW52v2-SNAPSHOT</version>
 
     <organization>
         <!-- Used as the 'Vendor' for JNLP generation -->

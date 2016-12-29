@@ -67,28 +67,4 @@ public class PrimaryStageSharedController {
             error.showAndWait();
         }
     }
-
-    //DEBUG
-    @FXML
-    public void printGuiValues(ActionEvent actionEvent) {
-        Stage stage = MainApp.primaryStage;
-        System.out.println(stage);
-        System.out.println("W: " + stage.getWidth() + " H: " + stage.getHeight());
-    }
-
-    @FXML
-    public void test(ActionEvent actionEvent) {
-        DialogStage test = new DialogStage("Dies ist ein Testhinweis. \nBeachten Sie das vorhandene Bild!",
-                "Hinweis", false);
-        test.showAndWait();
-    }
-
-    @FXML
-    public void neutest(ActionEvent actionEvent) {
-        DialogStage test = new DialogStage("Ist dies ein Test?", "Frage", true);
-        if(test.showAndWaitGetResult()){
-            DialogStage test2 = new DialogStage("Das ist toll!", "Awesome", false);
-            test2.showAndWait();
-        }
-    }
 }
