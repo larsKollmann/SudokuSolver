@@ -1,14 +1,14 @@
 Sie wollen eine JSON-Datei erstellen ? 
-Hier erklären wir ihnen wie.
+Hier erklï¿½ren wir Ihnen wie.
 
 Der Inhalt der JSON-Datei wird von geschweiften Klammern 
 umschlossen: {...}.
 
-Innerhalb dieser Klammern ist die erste Zeile die Größe
+Innerhalb dieser Klammern ist die erste Zeile die Grï¿½ï¿½e
 des Sudokus. Dort sind erlaubte Zahlen 9,16,25 und 36.
-Alle anderen Zahlen werden zu Fehlern führen: ""size": 9,".
+Alle anderen Zahlen werden zu Fehlern fï¿½hren: ""size": 9,".
 
-Die größe des Sudokus wird im Laufe des Dokumentes 'N' genannt.
+Die grï¿½ï¿½e des Sudokus wird im Laufe des Dokumentes 'N' genannt.
 
 Der Inhalt des Sudokus wird mit folgender Zeile eingeleitet:
 ""sudoku": ["
@@ -16,7 +16,7 @@ Der Inhalt des Sudokus wird mit folgender Zeile eingeleitet:
 Die nun Folgenden Zeilen, mit maximaler Zifferanzahl von N,
 beschreiben den Inhalt des Sudokus.
 Soll die Stelle des Sudokus leer sein, wird "0" eingetragen.
-Andernfalls wird die gewünschte Zahl von 1-N gesetzt.
+Andernfalls wird die gewï¿½nschte Zahl von 1-N gesetzt.
 
 Jede Ziffer wird von der darauffolgenden durch ein ","
 getrennt. Ist die Ziffer die letzte stelle des Sudokus,

@@ -1,0 +1,46 @@
+Sie wollen eine XML-Datei erstellen ?
+Hier erklären wir Ihnen wie.
+
+Der Inhalt der XML-Datei beginnt mit volgender Zeile:
+"<?xml version="1.0" encoding="UTF-8"?>".
+
+Nach dieser Zeile, beschreibt die Zeile: "<sudoku size="N">"
+den Beginn des Inhaltes des Sudokus.
+Dieses wird nach dem Füllen der Zeilen mit der Zeile:
+"</sudoku>" wieder geschlossen.
+
+Für "N" sind die Zahlen 9,16,25 oder 36 einzusetzen.
+Alle anderen Zahlen werden zu Fehlern führen.
+
+Die größe des Sudokus wird im Laufe des Dokumentes 'N' genannt.
+
+Jede der N Zeilen des Sudokus ist mit der Zeile: "<row>"
+einzuleiten und der Zeile: "</row>" zu schließen.
+
+Zwischen diesen Zeilen sind die N Stellen der Sudokuzeile
+zu füllen. Einträge von 1-N kann man auf folgende Weise
+festlegen: "<col>1</col>".
+Soll die Stelle leer bleiben, wird nur "</col>" eingetragen.
+
+
+Beispielzeile:
+==============
+
+<row>
+   <col/>
+   <col/>
+   <col>5</col>
+   <col>8</col>
+   <col/>
+   <col>4</col>
+   <col/>
+   <col/>
+   <col/>
+</row>
+
+==============
+
+
+Eine komplette Datei mit einem 9x9 Sudoku gibt es in der Datei "beispiel_9x9.XML".
+Eine Datei mit einem 16x16 Sudoku in der Datei "beispiel_16x16.XML".
+

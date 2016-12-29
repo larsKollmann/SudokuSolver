@@ -1,17 +1,19 @@
-CSV Dateien zu erstellen ist wahrscheinlich am schnellsten erledigt.
-Die erste Zeile legt fest, wie groß das Sudoku ist.
+Sie wollen eine CSV-Datei erstellen ?
+Hier erklï¿½ren wir Ihnen wie.
+
+Die erste Zeile legt fest, wie groï¿½ das Sudoku ist.
 Dort sind erlaubte Zahlen 9,16,25 und 36.
-Alle anderen Zahlen werden zu Fehlern führen.
+Alle anderen Zahlen werden zu Fehlern fï¿½hren.
 
-Die größe des Sudokus wird im Laufe des Dokumentes 'N' genannt.
+Die grï¿½ï¿½e des Sudokus wird im Laufe des Dokumentes 'N' genannt.
 
-die nächsten Zeilen (maximal noch N) beschreiben das Sudoku selber.
+die nï¿½chsten Zeilen (maximal noch N) beschreiben das Sudoku selber.
 Wenn eine Zeile leer ist, bedeutet das auch, dass im Sudoku in
 dieser Zeile kein Feld gesetzt ist.
 
 Falls eine Zeile nicht leer sein soll, muss die komplette Zeile 
-mit Werten gefüllt werden. Die Werte 1 bis N bedeutet, dass 
-das Sudoku an dieser Zeilen-Spalten Kombination einen Wert enthält.
+mit Werten gefï¿½llt werden. Die Werte 1 bis N bedeutet, dass 
+das Sudoku an dieser Zeilen-Spalten Kombination einen Wert enthï¿½lt.
 Der Wert 0 oder kein Wert bedeutet, dass an dieser Stelle
 kein Wert in dem Sudoku steht.
 Die Spalten werden durch ein Semikolon (;) getrennt.
