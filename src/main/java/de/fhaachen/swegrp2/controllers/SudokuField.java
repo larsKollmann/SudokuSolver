@@ -15,9 +15,10 @@ import static de.fhaachen.swegrp2.controllers.SudokuController.isSizeSupported;
  * Wrappt das eigentliche Sudoku und bietet zusätzliche Informationen und Methoden zum Umgang dessen.</p>
  */
 public class SudokuField {
-    private int size;                   //Groeße des Sudoku
-    private int subFieldSize;           //Groeße der einzelnen Sudokufelder
-    private int fieldValues[][];        //Eigentlichen Werte des Sudoku
+    private int size;                       //Groeße des Sudoku
+    private int subFieldSize;               //Groeße der einzelnen Sudokufelder
+    private int fieldValues[][];            //Eigentlichen Werte des Sudoku
+    private Boolean cellIsGenerated[][];    //Feld mit Boolschen Werten, die angeben, ob die Zelle vom System generiert wurde
 
     /**
      * Konstruktor, initialisiert Parameter.
@@ -27,6 +28,9 @@ public class SudokuField {
         this.size = size;
         subFieldSize = (int) Math.sqrt(size);
         fieldValues = new int[size][size];
+
+        cellIsGenerated = new Boolean[size][size];
+        for(Boolean[] bools : cellIsGenerated) Arrays.fill(bools, false);
     }
 
     /**
@@ -49,6 +53,10 @@ public class SudokuField {
         for (int i = 0; i < size; i++) {
             fieldValues[i] = Arrays.copyOf(arr[i], arr[i].length);
         }
+
+        cellIsGenerated = new Boolean[size][size];
+        for(Boolean[] bools : cellIsGenerated) Arrays.fill(bools, false);
+
         if(!checkNumbersInRange()) throw new Exception("Zahlen nicht im erlaubten Bereich");
     }
 
@@ -95,9 +103,25 @@ public class SudokuField {
         return conflictFields;
     }
 
+    /**
+     * Setzt für alle gefüllten Felder des Sudokufields den entsprechenden Eintrag in 'cellIsGenerated' auf true.
+     */
+    void markAsGenerated() {
+        for(int row = 0; row < size; row++) {
+            for(int col = 0; col < size; col++) {
+                if(fieldValues[row][col] != 0) {
+                    cellIsGenerated[row][col] = true;
+                }
+            }
+        }
+    }
+
     //Getterfunktionen
     public int getFieldValue(int y, int x) {
         return fieldValues[y][x];
+    }
+    Boolean getCellIsGenerated(int y, int x) {
+        return cellIsGenerated[y][x];
     }
     public int[][] getSudokuField() {
         return this.fieldValues;

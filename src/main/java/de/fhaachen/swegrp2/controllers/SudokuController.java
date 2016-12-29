@@ -67,6 +67,7 @@ public class SudokuController {
         }
 
         sudokuField = generator.getSudokuField();
+        sudokuField.markAsGenerated();
     }
 
     /**
@@ -164,5 +165,8 @@ public class SudokuController {
     }
     public int getFieldValue(int y, int x) {
         return sudokuField.getFieldValue(y, x);
+    }
+    public Boolean getCellIsGenerated(int y, int x) {
+        return sudokuField.getCellIsGenerated(y, x);
     }
 }

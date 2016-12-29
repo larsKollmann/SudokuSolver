@@ -13,6 +13,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -55,9 +56,16 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     private class CellEvent implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent event) {
-            String p = event.getSource().toString();
+            Pane pane = (Pane) event.getSource();
+            String p = pane.toString();
             int x = Integer.parseInt(p.substring(p.indexOf("$") + 1, p.indexOf(',')));
             int y = Integer.parseInt(p.substring(p.indexOf(',') + 1, p.indexOf(']')));
+
+            if(controller.getCellIsGenerated(y,x)) {
+                pane.setStyle("-fx-background-color: Red");
+                mainGridPane.requestFocus();
+                return;
+            }
 
             int[] gridCoords = translateXYToGridCoords(x, y);
             GridPane subGrid = (GridPane) mainGridPane.lookup("#SubGrid$" + gridCoords[0] + "," + gridCoords[1]);
@@ -74,6 +82,12 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             textField.setAlignment(CENTER);
 
             textField.setOnAction(event1 -> mainGridPane.requestFocus());
+            textField.setOnKeyPressed(aEvent -> {
+                if (aEvent.getCode() == KeyCode.ESCAPE) {
+                    textField.setText(text);
+                    mainGridPane.requestFocus();
+                }
+            });
             textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue) {
                     tryUpdate(textField.getText(), x, y);
