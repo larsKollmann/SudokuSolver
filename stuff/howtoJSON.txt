@@ -1,37 +1,55 @@
-Die .json Datei sieht folgendermassen aus:
+Sie wollen eine JSON-Datei erstellen ? 
+Hier erklären wir ihnen wie.
 
+Der Inhalt der JSON-Datei wird von geschweiften Klammern 
+umschlossen: {...}.
 
-!Start json Datei
+Innerhalb dieser Klammern ist die erste Zeile die Größe
+des Sudokus. Dort sind erlaubte Zahlen 9,16,25 und 36.
+Alle anderen Zahlen werden zu Fehlern führen: ""size": 9,".
 
-{ 
-	"size": $N,
-	"sudoku": [
-		$Sudoku
-	]
+Die größe des Sudokus wird im Laufe des Dokumentes 'N' genannt.
+
+Der Inhalt des Sudokus wird mit folgender Zeile eingeleitet:
+""sudoku": ["
+
+Die nun Folgenden Zeilen, mit maximaler Zifferanzahl von N,
+beschreiben den Inhalt des Sudokus.
+Soll die Stelle des Sudokus leer sein, wird "0" eingetragen.
+Andernfalls wird die gewünschte Zahl von 1-N gesetzt.
+
+Jede Ziffer wird von der darauffolgenden durch ein ","
+getrennt. Ist die Ziffer die letzte stelle des Sudokus,
+wird dieses weg gelassen.
+
+Sind alle N Zeilen bestimmt, wird der Inhalt wieder mit einer
+eckigen Klammer geschlossen: "]".
+
+Beispielzeile:
+==============
+
+0,4,0,0,0,0,0,0,6,
+...
+7,0,0,0,3,0,0,0,1
+
+==============
+
+Komplettbeispiel:
+
+{
+  "size": 9,
+  "sudoku": [
+    0,4,0,0,0,0,0,0,6,
+    0,0,5,8,0,4,0,0,0,
+    1,0,2,6,5,3,7,0,0,
+    0,0,6,3,0,0,0,0,0,
+    0,0,8,0,1,6,3,0,0,
+    0,0,0,0,0,0,0,6,0,
+    0,0,0,0,6,0,0,8,0,
+    0,2,1,0,8,5,0,0,0,
+    7,0,0,0,3,0,0,0,1
+  ]
 }
 
-!Ende Json Datei
-  
-$N kann dabei die Werte 9, 16, 25 oder 36 annehmen.
-Alle anderen führen zu Fehlern.
-
-$Sudoku steht für eine Aneinanderreihung von Zahlen zwischen 0 und N.
-Zahlen sind durch ein Komma (,) getrennt.
-0 Steht für ein leeres Feld. Eine zahl von 1 bis N steht für
-den jeweiligen Wert.
-
-Diese Zahlen werden spaltenweise eingelesen.
-Die erste Zahl ist die oben links, die 2. rechts daneben und so weiter.
-
-Wenn N Zahlen eingelesen worden sind, beginnt automatisch
-eine neue Zeile.
-Zur Übersichtlichkeit sollten Sie die einzelnen Zeilen in
-ihrer .json Datei durch Zeilenumbrüche trennen.
-
-Die Anzahl Zahlen in $Sudoku muss $N mal $N sein.
-Also im Beispiel von $N = 9 müssen es 81 Zahlen sein,
-ansonsten kann die Datei nicht importiert werden.
-
-
-Eine komplette Datei mit einem 9x9 Sudoku gibt es in der Datei "beispiel_9x9.json".
-Eine Datei mit einem 16x16 Sudoku in der Datei "beispiel_16x16.json".
+Eine komplette Datei mit einem 9x9 Sudoku gibt es in der Datei "beispiel_9x9.JSON". 
+Eine Datei mit einem 16x16 Sudoku in der Datei "beispiel_16x16.JSON".
