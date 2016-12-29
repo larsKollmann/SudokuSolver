@@ -118,21 +118,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
         drawGrid();
         MainApp.primaryStage.minWidthProperty().bind(mainGridPane.widthProperty().add(40));
-
-        switch(controller.getSubFieldsize()) {
-            case 3:
-                setSizeTo3.setSelected(true);
-                break;
-            case 4:
-                setSizeTo4.setSelected(true);
-                break;
-            case 5:
-                setSizeTo5.setSelected(true);
-                break;
-            case 6:
-                setSizeTo6.setSelected(true);
-                break;
-        }
+        tickSize();
 
         fillWithCurrentSudokuField(colorGenerated, true);
     }
@@ -230,6 +216,23 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             row.setPrefHeight(15);
             gridPane.getColumnConstraints().add(col);
             gridPane.getRowConstraints().add(row);
+        }
+    }
+
+    private void tickSize() {
+        switch(controller.getSubFieldsize()) {
+            case 3:
+                setSizeTo3.setSelected(true);
+                break;
+            case 4:
+                setSizeTo4.setSelected(true);
+                break;
+            case 5:
+                setSizeTo5.setSelected(true);
+                break;
+            case 6:
+                setSizeTo6.setSelected(true);
+                break;
         }
     }
 
@@ -343,6 +346,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         if(super.importFile(actionEvent)){
             redrawGrid();
             fillWithCurrentSudokuField(colorImported, true);
+            tickSize();
             return true;
         }
         return false;
