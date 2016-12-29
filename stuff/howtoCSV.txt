@@ -1,0 +1,38 @@
+CSV Dateien zu erstellen ist wahrscheinlich am schnellsten erledigt.
+Die erste Zeile legt fest, wie groß das Sudoku ist.
+Dort sind erlaubte Zahlen 9,16,25 und 36.
+Alle anderen Zahlen werden zu Fehlern führen.
+
+Die größe des Sudokus wird im Laufe des Dokumentes 'N' genannt.
+
+die nächsten Zeilen (maximal noch N) beschreiben das Sudoku selber.
+Wenn eine Zeile leer ist, bedeutet das auch, dass im Sudoku in
+dieser Zeile kein Feld gesetzt ist.
+
+Falls eine Zeile nicht leer sein soll, muss die komplette Zeile 
+mit Werten gefüllt werden. Die Werte 1 bis N bedeutet, dass 
+das Sudoku an dieser Zeilen-Spalten Kombination einen Wert enthält.
+Der Wert 0 oder kein Wert bedeutet, dass an dieser Stelle
+kein Wert in dem Sudoku steht.
+Die Spalten werden durch ein Semikolon (;) getrennt.
+
+
+Beispielzeile:
+==============
+
+1;;;2;3;0;;;
+
+Ergebnis:
+=========
+Eine Zeile mit 9 Spalten.
+
+Spalte 1: 1
+Spalte 2,3,6,7,8,9: 0
+Spalte 4: 2 
+Spalte 5: 3
+
+
+
+
+Eine komplette Datei mit einem 9x9 Sudoku gibt es in der Datei "beispiel_9x9.csv".
+Eine Datei mit einem 16x16 Sudoku in der Datei "beispiel_16x16.csv".
