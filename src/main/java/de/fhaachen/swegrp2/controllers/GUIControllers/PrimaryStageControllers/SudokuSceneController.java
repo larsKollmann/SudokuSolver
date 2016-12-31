@@ -37,6 +37,7 @@ import static javafx.scene.layout.Priority.ALWAYS;
 
 public class SudokuSceneController extends PrimaryStageSharedController {
     private SudokuController controller = SudokuController.getInstance();
+    private int currentSize;
 
     @FXML private GridPane mainGridPane;
     @FXML private Button mainSolveButton;
@@ -148,19 +149,19 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     }
 
     private void drawGrid() {
-        int size = controller.getSubFieldsize();
+        currentSize = controller.getSubFieldsize();
 
         addrowcolumnconstraints(mainGridPane);
-        for (int xl = 0; xl < size; xl++) {
-            for (int yl = 0; yl < size; yl++) {
+        for (int xl = 0; xl < currentSize; xl++) {
+            for (int yl = 0; yl < currentSize; yl++) {
                 GridPane smallgridPane = new GridPane();
 
                 smallgridPane.setHgap(2);
                 smallgridPane.setVgap(2);
                 smallgridPane.setId("SubGrid$" + xl + "," + yl);
 
-                for (int xs = 0; xs < size; xs++) {
-                    for (int ys = 0; ys < size; ys++) {
+                for (int xs = 0; xs < currentSize; xs++) {
+                    for (int ys = 0; ys < currentSize; ys++) {
                         int[] coords = translateGridCoordstoXY(xl, yl, xs, ys);
 
                         Pane pane = new Pane();
@@ -191,7 +192,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         }
 
         int[] stageHeightBySize = new int[]{496, 564, 781, 980};
-        MainApp.primaryStage.setMinHeight(stageHeightBySize[size - 3]);
+        MainApp.primaryStage.setMinHeight(stageHeightBySize[currentSize - 3]);
         MainApp.primaryStage.sizeToScene();
     }
 
@@ -220,7 +221,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     }
 
     private void tickSize() {
-        switch(controller.getSubFieldsize()) {
+        switch(currentSize) {
             case 3:
                 setSizeTo3.setSelected(true);
                 break;
@@ -344,7 +345,8 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     @FXML
     public boolean importFile(ActionEvent actionEvent) {
         if(super.importFile(actionEvent)){
-            redrawGrid();
+            if(currentSize != controller.getSubFieldsize())
+                redrawGrid();
             fillWithCurrentSudokuField(colorImported, true);
             tickSize();
             return true;
