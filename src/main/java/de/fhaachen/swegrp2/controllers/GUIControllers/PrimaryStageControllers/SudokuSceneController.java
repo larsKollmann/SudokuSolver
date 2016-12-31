@@ -197,6 +197,9 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         int[] stageHeightBySize = new int[]{496, 564, 781, 980};
         MainApp.primaryStage.setMinHeight(stageHeightBySize[currentSize - 3]);
         MainApp.primaryStage.sizeToScene();
+
+        int[] stageWidthBySize = new int[]{419, 486, 705, 900};
+        MainApp.primaryStage.setWidth(stageWidthBySize[currentSize - 3]);
     }
 
     private void redrawGrid() {
