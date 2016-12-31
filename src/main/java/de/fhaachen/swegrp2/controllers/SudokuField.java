@@ -20,6 +20,8 @@ public class SudokuField {
     private int fieldValues[][];            //Eigentlichen Werte des Sudoku
     private Boolean cellIsGenerated[][];    //Feld mit Boolschen Werten, die angeben, ob die Zelle vom System generiert wurde
 
+    private Boolean systemGenereated = false;   //gibt an, ob das vorliegende Feld vom System generiert wurde
+
     /**
      * Konstruktor, initialisiert Parameter.
      * @param size Die Größe des zu erstellenden SudokuField.
@@ -107,6 +109,7 @@ public class SudokuField {
      * Setzt für alle gefüllten Felder des Sudokufields den entsprechenden Eintrag in 'cellIsGenerated' auf true.
      */
     void markAsGenerated() {
+        systemGenereated = true;
         for(int row = 0; row < size; row++) {
             for(int col = 0; col < size; col++) {
                 if(fieldValues[row][col] != 0) {
@@ -131,6 +134,9 @@ public class SudokuField {
     }
     public int getSize() {
         return size;
+    }
+    public Boolean getSystemGenereated() {
+        return systemGenereated;
     }
 
     //Setterfunktionen

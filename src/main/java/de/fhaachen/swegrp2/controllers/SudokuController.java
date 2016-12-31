@@ -169,4 +169,7 @@ public class SudokuController {
     public Boolean getCellIsGenerated(int y, int x) {
         return sudokuField.getCellIsGenerated(y, x);
     }
+    public Boolean getSystemGenerated() {
+        return sudokuField.getSystemGenereated();
+    }
 }

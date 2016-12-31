@@ -46,9 +46,9 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     @FXML private RadioMenuItem setSizeTo5;
     @FXML private RadioMenuItem setSizeTo6;
 
-    private Color colorImported = Color.BLACK;
     private Color colorInserted = Color.BLACK;
-    private Color colorGenerated = Color.BLUE;
+    private Color colorImported = colorInserted;
+    private Color colorGenerated = new Color(0.4, 0.4, 0.4, 1);
     private Color colorSolved = Color.BLACK;
     private Color colorConflicts = Color.RED;
 
@@ -121,7 +121,10 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         MainApp.primaryStage.minWidthProperty().bind(mainGridPane.widthProperty().add(40));
         tickSize();
 
-        fillWithCurrentSudokuField(colorGenerated, true);
+        if(controller.getSystemGenerated())
+            fillWithCurrentSudokuField(colorGenerated, true);
+        else
+            fillWithCurrentSudokuField(colorImported, true);
     }
 
     private void tryUpdate(String textinput, int x, int y) {
