@@ -341,6 +341,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
     @FXML
     public void changeSize(ActionEvent actionEvent) throws IOException {
+        mainGridPane.requestFocus();
         RadioMenuItem menuItem = (RadioMenuItem)actionEvent.getSource();
         String sourceID = menuItem.toString();
         int size = Integer.parseInt(sourceID.substring(sourceID.indexOf('=') + 10, sourceID.indexOf(',')));
