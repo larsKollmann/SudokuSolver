@@ -172,4 +172,7 @@ public class SudokuController {
     public Boolean getSystemGenerated() {
         return sudokuField.getSystemGenereated();
     }
+    public Boolean isEmpty() {
+        return sudokuField.isEmpty();
+    }
 }

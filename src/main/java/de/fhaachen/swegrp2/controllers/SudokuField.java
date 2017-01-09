@@ -1,5 +1,6 @@
 package de.fhaachen.swegrp2.controllers;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import de.fhaachen.swegrp2.models.ExceptionSuite.EmptyArrayException;
 import de.fhaachen.swegrp2.models.ExceptionSuite.SizeNotSupportedException;
 
@@ -117,6 +118,16 @@ public class SudokuField {
                 }
             }
         }
+    }
+
+    public Boolean isEmpty() {
+        for(int[] row : fieldValues){
+            for(int field : row) {
+                if(field != 0)
+                    return false;
+            }
+        }
+        return true;
     }
 
     //Getterfunktionen
