@@ -1,7 +1,8 @@
 package de.fhaachen.swegrp2.models;
 
 /**
- * Created by lars on 19.12.16.
+ * <p><b>Titel:</b>Help</p>
+ * <p><b>Beschreibung:</b>Stellt die Datenstruktur der Hilfeeinträge dar.</p>
  */
 public class Help {
 

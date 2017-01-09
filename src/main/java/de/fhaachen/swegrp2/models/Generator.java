@@ -7,7 +7,7 @@ import java.util.Random;
 
 /**
  * <p><b>Titel:</b> Generator</p>
- * <p><b>Beschreibung:</b> Generiert ein zufälluges Sudoku angebebener Größe
+ * <p><b>Beschreibung:</b> Generiert ein zufälliges Sudoku angebebener Größe
  * und speichert dies für weitere externe Zugriffe.</p>
  */
 public class Generator {

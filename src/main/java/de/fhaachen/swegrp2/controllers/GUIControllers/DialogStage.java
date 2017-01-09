@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Die Klasse stellt den Prototypen der Fehler- bzw. Fragedialoge dar.
+ * Es kann ein Dialog für Fehler erstellt werden, welcher nur bestätigt werden kann oder ein Auswahl-Dialog der einen Ja bzw. Nein-Aktion auslösen kann.
+ */
 public class DialogStage extends Stage implements Initializable {
 
     @FXML private ImageView imageView;
@@ -61,18 +65,30 @@ public class DialogStage extends Stage implements Initializable {
         }
     }
 
+    /**
+     * Stellt die Ok-Action des Fehlerdialogs dar
+     * @param event
+     */
     @FXML
     public void onOkButtonAction(ActionEvent event){
         this.clicked = true;
         close();
     }
 
+    /**
+     * Stellt die Nein-Action des AuswahlDialogs dar
+      * @param actionEvent
+     */
     @FXML
-    public void onNoButtonAction(ActionEvent actionEvent) throws IOException {
+    public void onNoButtonAction(ActionEvent actionEvent)  {
         this.clicked = false;
         close();
     }
 
+    /**
+     * Stellt die Ja-Action des AuswahlDialogs dar
+     * @param actionEvent
+     */
     @FXML
     public void onYesButtonAction(ActionEvent actionEvent) {
         this.clicked = true;
