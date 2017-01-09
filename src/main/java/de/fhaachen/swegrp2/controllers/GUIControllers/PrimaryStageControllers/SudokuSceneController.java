@@ -49,7 +49,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     private Color colorInserted = Color.BLACK;
     private Color colorImported = colorInserted;
     private Color colorGenerated = new Color(0.4, 0.4, 0.4, 1);
-    private Color colorSolved = Color.BLACK;
+    private Color colorSolved = Color.GREEN;
     private Color colorConflicts = Color.RED;
 
     private CellEvent cellEvent = new CellEvent();
@@ -130,14 +130,17 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     private void tryUpdate(String textinput, int x, int y) {
         int newvalue;
         int max = controller.getSize();
+        Boolean delete = false;
 
         try {
-            if (textinput == null || StringUtils.isBlank(textinput))
+            if (textinput == null || StringUtils.isBlank(textinput)) {
                 newvalue = 0;
+                delete = true;
+            }
             else
                 newvalue = Integer.parseInt(textinput);
 
-            if (newvalue < 0 || newvalue > max) throw new IOException();
+            if (!delete && (newvalue <= 0 || newvalue > max)) throw new IOException();
 
             controller.setFieldValue(y, x, newvalue);
             Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
