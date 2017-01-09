@@ -13,6 +13,11 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * <p>Titel:PrimaryStageSharedController</p>
+ * <p>Beschreibung: Der PrimaryStageSharedController dient der gemeinsamen Funktionalität der StartScene und der
+ * SudokuScene. Dabei handelt es sich primär um die Startleiste, die die beiden Stages teilen.</p>
+ */
 public class PrimaryStageSharedController {
     private SudokuController controller = SudokuController.getInstance();
 
@@ -21,6 +26,12 @@ public class PrimaryStageSharedController {
         MainApp.primaryStage.close();
     }
 
+    /**
+     * Die importFile-Methode dient dem Import von Sudokus, dabei wird ein Dateiexplorer geöffnet, in dem der User das gewünschte
+     * Sudoku auswählen kann
+     * @param actionEvent Wird ausgelöst bei Klick auf einen der Import-Steuerelemente
+     * @return Gibt zurück ob der Import erfolgreich war
+     */
     @FXML
     public boolean importFile(ActionEvent actionEvent) {
         Boolean  returnValue = false;
@@ -47,6 +58,10 @@ public class PrimaryStageSharedController {
         return returnValue;
     }
 
+    /**
+     * Öffnet die Hilfe-Ansicht
+     * @param actionEvent Wird bei Klick auf "Hilfe anzeigen" ausgelöst
+     */
     @FXML
     public void showHelpStage(ActionEvent actionEvent) {
         try {

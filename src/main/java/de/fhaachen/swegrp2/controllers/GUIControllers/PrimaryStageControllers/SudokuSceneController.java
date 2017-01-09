@@ -35,6 +35,10 @@ import java.util.Objects;
 import static javafx.geometry.Pos.CENTER;
 import static javafx.scene.layout.Priority.ALWAYS;
 
+/**
+ * <p>Titel: SodukuScene</p>
+ * <p>Beschreibung: Dient der Steuerung der SudokuScene</p>
+ */
 public class SudokuSceneController extends PrimaryStageSharedController {
     private SudokuController controller = SudokuController.getInstance();
     private int currentSize;
@@ -300,6 +304,10 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         pane.setStyle("-fx-background-color: MistyRose");
     }
 
+    /**
+     * Dient dem Zurücksetzen eines Sudokus. Nach Bestätigung des Dialogs wird das aktuelle Sudokufeld geleert.
+     * @param actionEvent Wird aufgerufen durch einen Klick auf "Sudoku zurücksetzen"
+     */
     //onAction methods
     @FXML
     public void clearField(ActionEvent actionEvent) {
@@ -313,12 +321,21 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         }
     }
 
+    /**
+     * Ruft die Generate-Methode des Controllers auf und füllt das aktuelle Sudokufeld mit dem generierten Sudoku
+     * @param actionEvent "Wird aufgerufen durch einen Klick auf "Sudoku zufällig generieren"
+     */
     @FXML
     public void generate(ActionEvent actionEvent) {
         controller.generate();
         fillWithCurrentSudokuField(colorGenerated, true);
     }
 
+    /**
+     * Löst das aktuelle Sudoku-Feld über die Solver-Funktionalität des SudokuControllers.
+     * Ist das Sudoku nicht lösbar oder das Feld leer, wird eine Fehlermeldung angezeigt.
+     * @param event Wird aufgerufen durch einen Klick auf "Lösen"
+     */
     @FXML
     public void solve(Event event) {
         if(controller.isEmpty()) {
@@ -335,6 +352,11 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         }
     }
 
+    /**
+     * Wird durch einen Klick auf "Eingaben überprüfen" aufgerufen. Prüft alle aktuellen Eingaben auf die Sudoku-Regeln und markiert
+     * die Felder, die diese verletzen.
+     * @param actionEvent
+     */
     @FXML
     public void markConflictCells(ActionEvent actionEvent) {
         resetConflictCells();
@@ -344,8 +366,13 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         }
     }
 
+    /**
+     * Wird aufgerufen über die Startleiste, Größe ändern und die anschließende Auswahl der gewünschten Größe.
+     * Das aktuelle Feld wird gelöscht, danach wird die Größe des Feldes geändert und das neue Feld erzeugt.
+     * @param actionEvent
+     */
     @FXML
-    public void changeSize(ActionEvent actionEvent) throws IOException {
+    public void changeSize(ActionEvent actionEvent) {
         mainGridPane.requestFocus();
         RadioMenuItem menuItem = (RadioMenuItem)actionEvent.getSource();
         String sourceID = menuItem.toString();
@@ -357,6 +384,12 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         menuItem.setSelected(true);
     }
 
+    /**
+     * Dient dem Import eines neuen Sudokus über eines der drei Dateiformate.
+     * Es wird die Import-Methode des SudokuControllers aufgerufen.
+     * @param actionEvent Wird ausgelöst bei Klick auf einen der Import-Steuerelemente
+     * @return
+     */
     @FXML
     public boolean importFile(ActionEvent actionEvent) {
         if(super.importFile(actionEvent)){
@@ -369,6 +402,11 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         return false;
     }
 
+    /**
+     * Dient dem Export des aktuellen Sudokus. Ruft den Dateiexplorer des Systems auf. Nachdem der Nutzer den Speiecherort und den Dateinamen
+     * festgelegt hat wird die Export-Methode des SudokuControllers aufegrufen.
+     * @param actionEvent
+     */
     @FXML
     public void exportFile(ActionEvent actionEvent) {
         String sourceID = actionEvent.getSource().toString();
@@ -389,6 +427,10 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         }
     }
 
+    /**
+     * Der User kann den Speicherort der zu exportierenden PDF aussuchen. Danach wird die PDF-Export-Methode des SudokuControllers aufgerufen.
+     * @param actionEvent Wird aufgerufen bei Auswahl des Steuerelementes Export, PDF-Datei.
+     */
     @FXML
     public void exportPDF(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
