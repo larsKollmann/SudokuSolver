@@ -119,16 +119,6 @@ public class SudokuField {
         }
     }
 
-    Boolean isEmpty() {
-        for(int[] row : fieldValues){
-            for(int field : row) {
-                if(field != 0)
-                    return false;
-            }
-        }
-        return true;
-    }
-
     //Getterfunktionen
     public int getFieldValue(int y, int x) {
         return fieldValues[y][x];

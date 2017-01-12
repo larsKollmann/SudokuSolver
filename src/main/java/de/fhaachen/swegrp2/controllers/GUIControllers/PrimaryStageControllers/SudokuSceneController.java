@@ -344,11 +344,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
      */
     @FXML
     public void solve(Event event) {
-        if(controller.isEmpty()) {
-            DialogStage test = new DialogStage("Das Sudoku ist leer.", "Fehler", false);
-            test.showAndWait();
-            return;
-        }
         if (controller.solve()) {
             fillWithCurrentSudokuField(colorSolved, false);
             resetConflictCells();

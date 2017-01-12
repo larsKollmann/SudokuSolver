@@ -165,9 +165,6 @@ public class SudokuController {
     public Boolean getSystemGenerated() {
         return sudokuField.getSystemGenereated();
     }
-    public Boolean isEmpty() {
-        return sudokuField.isEmpty();
-    }
 
     //Setterfunktionen
     public void setFieldValue(int y, int x, int value) {
