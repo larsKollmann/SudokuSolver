@@ -34,15 +34,14 @@ public class PrimaryStageSharedController {
      */
     @FXML
     public boolean importFile(ActionEvent actionEvent) {
-        Boolean  returnValue = false;
+        Boolean returnValue = false;
 
         String sourceID = actionEvent.getSource().toString();
         String fileType = sourceID.substring(sourceID.indexOf('$') + 1, sourceID.indexOf(','));
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(fileType + "-Datei importieren");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileType + "-Dateien",
-                "*." + fileType.toLowerCase()));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(fileType + "-Dateien", "*." + fileType.toLowerCase()));
 
         File file = fileChooser.showOpenDialog(MainApp.primaryStage);
         try {

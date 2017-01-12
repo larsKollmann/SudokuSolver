@@ -2,7 +2,6 @@ package de.fhaachen.swegrp2.models.solver;
 
 import de.fhaachen.swegrp2.controllers.SudokuField;
 
-import java.io.IOException;
 import java.util.*;
 
 /**<p><b>Titel:</b> SudokuGrid</p>
@@ -10,13 +9,12 @@ import java.util.*;
  * und enthält die primären Methoden zum Lösen des Sudoku. </p>
  */
 public class SudokuGrid {
-    int m_size;
-    int m_subRow;
-    int m_subCol;
-    int m_numNodesExpanded = 0;
+    private int m_size;
+    private int m_subRow;
+    private int m_subCol;
 
-    Cell[][] m_grid;
-    SudokuField sudokuField;
+    private Cell[][] m_grid;
+    private SudokuField sudokuField;
 
     /**
      * Konstruktor, intitialisiert Parameter und führt Umwandlung des SudokuField durch.
@@ -51,7 +49,6 @@ public class SudokuGrid {
     }
 
     private boolean solveGrid() {
-        m_numNodesExpanded++;
         Cell cell = this.getNextUnoccupiedCell();
         if (cell == null) return true;
 
@@ -73,7 +70,7 @@ public class SudokuGrid {
 
     private List<Cell> addConstraints(Cell cell, int k) {
 
-        List<Cell> updatedCells = new ArrayList<Cell>(m_size);
+        List<Cell> updatedCells = new ArrayList<>(m_size);
         for (int ind = 0; ind < m_size; ind++) {
             Cell colCell = m_grid[ind][cell.col()];
             if (!colCell.solved() && cell.row() != ind && !colCell.constraints().contains(k)) {
@@ -105,11 +102,10 @@ public class SudokuGrid {
 
     private List<Cell> setVal(Cell cell, int val) {
         cell.setVal(val);
-        List<Cell> constraints = addConstraints(cell, val);
-        return constraints;
+        return addConstraints(cell, val);
     }
 
-    private Set<Cell> m_constrainedCells = new HashSet<Cell>(200);
+    private Set<Cell> m_constrainedCells = new HashSet<>(200);
 
     private boolean valid(int row, int col, int k) {
 
@@ -131,32 +127,26 @@ public class SudokuGrid {
 
     private Cell getNextUnoccupiedCell() {
         if (this.m_constrainedCells.size() == 0) return null;
-        Cell max = Collections.max(this.m_constrainedCells);
-        return max;
-    }
-
-    private int numNodesExpanded() {
-        return this.m_numNodesExpanded;
+        return Collections.max(this.m_constrainedCells);
     }
 
     private void resetVal(List<Cell> modifiedCells, int k) {
         for (Cell cell : modifiedCells) {
             cell.constraints().remove(k);
-//			updateTree(cell);
         }
     }
-    //Interne Funktionen
 
+    //Interne Funktionen
     /**
      * Gibt das Sudoku als ein String aus.
      * @return Der Sudokustring.
      */
     @Override
     public String toString() {
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
         for (Cell[] row : m_grid) {
             for (Cell cell : row)
-                buff.append(cell.val() + ",");
+                buff.append(cell.val()).append(",");
             buff.append("\n");
         }
         return buff.toString();
@@ -166,7 +156,7 @@ public class SudokuGrid {
      * Wandelt das als Cell Array gespeicherte Sudoku in ein 2D integer Array um.
      * @return 2D int Array des Sudoku.
      */
-    public int[][] getGridAsIntArr() {
+    int[][] getGridAsIntArr() {
         int arr[][] = new int[m_size][m_size];
         for (int i = 0; i < m_grid.length; i++) {
             for (int b = 0; b < m_grid[i].length; b++) {
@@ -191,7 +181,6 @@ public class SudokuGrid {
      * @return Boolean ob das Sudoku erfolgreich gelöst werden konnte.
      */
     public boolean solve() {
-        if(sudokuField.getConflictCoordinates().size() > 0) return false;
-        else return solveGrid();
+        return sudokuField.getConflictCoordinates().size() <= 0 && solveGrid();
     }
 }

@@ -11,9 +11,7 @@ import java.util.Random;
  * und speichert dies für weitere externe Zugriffe.</p>
  */
 public class Generator {
-    private SudokuField field; //Backup field, falls man das generierte Sudoku zuruücksetzen will
-
-    public Generator () {}
+    private SudokuField field;
 
     /**
      * Generiert ein zufälliges Sudoku angegebener Größe und speichert dies in seinem Private Attribut zu Backup zwecken
@@ -24,25 +22,25 @@ public class Generator {
     public boolean generate (int size) throws Exception {
         SudokuGrid grid;
 
-            field = new SudokuField(size);
+        field = new SudokuField(size);
 
-            //random row & col & number
-            int row = new Random().nextInt(size);
-            int col = new Random().nextInt(size);
-            int num = new Random().nextInt(size);
+        //random row & col & number
+        int row = new Random().nextInt(size);
+        int col = new Random().nextInt(size);
+        int num = new Random().nextInt(size);
 
-            field.setFieldValue(row, col, num);
+        field.setFieldValue(row, col, num);
 
-            grid = new SudokuGrid(this.field);
+        grid = new SudokuGrid(this.field);
 
-            grid.solve();
+        grid.solve();
 
-        this.field = grid.getGridAsSudokuField();
+        field = grid.getGridAsSudokuField();
 
-        //anzahl an hinweisen die noch übrig gelassen werden sollen
-        int hints = ((size* size)/ 2) + (3 * size);
+        //Anzahl an Hinweisen die gelöscht werden sollen
+        int hints = ((size* size)/ 2) - (3 * size);
 
-        //Lösche felder
+        //Lösche Felder
         for (int i = 0; i < hints; i++) {
             int rowtodel = new Random().nextInt(size);
             int coltodel = new Random().nextInt(size);
@@ -54,5 +52,4 @@ public class Generator {
 
     //Getterfuntkionen
     public SudokuField getSudokuField () {return field;}
-
 }

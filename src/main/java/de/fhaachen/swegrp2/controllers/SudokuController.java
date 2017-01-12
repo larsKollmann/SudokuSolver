@@ -17,8 +17,6 @@ import java.util.List;
 public class SudokuController {
     private static SudokuController ourInstance = new SudokuController();
     private SudokuField sudokuField;    //Speichert das Sudoku und Sudoku relevante Informationen
-    //TODO: noch benötigt?
-    private SudokuField previousSudoku; //Das zuletzt erstellte, generierte, importierte Sudoku (zum zuruecksetzen)
     private Import importer;
     private Export exporter;
     private Generator generator;
@@ -34,7 +32,6 @@ public class SudokuController {
 
     private SudokuController () {
         sudokuField = new SudokuField(9); //9 = Standardgroeße
-        previousSudoku = sudokuField;
         generator = new Generator();
         importer = new Import();
         exporter = new Export();
@@ -153,10 +150,6 @@ public class SudokuController {
     }
 
     //Getterfunktionen
-    public void setFieldValue(int y, int x, int value) {
-        sudokuField.setFieldValue(y, x, value);
-    }
-
     public int getSubFieldsize() {
         return (int) Math.sqrt(sudokuField.getSize());
     }
@@ -174,5 +167,10 @@ public class SudokuController {
     }
     public Boolean isEmpty() {
         return sudokuField.isEmpty();
+    }
+
+    //Setterfunktionen
+    public void setFieldValue(int y, int x, int value) {
+        sudokuField.setFieldValue(y, x, value);
     }
 }

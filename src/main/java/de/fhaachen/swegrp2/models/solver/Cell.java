@@ -7,12 +7,10 @@ import java.util.Set;
  * <p><b>Beschreibung:</b> Bietet für ein einzelnes Sudokufeld für den Solver essentielle Daten.</p>
  */
 public class Cell implements Comparable<Cell> {
-    public static final int DEF = 0; //Konstante zur Bestimmung des Status des Feldes (Geloest/ Ungeloest)
-    Set<Integer> m_constraints = new HashSet<Integer>();
-    boolean m_preFilled = false;
-    int m_row, m_col;
+    private static final int DEF = 0; //Konstante zur Bestimmung des Status des Feldes (Geloest/ Ungeloest)
+    private Set<Integer> m_constraints = new HashSet<>();
+    private int m_row, m_col;
     int m_val;
-
     /**
      * Statische Methode die zu gegebenen Wert, Zeile, Spalte eine neue Cell erstellt.
      * @param c Wert des Feldes.
@@ -20,16 +18,19 @@ public class Cell implements Comparable<Cell> {
      * @param col Spalte in dem sich das Feld befindet.
      * @return Die neu erstellte Cell.
      */
-    public static Cell getCell(int c, int row, int col) {
+    static Cell getCell(int c, int row, int col) {
         if (0 == c)
-            return new Cell(DEF, row, col, false);
+            return new Cell(DEF, row, col);
         else
-            return new Cell(c, row, col, true);
+            return new Cell(c, row, col);
     }
 
-    private Cell(int val, int row, int col, boolean preFilled) {
+    private int constraintSize() {
+        return m_constraints.size();
+    }
+
+    private Cell(int val, int row, int col) {
         m_val = val;
-        m_preFilled = preFilled;
         m_row = row;
         m_col = col;
     }
@@ -75,13 +76,7 @@ public class Cell implements Comparable<Cell> {
         return m_col;
     }
     int val() {return m_val;}
-    boolean preFilled() {
-        return m_preFilled;
-    }
     Set<Integer> constraints() {return m_constraints;}
-    int constraintSize() {
-        return m_constraints.size();
-    }
 
     /**
      * Fragt ab ob das einzelne Feld im geloesten Zustand ist.

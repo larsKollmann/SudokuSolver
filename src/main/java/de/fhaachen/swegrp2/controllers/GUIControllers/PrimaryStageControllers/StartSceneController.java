@@ -32,7 +32,7 @@ public class StartSceneController extends PrimaryStageSharedController {
     /**
      * Ruft die Import-Funktionalität auf
      * @param actionEvent Wird ausgelöst bei Klick auf einen der Import-Steuerelemente
-     * @return
+     * @return Gibt zurück ob der Import erfolgreich war
      */
     @FXML
     public boolean importFile(ActionEvent actionEvent) {
@@ -45,7 +45,6 @@ public class StartSceneController extends PrimaryStageSharedController {
 
     /**
      * Generiert per Default ein 9x9 Sudoku aus der StartScene
-     * @param actionEvent
      */
     @FXML
     public void generate(ActionEvent actionEvent) {
@@ -55,7 +54,6 @@ public class StartSceneController extends PrimaryStageSharedController {
 
     /**
      * Dient der Erstellung eines leeren Sudokus aus der Schnellstart-Leiste.
-     * @param actionEvent
      */
     @FXML
     public void NewSudoku(ActionEvent actionEvent) {

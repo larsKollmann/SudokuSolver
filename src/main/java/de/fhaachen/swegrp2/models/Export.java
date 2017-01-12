@@ -1,22 +1,5 @@
 package de.fhaachen.swegrp2.models;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import de.fhaachen.swegrp2.controllers.SudokuField;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.WritableImage;
@@ -29,6 +12,19 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import javax.imageio.ImageIO;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import static de.fhaachen.swegrp2.controllers.SudokuController.isSizeSupported;
 
 /**
@@ -37,14 +33,12 @@ import static de.fhaachen.swegrp2.controllers.SudokuController.isSizeSupported;
  * mit gegeben Dateipfad in XML, CSV, JSON und PDF.</p>
  */
 public class Export {
-    public Export() {
-    }
 
     /**
      * Exportiert ein gegebenes SudokuField als XML in einen gegebenen Dateipfad.
      *
      * @param field Das zu exportierende Sudoku
-     * @param path  Der Dateipfad.
+     * @param path Der Dateipfad.
      * @throws Exception Lese-& Schreibefehler sowie fehlerhaftes SudokuField.
      */
     public void exportXML(SudokuField field, String path) throws Exception {
@@ -86,10 +80,10 @@ public class Export {
     }
 
     /**
-     * Exportiert ein gegebenes SudokuField als XML in einen gegebenen Dateipfad.
+     * Exportiert ein gegebenes SudokuField als CSV in einen gegebenen Dateipfad.
      *
      * @param field Das zu exportierende Sudoku
-     * @param path  Der Dateipfad.
+     * @param path Der Dateipfad.
      * @throws Exception Lese-& Schreibefehler sowie fehlerhaftes SudokuField.
      */
     public void exportCSV(SudokuField field, String path) throws Exception {
@@ -99,10 +93,10 @@ public class Export {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append(size + ";\n");
+        builder.append(size).append(";\n");
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
-                builder.append(arr[y][x] + "");
+                builder.append(arr[y][x]).append("");
                 if (x < size - 1)
                     builder.append(";");
             }
@@ -116,7 +110,7 @@ public class Export {
      * Exportiert ein gegebenes SudokuField als JSON in einen gegebenen Dateipfad.
      *
      * @param field Das zu exportierende Sudoku
-     * @param path  Der Dateipfad.
+     * @param path Der Dateipfad.
      * @throws Exception Lese-& Schreibefehler sowie fehlerhaftes SudokuField.
      */
     public void exportJSON(SudokuField field, String path) throws Exception {
@@ -126,7 +120,7 @@ public class Export {
 
         StringBuilder builder = new StringBuilder();
         builder.append("{\r\n");
-        builder.append("  \"size\": " + size + ",\r\n");
+        builder.append("  \"size\": ").append(size).append(",\r\n");
         builder.append("  \"sudoku\": [\r\n");
 
         for (int y = 0; y < size; y++) {
@@ -152,11 +146,11 @@ public class Export {
     }
 
     private void exportSnapshotAsPNG(String path, WritableImage png) throws IOException {
-        WritableImage image = png;
         File pngFile = new File(path);
-        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", pngFile);
+        ImageIO.write(SwingFXUtils.fromFXImage(png, null), "png", pngFile);
     }
 
+    @SuppressWarnings("deprecation")
     private void insertPNGintoPDF(BufferedImage png, PDDocument pdf) throws Exception {
         PDPage page = new PDPage();
         pdf.addPage(page);
@@ -177,7 +171,7 @@ public class Export {
             insertPNGintoPDF(bufferedImagePng, pdf);
             pdf.save(pdfFile.getPath());
             pdf.close();
-            pngFile.delete();
+            if(!pngFile.delete()) throw new IOException();
         } catch (Exception e) {
             e.printStackTrace();
         }

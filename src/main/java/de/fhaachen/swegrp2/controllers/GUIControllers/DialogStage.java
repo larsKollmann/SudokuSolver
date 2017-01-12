@@ -67,17 +67,15 @@ public class DialogStage extends Stage implements Initializable {
 
     /**
      * Stellt die Ok-Action des Fehlerdialogs dar
-     * @param event
      */
     @FXML
-    public void onOkButtonAction(ActionEvent event){
+    public void onOkButtonAction(ActionEvent actionEvent){
         this.clicked = true;
         close();
     }
 
     /**
-     * Stellt die Nein-Action des AuswahlDialogs dar
-      * @param actionEvent
+     * Stellt die Nein-Action des Auswahldialogs dar
      */
     @FXML
     public void onNoButtonAction(ActionEvent actionEvent)  {
@@ -86,8 +84,7 @@ public class DialogStage extends Stage implements Initializable {
     }
 
     /**
-     * Stellt die Ja-Action des AuswahlDialogs dar
-     * @param actionEvent
+     * Stellt die Ja-Action des Auswahldialogs dar
      */
     @FXML
     public void onYesButtonAction(ActionEvent actionEvent) {
