@@ -3,6 +3,9 @@ package de.fhaachen.swegrp2.controllers.GUIControllers.PrimaryStageControllers;
 import de.fhaachen.swegrp2.MainApp;
 import de.fhaachen.swegrp2.controllers.GUIControllers.DialogStage;
 import de.fhaachen.swegrp2.controllers.SudokuController;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -20,8 +23,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
@@ -42,6 +43,7 @@ import static javafx.scene.layout.Priority.ALWAYS;
 public class SudokuSceneController extends PrimaryStageSharedController {
     private SudokuController controller = SudokuController.getInstance();
     private int currentSize;
+    private DoubleProperty fontSize = new SimpleDoubleProperty(14);
 
     @FXML private GridPane mainGridPane;
     @FXML private Button mainSolveButton;
@@ -76,6 +78,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             GridPane subGrid = (GridPane) mainGridPane.lookup("#SubGrid$" + gridCoords[0] + "," + gridCoords[1]);
 
             TextField textField = new TextField();
+            textField.setStyle("-fx-padding: 5px;");
 
             String text = controller.getFieldValue(y, x) + "";
             if (!Objects.equals(text, "0"))
@@ -86,9 +89,9 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             textField.setMinWidth(40);
             textField.setAlignment(CENTER);
 
-            textField.setOnAction(event1 -> mainGridPane.requestFocus());
-            textField.setOnKeyPressed(aEvent -> {
-                if (aEvent.getCode() == KeyCode.ESCAPE) {
+            textField.setOnAction(ActionEvent -> mainGridPane.requestFocus());
+            textField.setOnKeyPressed(KeyEvent -> {
+                if (KeyEvent.getCode() == KeyCode.ESCAPE) {
                     textField.setText(text);
                     mainGridPane.requestFocus();
                 }
@@ -123,7 +126,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
         drawGrid();
         MainApp.primaryStage.minWidthProperty().bind(mainGridPane.widthProperty().add(40));
-        tickSize();
+        setSizeSelector();
 
         if(controller.getSystemGenerated())
             fillWithCurrentSudokuField(colorGenerated, true);
@@ -161,14 +164,17 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     private void drawGrid() {
         currentSize = controller.getSubFieldsize();
 
-        addrowcolumnconstraints(mainGridPane);
+        addRowColumnConstraints(mainGridPane);
         for (int xl = 0; xl < currentSize; xl++) {
             for (int yl = 0; yl < currentSize; yl++) {
-                GridPane smallgridPane = new GridPane();
+                GridPane smallGridPane = new GridPane();
 
-                smallgridPane.setHgap(2);
-                smallgridPane.setVgap(2);
-                smallgridPane.setId("SubGrid$" + xl + "," + yl);
+                smallGridPane.setHgap(2);
+                smallGridPane.setVgap(2);
+                smallGridPane.setId("SubGrid$" + xl + "," + yl);
+
+                fontSize.bind(mainGridPane.heightProperty().divide(currentSize * currentSize + 10));
+                mainGridPane.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), "; -fx-background-color: black"));
 
                 for (int xs = 0; xs < currentSize; xs++) {
                     for (int ys = 0; ys < currentSize; ys++) {
@@ -184,20 +190,19 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                         Text text = new Text();
                         text.setMouseTransparent(true);
                         text.setTextAlignment(TextAlignment.CENTER);
-                        text.setFont(Font.font(null, FontWeight.BOLD, 14));
                         text.setId("Text$" + coords[0] + "," + coords[1]);
 
-                        smallgridPane.add(pane, xs, ys);
-                        smallgridPane.add(text, xs, ys);
+                        smallGridPane.add(pane, xs, ys);
+                        smallGridPane.add(text, xs, ys);
 
                         GridPane.setHalignment(text, HPos.CENTER);
                         GridPane.setValignment(text, VPos.CENTER);
                     }
                 }
 
-                addrowcolumnconstraints(smallgridPane);
+                addRowColumnConstraints(smallGridPane);
 
-                mainGridPane.add(smallgridPane, xl, yl);
+                mainGridPane.add(smallGridPane, xl, yl);
             }
         }
 
@@ -217,7 +222,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         drawGrid();
     }
 
-    private void addrowcolumnconstraints(GridPane gridPane) {
+    private void addRowColumnConstraints(GridPane gridPane) {
         int size = controller.getSubFieldsize();
         for (int i = 0; i < size; i++) {
             ColumnConstraints col = new ColumnConstraints();
@@ -233,7 +238,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         }
     }
 
-    private void tickSize() {
+    private void setSizeSelector() {
         switch(currentSize) {
             case 3:
                 setSizeTo3.setSelected(true);
@@ -267,6 +272,9 @@ public class SudokuSceneController extends PrimaryStageSharedController {
 
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
+                Pane pane = (Pane) mainGridPane.lookup("#Pane$" + x + "," + y);
+                pane.setStyle("-fx-background-color: white");
+
                 Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
                 int number = controller.getFieldValue(y, x);
                 if (!all && text.getText().equals(number + ""))
@@ -278,8 +286,6 @@ public class SudokuSceneController extends PrimaryStageSharedController {
                     text.setText("");
 
                 text.setFill(textcolor);
-                Pane pane = (Pane) mainGridPane.lookup("#Pane$" + x + "," + y);
-                pane.setStyle("-fx-background-color: white");
             }
         }
     }
@@ -355,7 +361,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     /**
      * Wird durch einen Klick auf "Eingaben überprüfen" aufgerufen. Prüft alle aktuellen Eingaben auf die Sudoku-Regeln und markiert
      * die Felder, die diese verletzen.
-     * @param actionEvent
+     * @param actionEvent Wird aufgerufen durch einen Klick auf "Eingaben überprüfen"
      */
     @FXML
     public void markConflictCells(ActionEvent actionEvent) {
@@ -369,7 +375,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     /**
      * Wird aufgerufen über die Startleiste, Größe ändern und die anschließende Auswahl der gewünschten Größe.
      * Das aktuelle Feld wird gelöscht, danach wird die Größe des Feldes geändert und das neue Feld erzeugt.
-     * @param actionEvent
+     * @param actionEvent Wird aufgerufen durch einen Klick auf eine Größenauswahl über die Startleiste
      */
     @FXML
     public void changeSize(ActionEvent actionEvent) {
@@ -388,7 +394,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
      * Dient dem Import eines neuen Sudokus über eines der drei Dateiformate.
      * Es wird die Import-Methode des SudokuControllers aufgerufen.
      * @param actionEvent Wird ausgelöst bei Klick auf einen der Import-Steuerelemente
-     * @return
+     * @return Gibt zurück ob der Import erfolgreich war
      */
     @FXML
     public boolean importFile(ActionEvent actionEvent) {
@@ -396,7 +402,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             if(currentSize != controller.getSubFieldsize())
                 redrawGrid();
             fillWithCurrentSudokuField(colorImported, true);
-            tickSize();
+            setSizeSelector();
             return true;
         }
         return false;
@@ -405,7 +411,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     /**
      * Dient dem Export des aktuellen Sudokus. Ruft den Dateiexplorer des Systems auf. Nachdem der Nutzer den Speiecherort und den Dateinamen
      * festgelegt hat wird die Export-Methode des SudokuControllers aufegrufen.
-     * @param actionEvent
+     * @param actionEvent Wird aufgerufen durch einen Klick auf ein Steuerelement unter Export, das dem gewünschten Dateiformat entspricht (außer PDF)
      */
     @FXML
     public void exportFile(ActionEvent actionEvent) {
