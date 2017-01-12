@@ -9,11 +9,11 @@ import java.util.*;
  * und enthält die primären Methoden zum Lösen des Sudoku. </p>
  */
 public class SudokuGrid {
-    private int m_size;
-    private int m_subRow;
-    private int m_subCol;
+    private int size;
+    private int subRow;
+    private int subCol;
 
-    private Cell[][] m_grid;
+    private Cell[][] grid;
     private SudokuField sudokuField;
 
     /**
@@ -22,11 +22,11 @@ public class SudokuGrid {
      */
     public SudokuGrid(SudokuField sudokuField) {
         this.sudokuField = sudokuField;
-        m_size = sudokuField.getSize();
-        m_grid = getGrid(sudokuField);
-        m_subRow = sudokuField.getSubFieldSize();
-        m_subCol = m_subRow;
-        for (Cell[] row : m_grid)
+        size = sudokuField.getSize();
+        grid = getGrid(sudokuField);
+        subRow = sudokuField.getSubFieldSize();
+        subCol = subRow;
+        for (Cell[] row : grid)
             for (Cell cell : row) {
                 if (!cell.solved())
                     this.m_constrainedCells.add(cell);
@@ -52,7 +52,7 @@ public class SudokuGrid {
         Cell cell = this.getNextUnoccupiedCell();
         if (cell == null) return true;
 
-        for (int val = 1; val <= m_size; val++) {
+        for (int val = 1; val <= size; val++) {
             if (cell.constraints().contains(val)) continue;
             if (this.valid(cell.row(), cell.col(), val)) {
                 int prevVal = cell.val();
@@ -62,7 +62,7 @@ public class SudokuGrid {
                     return true;
                 cell.setVal(prevVal);
                 this.m_constrainedCells.add(cell);
-                resetVal(modifiedCells, val);
+                resetValue(modifiedCells, val);
             }
         }
         return false;
@@ -70,27 +70,27 @@ public class SudokuGrid {
 
     private List<Cell> addConstraints(Cell cell, int k) {
 
-        List<Cell> updatedCells = new ArrayList<>(m_size);
-        for (int ind = 0; ind < m_size; ind++) {
-            Cell colCell = m_grid[ind][cell.col()];
+        List<Cell> updatedCells = new ArrayList<>(size);
+        for (int ind = 0; ind < size; ind++) {
+            Cell colCell = grid[ind][cell.col()];
             if (!colCell.solved() && cell.row() != ind && !colCell.constraints().contains(k)) {
                 colCell.constraints().add(k);
                 if (!updatedCells.contains(colCell))
                     updatedCells.add(colCell);
             }
-            Cell rowCell = m_grid[cell.row()][ind];
+            Cell rowCell = grid[cell.row()][ind];
             if (!rowCell.solved() && cell.col() != ind && !rowCell.constraints().contains(k)) {
                 rowCell.constraints().add(k);
                 if (!updatedCells.contains(rowCell))
                     updatedCells.add(rowCell);
             }
         }
-        int m = (cell.row() / m_subRow) * m_subRow;
-        int n = (cell.col() / m_subCol) * m_subCol;
-        for (int i = m; i < m + m_subRow; i++)
-            for (int j = n; j < n + m_subCol; j++) {
-                if (m_grid[i][j].solved() || (i == cell.row() && j == cell.col())) continue;
-                Cell groupCell = m_grid[i][j];
+        int m = (cell.row() / subRow) * subRow;
+        int n = (cell.col() / subCol) * subCol;
+        for (int i = m; i < m + subRow; i++)
+            for (int j = n; j < n + subCol; j++) {
+                if (grid[i][j].solved() || (i == cell.row() && j == cell.col())) continue;
+                Cell groupCell = grid[i][j];
                 if (!groupCell.constraints().contains(k)) {
                     groupCell.constraints().add(k);
                     if (!updatedCells.contains(groupCell))
@@ -109,17 +109,17 @@ public class SudokuGrid {
 
     private boolean valid(int row, int col, int k) {
 
-        for (int ind = 0; ind < m_size; ind++) {
-            if ((row != ind && m_grid[ind][col].val() == k) ||
-                    (col != ind && m_grid[row][ind].val() == k))
+        for (int ind = 0; ind < size; ind++) {
+            if ((row != ind && grid[ind][col].val() == k) ||
+                    (col != ind && grid[row][ind].val() == k))
                 return false;
         }
-        int m = (row / m_subRow) * m_subRow;
-        int n = (col / m_subCol) * m_subCol;
-        for (int i = m; i < m + m_subRow; i++)
-            for (int j = n; j < n + m_subCol; j++) {
+        int m = (row / subRow) * subRow;
+        int n = (col / subCol) * subCol;
+        for (int i = m; i < m + subRow; i++)
+            for (int j = n; j < n + subCol; j++) {
                 if (i == row && j == col) continue;
-                if (this.m_grid[i][j].val() == k)
+                if (this.grid[i][j].val() == k)
                     return false;
             }
         return true;
@@ -130,7 +130,7 @@ public class SudokuGrid {
         return Collections.max(this.m_constrainedCells);
     }
 
-    private void resetVal(List<Cell> modifiedCells, int k) {
+    private void resetValue(List<Cell> modifiedCells, int k) {
         for (Cell cell : modifiedCells) {
             cell.constraints().remove(k);
         }
@@ -144,7 +144,7 @@ public class SudokuGrid {
     @Override
     public String toString() {
         StringBuilder buff = new StringBuilder();
-        for (Cell[] row : m_grid) {
+        for (Cell[] row : grid) {
             for (Cell cell : row)
                 buff.append(cell.val()).append(",");
             buff.append("\n");
@@ -157,10 +157,10 @@ public class SudokuGrid {
      * @return 2D int Array des Sudoku.
      */
     int[][] getGridAsIntArr() {
-        int arr[][] = new int[m_size][m_size];
-        for (int i = 0; i < m_grid.length; i++) {
-            for (int b = 0; b < m_grid[i].length; b++) {
-                arr[i][b] = m_grid[i][b].m_val;
+        int arr[][] = new int[size][size];
+        for (int i = 0; i < grid.length; i++) {
+            for (int b = 0; b < grid[i].length; b++) {
+                arr[i][b] = grid[i][b].mVal;
             }
         }
         return arr;

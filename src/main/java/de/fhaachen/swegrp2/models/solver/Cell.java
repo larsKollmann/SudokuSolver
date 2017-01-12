@@ -8,9 +8,9 @@ import java.util.Set;
  */
 public class Cell implements Comparable<Cell> {
     private static final int DEF = 0; //Konstante zur Bestimmung des Status des Feldes (Geloest/ Ungeloest)
-    private Set<Integer> m_constraints = new HashSet<>();
-    private int m_row, m_col;
-    int m_val;
+    private Set<Integer> mConstraints = new HashSet<>();
+    private int mRow, mCol;
+    int mVal;
     /**
      * Statische Methode die zu gegebenen Wert, Zeile, Spalte eine neue Cell erstellt.
      * @param c Wert des Feldes.
@@ -26,13 +26,13 @@ public class Cell implements Comparable<Cell> {
     }
 
     private int constraintSize() {
-        return m_constraints.size();
+        return mConstraints.size();
     }
 
     private Cell(int val, int row, int col) {
-        m_val = val;
-        m_row = row;
-        m_col = col;
+        mVal = val;
+        mRow = row;
+        mCol = col;
     }
 
     /**
@@ -41,7 +41,7 @@ public class Cell implements Comparable<Cell> {
      */
     @Override
     public String toString() {
-        return "" + m_val + "[" + m_row + "," + m_col + "]";
+        return "" + mVal + "[" + mRow + "," + mCol + "]";
     }
 
     /**
@@ -65,27 +65,27 @@ public class Cell implements Comparable<Cell> {
     public boolean equals(Object cellObj) {
         if (!(cellObj instanceof Cell)) return false;
         Cell cell = (Cell) cellObj;
-        return cell.row() == m_row && cell.col() == m_col;
+        return cell.row() == mRow && cell.col() == mCol;
     }
 
     //Getterfunktionen
     int row() {
-        return m_row;
+        return mRow;
     }
     int col() {
-        return m_col;
+        return mCol;
     }
-    int val() {return m_val;}
-    Set<Integer> constraints() {return m_constraints;}
+    int val() {return mVal;}
+    Set<Integer> constraints() {return mConstraints;}
 
     /**
      * Fragt ab ob das einzelne Feld im geloesten Zustand ist.
      * @return Boolean wert ob das Feld geloest wurde.
      */
     boolean solved() {
-        return m_val != DEF;
+        return mVal != DEF;
     }
 
     //Setterfunktionen
-    void setVal(int m_val) {this.m_val = m_val;}
+    void setVal(int m_val) {this.mVal = m_val;}
 }
