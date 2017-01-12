@@ -11,7 +11,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class HelpSceneController {
     private List<Help> getHelpList() throws Exception {
         JSONParser parser = new JSONParser();
 
-        Object obj = parser.parse(new FileReader(getClass().getResource("/hilfetexte.json").getPath()));
+        Object obj = parser.parse(new InputStreamReader(getClass().getResourceAsStream("/hilfetexte.json"), "UTF-8"));
 
         JSONObject jsonObject = (JSONObject) obj;
 
