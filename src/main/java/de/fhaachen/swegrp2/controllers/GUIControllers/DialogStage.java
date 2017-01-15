@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
  * Es kann ein Dialog für Fehler erstellt werden, welcher nur bestätigt werden kann oder ein Auswahl-Dialog der einen Ja bzw. Nein-Aktion auslösen kann.
  */
 public class DialogStage extends Stage implements Initializable {
+    public enum DialogType {ERROR, CONFIRM, INFO}
 
     @FXML private ImageView imageView;
     @FXML private Label text;
@@ -31,7 +32,7 @@ public class DialogStage extends Stage implements Initializable {
 
     private String message;
     private Stage parentStage;
-    private Boolean isConfirmDialog;
+    private DialogType dialogType;
     private Image image;
     private boolean clicked;
 
@@ -40,22 +41,15 @@ public class DialogStage extends Stage implements Initializable {
         return clicked;
     }
 
-    public DialogStage(String message, String title, Boolean isConfirmDialog) {
+    public DialogStage(String message, String title, DialogType dialogType) {
         setTitle(title);
 
         this.message = message;
-        this.isConfirmDialog = isConfirmDialog;
+        this.dialogType = dialogType;
         this.parentStage = MainApp.primaryStage;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Dialog.fxml"));
         fxmlLoader.setController(this);
-
-        if (isConfirmDialog) {
-            image = new Image(getClass().getResourceAsStream("/images/question.png"));
-        }
-        else {
-            image = new Image(getClass().getResourceAsStream("/images/error.png"));
-        }
 
         try {
             setScene(new Scene(fxmlLoader.load()));
@@ -94,13 +88,24 @@ public class DialogStage extends Stage implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (isConfirmDialog) {
-            Ok.setVisible(false);
-            Nein.setDefaultButton(true);
-        } else {
-            Ja.setVisible(false);
-            Nein.setVisible(false);
-            Ok.setDefaultButton(true);
+        switch (dialogType){
+            case INFO:
+                image = new Image(getClass().getResourceAsStream("/images/exclamation.png"));
+                Ja.setVisible(false);
+                Nein.setVisible(false);
+                Ok.setDefaultButton(true);
+                break;
+            case ERROR:
+                image = new Image(getClass().getResourceAsStream("/images/error.png"));
+                Ja.setVisible(false);
+                Nein.setVisible(false);
+                Ok.setDefaultButton(true);
+                break;
+            case CONFIRM:
+                image = new Image(getClass().getResourceAsStream("/images/question.png"));
+                Ok.setVisible(false);
+                Nein.setDefaultButton(true);
+                break;
         }
 
         imageView.setImage(image);

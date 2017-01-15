@@ -45,6 +45,7 @@ public class SudokuController {
         if(grid.solve()) {
             try {
                 sudokuField = grid.getGridAsSudokuField();
+                sudokuField.isSolved();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -164,6 +165,12 @@ public class SudokuController {
     }
     public Boolean getSystemGenerated() {
         return sudokuField.getSystemGenereated();
+    }
+    public Boolean getWasSolved() {
+        return sudokuField.getWasSolved();
+    }
+    public Boolean getIsSolved() {
+        return sudokuField.isSolved();
     }
 
     //Setterfunktionen

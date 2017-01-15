@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+import static de.fhaachen.swegrp2.controllers.GUIControllers.DialogStage.DialogType.ERROR;
+
 /**
  * <p>Titel:PrimaryStageSharedController</p>
  * <p>Beschreibung: Der PrimaryStageSharedController dient der gemeinsamen Funktionalität der StartScene und der
@@ -50,7 +52,7 @@ public class PrimaryStageSharedController {
                 returnValue = true;
             }
         } catch (Exception e) {
-            DialogStage test = new DialogStage("Die gewählte Datei ist nicht korrekt", "Fehler", false);
+            DialogStage test = new DialogStage("Die gewählte Datei ist nicht korrekt", "Fehler", ERROR);
             test.showAndWait();
             returnValue = false;
         }
@@ -77,7 +79,7 @@ public class PrimaryStageSharedController {
             stage.show();
         } catch (Exception e ) {
             DialogStage error = new DialogStage("Die Hilfedatei ist beschädigt\noder nicht vorhanden.",
-                    "Fehler", false);
+                    "Fehler", ERROR);
             error.showAndWait();
         }
     }

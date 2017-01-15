@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
+import static de.fhaachen.swegrp2.controllers.GUIControllers.DialogStage.DialogType.*;
 import static javafx.geometry.Pos.CENTER;
 import static javafx.scene.layout.Priority.ALWAYS;
 
@@ -153,10 +154,15 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
             text.setText((newvalue == 0 ? "" : newvalue) + "");
             text.setFill(colorInserted);
+
+            if(!controller.getWasSolved() && controller.getIsSolved()) {
+                DialogStage sucess = new DialogStage("Das Sudoku wurde erfolgreich gelöst!", "Glückwunsch!", INFO);
+                sucess.showAndWait();
+            }
         } catch (Exception e) {
             DialogStage error = new DialogStage(
                     "Die eingegebene Zahl ist ungültig!\nEs können nur Zahlen zwischen 1 und " + max + " eingegeben werden.",
-                    "Fehler", false);
+                    "Fehler", ERROR);
             error.showAndWait();
         }
     }
@@ -294,6 +300,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
         int size  = controller.getSize();
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
+                mainGridPane.lookup("#Pane$" + x + "," + y).setStyle("-fx-background-color: white");
                 Text text = (Text) mainGridPane.lookup("#Text$" + x + "," + y);
                 if(text.getFill() == colorConflicts) {
                     text.setFill(colorInserted);
@@ -318,7 +325,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
     @FXML
     public void clearField(ActionEvent actionEvent) {
         DialogStage confirmDialog = new DialogStage("Sudoku zurücksetzen?\nNicht exportierte Änderungen gehen verloren.",
-                "Hinweis", true);
+                "Hinweis", CONFIRM);
         boolean result = confirmDialog.showAndWaitGetResult();
 
         if (result) {
@@ -348,8 +355,8 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             fillWithCurrentSudokuField(colorSolved, false);
             resetConflictCells();
         } else {
-            DialogStage test = new DialogStage("Das Sudoku ist nicht lösbar", "Fehler", false);
-            test.showAndWait();
+            DialogStage unsolvable = new DialogStage("Das Sudoku ist nicht lösbar", "Fehler", ERROR);
+            unsolvable.showAndWait();
         }
     }
 
@@ -360,10 +367,15 @@ public class SudokuSceneController extends PrimaryStageSharedController {
      */
     @FXML
     public void markConflictCells(ActionEvent actionEvent) {
+        mainGridPane.requestFocus();
         resetConflictCells();
         List<int[]> conflictTuples = controller.getConflicts();
         for (int[] conflict : conflictTuples) {
             changeTextColor(conflict[1], conflict[0], colorConflicts);
+        }
+        if(conflictTuples.size() == 0) {
+            DialogStage noErrors = new DialogStage("Es wurden keine Fehler gefunden.", "Hinweis", INFO);
+            noErrors.showAndWait();
         }
     }
 
@@ -423,7 +435,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             if(file != null)
                 controller.exportFile(file);
         } catch (Exception e) {
-            DialogStage error = new DialogStage("Fehler!", "Fehler", false);
+            DialogStage error = new DialogStage("Fehler!", "Fehler", ERROR);
             error.showAndWait();
         }
     }
@@ -443,7 +455,7 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             if(pdfFile != null)
                 controller.exportPDF(pdfFile,mainGridPane.snapshot(new SnapshotParameters(),null));
         } catch (Exception e) {
-            DialogStage error = new DialogStage("Fehler!", "Fehler", false);
+            DialogStage error = new DialogStage("Fehler!", "Fehler", ERROR);
             error.showAndWait();
         }
     }

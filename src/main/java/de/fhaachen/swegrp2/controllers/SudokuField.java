@@ -20,6 +20,7 @@ public class SudokuField {
     private int fieldValues[][];            //Eigentlichen Werte des Sudoku
     private Boolean cellIsGenerated[][];    //Feld mit Boolschen Werten, die angeben, ob die Zelle vom System generiert wurde
 
+    private Boolean wasSolved = false;
     private Boolean systemGenereated = false;   //gibt an, ob das vorliegende Feld vom System generiert wurde
 
     /**
@@ -119,6 +120,19 @@ public class SudokuField {
         }
     }
 
+    Boolean isSolved() {
+        if(!wasSolved) {
+            for (int[] row : fieldValues) {
+                for (int cell : row) {
+                    if (cell == 0)
+                        return false;
+                }
+            }
+        }
+        wasSolved = getConflictCoordinates().size() == 0;
+        return wasSolved;
+    }
+
     //Getterfunktionen
     public int getFieldValue(int y, int x) {
         return fieldValues[y][x];
@@ -138,9 +152,16 @@ public class SudokuField {
     Boolean getSystemGenereated() {
         return systemGenereated;
     }
+    Boolean getWasSolved() {
+        return wasSolved;
+    }
 
     //Setterfunktionen
     public void setFieldValue(int y, int x, int value) {
+        if(value == 0)
+            wasSolved = false;
         fieldValues[y][x] = value;
     }
+
+
 }
