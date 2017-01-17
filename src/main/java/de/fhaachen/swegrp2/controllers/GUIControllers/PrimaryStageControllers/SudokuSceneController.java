@@ -156,8 +156,8 @@ public class SudokuSceneController extends PrimaryStageSharedController {
             text.setFill(colorInserted);
 
             if(!controller.getWasSolved() && controller.getIsSolved()) {
-                DialogStage sucess = new DialogStage("Das Sudoku wurde erfolgreich gelöst!", "Glückwunsch!", INFO);
-                sucess.showAndWait();
+                DialogStage success = new DialogStage("Das Sudoku wurde erfolgreich gelöst!", "Glückwunsch!", INFO);
+                success.showAndWait();
             }
         } catch (Exception e) {
             DialogStage error = new DialogStage(

@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -75,6 +76,7 @@ public class PrimaryStageSharedController {
             stage.setTitle("Hilfe");
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/Sudoku.png")));
 
             stage.show();
         } catch (Exception e ) {

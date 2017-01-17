@@ -35,7 +35,6 @@ public class SudokuGrid {
             }
     }
 
-    //Interne Funtkionen
     private Cell[][] getGrid(SudokuField sudokuField) {
         int n = sudokuField.getSize();
         int gridInput[][] = sudokuField.getSudokuField();
@@ -136,7 +135,6 @@ public class SudokuGrid {
         }
     }
 
-    //Interne Funktionen
     /**
      * Gibt das Sudoku als ein String aus.
      * @return Der Sudokustring.

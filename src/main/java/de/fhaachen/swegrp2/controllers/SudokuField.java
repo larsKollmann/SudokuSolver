@@ -162,6 +162,4 @@ public class SudokuField {
             wasSolved = false;
         fieldValues[y][x] = value;
     }
-
-
 }

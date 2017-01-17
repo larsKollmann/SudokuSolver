@@ -30,7 +30,7 @@ public class MainApp extends Application {
      * Start Methode, die von Applikation geerbt wird.
      * Lädt für das Fenster nötige Dateien, setzt Parameter und startet dies.
      * @param stage Das Hauptfenster der Anwendung
-     * @throws Exception Wird vom loader geworfen, wenn das laden nötiger Dateien fehlschlägt.
+     * @throws Exception Wird vom loader geworfen, wenn das Laden nötiger Dateien fehlschlägt.
      */
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
