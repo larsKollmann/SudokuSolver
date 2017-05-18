@@ -1,0 +1,55 @@
+Sie wollen eine JSON-Datei erstellen ? 
+Hier erklären wir Ihnen wie.
+
+Der Inhalt der JSON-Datei wird von geschweiften Klammern 
+umschlossen: {...}.
+
+Innerhalb dieser Klammern ist die erste Zeile die Gr��e
+des Sudokus. Dort sind erlaubte Zahlen 9,16,25 und 36.
+Alle anderen Zahlen werden zu Fehlern führen: ""size": 9,".
+
+Die größe des Sudokus wird im Laufe des Dokumentes 'N' genannt.
+
+Der Inhalt des Sudokus wird mit folgender Zeile eingeleitet:
+""sudoku": ["
+
+Die nun Folgenden Zeilen, mit maximaler Zifferanzahl von N,
+beschreiben den Inhalt des Sudokus.
+Soll die Stelle des Sudokus leer sein, wird "0" eingetragen.
+Andernfalls wird die gewünschte Zahl von 1-N gesetzt.
+
+Jede Ziffer wird von der darauffolgenden durch ein ","
+getrennt. Ist die Ziffer die letzte stelle des Sudokus,
+wird dieses weg gelassen.
+
+Sind alle N Zeilen bestimmt, wird der Inhalt wieder mit einer
+eckigen Klammer geschlossen: "]".
+
+Beispielzeile:
+==============
+
+0,4,0,0,0,0,0,0,6,
+...
+7,0,0,0,3,0,0,0,1
+
+==============
+
+Komplettbeispiel:
+
+{
+  "size": 9,
+  "sudoku": [
+    0,4,0,0,0,0,0,0,6,
+    0,0,5,8,0,4,0,0,0,
+    1,0,2,6,5,3,7,0,0,
+    0,0,6,3,0,0,0,0,0,
+    0,0,8,0,1,6,3,0,0,
+    0,0,0,0,0,0,0,6,0,
+    0,0,0,0,6,0,0,8,0,
+    0,2,1,0,8,5,0,0,0,
+    7,0,0,0,3,0,0,0,1
+  ]
+}
+
+Eine komplette Datei mit einem 9x9 Sudoku gibt es in der Datei "beispiel_9x9.JSON". 
+Eine Datei mit einem 16x16 Sudoku in der Datei "beispiel_16x16.JSON".

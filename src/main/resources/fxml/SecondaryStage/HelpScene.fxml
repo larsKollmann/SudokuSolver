@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="393.0" prefWidth="374.0" style="-fx-background-color: #92CDDC;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.fhaachen.swegrp2.controllers.GUIControllers.HelpSceneController">
+   <bottom>
+      <AnchorPane prefHeight="52.0" prefWidth="374.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="64.0" text="OK" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <top>
+      <ComboBox fx:id="comboBox" prefHeight="25.0" prefWidth="360.0" promptText="Hilfethema auswählen" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </BorderPane.margin>
+      </ComboBox>
+   </top>
+   <center>
+      <TextArea fx:id="textArea" editable="false" prefHeight="596.0" prefWidth="371.0" text="Hier wird Hilfe für das ausgewählte Hilfethema angezeigt." wrapText="true" BorderPane.alignment="CENTER">
+         <opaqueInsets>
+            <Insets right="10.0" />
+         </opaqueInsets>
+         <font>
+            <Font size="14.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets left="15.0" right="15.0" />
+         </BorderPane.margin>
+      </TextArea>
+   </center>
+</BorderPane>

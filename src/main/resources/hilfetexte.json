@@ -1,0 +1,15 @@
+{"hilfetexte":[ 
+    {"Titel":"Was ist Sudoku?", "Hilfetext":"Sudoku ist ein Logikrätsel. Es handelt sich dabei um ein durch Logik zu lösendes Anordnungsproblem. Die moderne Form des Sudokus wurde von Howard Garns erfunden. Erstmals im Jahr 1979 unter dem Namen Number Place in einer Rätselzeitschrift in den Vereinigten Staaten veröffentlicht, wurde es erst ab 1984 zunächst in Japan populär, wo es auch seinen heutigen Namen Sudoku erhielt."},
+    {"Titel":"Das Ziel eines Sudokus", "Hilfetext":"In der üblichen Version ist es das Ziel, ein 9×9-Gitter mit den Ziffern 1 bis 9 so zu füllen, sodass jede Ziffer in jeder Spalte, in jeder Zeile und in jedem Block (3×3-Unterquadrat) genau einmal vorkommt – und natürlich in jedem der 81 Felder exakt eine Ziffer eingetragen wird. Ausgangspunkt ist ein Gitter, in dem bereits mehrere Ziffern vorgegeben sind. Je nach Größe des Sudokus variiert auch die Größe des Gitters und die Blöcke. Die vorhanden Größen sind hierbei: 9x9, 16x16, 25x25, 36x36"},
+    {"Titel":"Größe des Sudokus wählen", "Hilfetext": "Um die Größe des Sudokus wählen zu können, klicken Sie im Startfenster auf einen der unteren Buttons. Sie können alternativ auf den Reiter „Sudoku“ in der Startleiste klicken und danach „Größe ändern“ wählen. Anschließend können Sie sich für eine der Größen entscheiden."},
+    {"Titel":"Sudoku zurücksetzen", "Hilfetext": "Um ein Sudoku zurückzusetzen, klicken Sie zunächst auf den „Sudoku“-Reiter in der Startleiste und anschließend auf „Sudoku zurücksetzen“. Die Zahlen im vorhanden Sudoku werden nach Bestätigung des Dialogs gelöscht."},
+    {"Titel":"Ein Sudoku generieren", "Hilfetext": "Hierbei werden zufällige Zahlen eines Sudokus generiert. Um ein Sudoku zu generieren, stellen Sie erst die Größe ein. Anschließend klicken Sie unter „Sudoku“ in der Startleiste auf „Sudoku zufällig generieren“. Wurde zuvor keine Größe gewählt, wird automatisch ein 9x9 Sudoku generiert."},
+    {"Titel":"Eingaben überprüfen lassen", "Hilfetext": "Wollen Sie ein Sudoku überprüfen lassen, klicken Sie auf den Reiter „Sudoku“ und anschließend auf „Eingaben überprüfen."},
+    {"Titel":"Ein Sudoku lösen lassen", "Hilfetext": "Wollen Sie ein Sudoku lösen lassen, klicken Sie auf die Lösen-Schaltfläche unterhalb des Sudoku-Feldes."},
+    {"Titel":"Sudoku importieren", "Hilfetext": "Um ein Sudoku zu importieren, benötigen Sie zunächst eine vorher existierende Datei des Formats XML, JSON oder CSV. Nun klicken Sie auf den Import-Button in der obigen Leiste und wählen eines der zuvor erwähnten Formate aus. Es öffnet sich ein Fenster, in welchem Sie abschließend die Datei auswählen und auf \"importieren\" klicken. Ist die gewählte Datei nicht valide, so erscheint eine Fehlermeldung."},
+    {"Titel":"Sudoku exportieren", "Hilfetext": "Um ein Sudoku zu exportieren, klicken Sie auf den Export-Reiter in der obigen Leiste und wählen eines der gewünschten Formate aus. Vorhanden sind die Formate XML, JSON, CSV und PDF. Anschließend öffnet sich ein Fenster, dort können Sie auswählen, wo die Datei gespeichert werden soll."}
+]
+}
+
+
+  
