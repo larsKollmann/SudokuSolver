@@ -23,6 +23,6 @@ Features
 Usage
 -----
 - Clone project
-- Build Project via Maven (mvn install)
+- Build project via Maven (mvn install)
 - Find jar-executable in target folder
 
